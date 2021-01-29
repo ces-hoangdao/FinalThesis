@@ -1,32 +1,50 @@
 import React from "react";
-import { Navbar, Nav, Container} from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { NavLink, Link } from "react-router-dom";
+import authService from "../helper/authService";
 
 const Header = () => {
+  var isLogin = localStorage.getItem("user");
+  const logout = (e) => {
+    authService.logout();
+  };
+  var currentUser = localStorage.getItem("userName");
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="md" >
+      <Navbar bg="dark" variant="dark" expand="md">
         <Container>
           <NavLink to="/">
             <Navbar.Brand>Master Travel</Navbar.Brand>
           </NavLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse className="collapse navbar-collapse" id="navbarColor03">
+          <Navbar.Collapse
+            className="collapse navbar-collapse"
+            id="navbarColor03"
+          >
             <Nav className="ml-auto">
-              <Nav.Link href="">Home</Nav.Link>
+              <Nav.Link to="/">Home</Nav.Link>
               <Nav.Link href="#">Homestay</Nav.Link>
               <Nav.Link href="#">About Us</Nav.Link>
-              <Nav.Link href="#">Login </Nav.Link>
-              <Nav.Link href="#">Register</Nav.Link>
-              {/* {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
+              {!isLogin ? (
+                <Nav>
+                    <Link to="/login" className = "nav-link">Login </Link>
+                    <Link to="/register" className="nav-link">Register</Link>
+                </Nav>
+              ) : (
+                <NavDropdown title={currentUser} id="username">
+                  <NavDropdown.Item>
+                    <Link to="#">Profile</Link>
                   </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="#">Booking History</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 </NavDropdown>
+              )}
+
+              {/* {userInfo ? (
+                
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>

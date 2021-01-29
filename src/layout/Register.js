@@ -10,13 +10,14 @@ import {
 } from "../constants/formValidation";
 
 
-class Login extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: null,
       password: null,
+      confirmPassword: null,
       isLogin: false,
       formErrors: {
         email: "",
@@ -70,12 +71,13 @@ class Login extends Component {
     this.setState({ formErrors, [name]: value });
   };
 
+
   render() {
     const { formErrors } = this.state;
     return (
       <div className="container">
         <Form className="form-login" onSubmit={this.handleSubmit} noValidate>
-          <h1>Login</h1>
+          <h1>Register</h1>
           <Form.Group controlId="Email">
             <Form.Label>Email address</Form.Label>
             <Form.Control  className={formErrors.email.length > 0 ? "error" : null}
@@ -105,10 +107,10 @@ class Login extends Component {
             )}
           </Form.Group>
           <Button variant="outline-dark" type="submit" className="btn-login">
-            Submit
+            Register
           </Button>
           <h1 className="form-text">
-            Don't have an account? <Link to ="/register">Resigter</Link>
+           I have an account <Link to ="/login">Login</Link>
           </h1>
         </Form>
       </div>
@@ -116,4 +118,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;

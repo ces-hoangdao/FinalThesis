@@ -15,9 +15,7 @@ const signup = (firstname, lastname, email, password) => {
       
     console.log(response);
     if (response.data.token) {
-      {
-        /*Save JWT in localStorage */
-      }
+     
       localStorage.setItem("email", email);
       localStorage.setItem("user", JSON.stringify(response.data));
     }
@@ -36,15 +34,15 @@ const login = (userName, passWord) => {
     .then((response) => {
       
       console.log(response);
-      if (response.data.token) {
-        {
-          /*Save JWT in localStorage */
-        }
-        // localStorage.setItem("email", email);
+      if (response.data) {
+       
+        localStorage.setItem("userName", userName);
+        console.log(localStorage.getItem("userName"));
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 
       return response.data;
+      
     });
 };
 
