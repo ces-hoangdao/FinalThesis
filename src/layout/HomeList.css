@@ -1,0 +1,40 @@
+.img-wrap {
+    text-align: center;
+    display: block;
+  }
+  .img-wrap img {
+    max-width: 100%;
+  }
+  .card-sm .img-wrap {
+    height: 160px;
+  }
+  
+  .card-lg .img-wrap {
+    height: 280px;
+  }
+  .card-house-grid {
+    margin-bottom: 20px;
+    width: 400px;;
+  }
+  .card .img-wrap {
+    overflow: hidden;
+  }
+  .card-house-grid .img-wrap {
+    border-radius: 0.2rem 0.2rem 0 0;
+    height: 280px;
+  }
+  .card-house-grid .info-wrap {
+    overflow: hidden;
+    padding: 18px 20px;
+  }
+  .card-house-grid .fix-height {
+      height: 120px;
+      overflow: hidden;
+  }
+  .icon-house{
+    margin-block: auto;
+    margin-left: 10px;
+  }
+  .text-house{
+    margin-left: 10px;
+  }

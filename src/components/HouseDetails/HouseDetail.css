@@ -1,0 +1,51 @@
+
+.img-wrap {
+  margin-bottom: 50px;
+}
+img {
+  margin-top: 30px;
+}
+.img-slide{
+  height: 700px;
+  width: 1280px;
+}
+.text-center {
+  align-items: center;
+}
+.icon{
+    height: 30px;
+    width: 30px;
+    margin-left: 100px;
+}
+.text{
+    margin-top: 34px;
+    margin-left: 15px;
+}
+.phone{
+    margin-top: 34px;
+    margin-left: 130px;
+}
+.house-info {
+  background-color: #fff;
+  height: 450px;
+}
+.house-detail {
+  background-color: #f6f6f6;
+}
+.house-title {
+  color: #352f51;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  margin-left: 100px;
+  padding-top: 40px;
+  padding-bottom: 10px !important;
+}
+.house-address {
+  padding-top: 0px;
+  margin-left: 100px;
+  color: #352f51;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 24px;
+}

@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import { Link, Redirect } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import authService from "../helper/authService";
 import "./Login.css";
 import {
-  PASSWORD_MIN_LENGTH,
   emailRegex,
-  formValid,userConstants
+  formValid,
+  usernameRegex,
+  passwordRegex,
+  userConstants,
 } from "../constants/formValidation";
-
 
 class Register extends Component {
   constructor(props) {
@@ -16,12 +21,14 @@ class Register extends Component {
 
     this.state = {
       email: null,
+      username: null,
       password: null,
       confirmPassword: null,
       isLogin: false,
       formErrors: {
         email: "",
         password: "",
+        username: "",
       },
     };
     this.handleChange = this.handleChange.bind(this);
@@ -29,21 +36,20 @@ class Register extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
+
     if (formValid(this.state)) {
+      //CAll API Register
       const email = this.state.email;
       const password = this.state.password;
-      authService.login(email, password)
-       .then(() =>{
-        alert(userConstants.LOGIN_SUCCESS);
-
-         window.location.reload();
-
-       },
-       (error) => {
-        alert(userConstants.LOGIN_FAILURE);
-      }
-
-       );
+      const username = this.state.username;
+      authService.register(email, username, password).then(
+        () => {
+          NotificationManager.success(userConstants.REGISTER_SUCCESS);
+        },
+        (error) => {
+          NotificationManager.error(userConstants.REGISTER_FAILURE);
+        }
+      );
     }
   };
 
@@ -59,10 +65,14 @@ class Register extends Component {
           : "invalid email address";
         break;
       case "password":
-        formErrors.password =
-          value.length < PASSWORD_MIN_LENGTH
-            ? "minimum 6 characters required"
-            : "";
+        formErrors.password = passwordRegex.test(value)
+          ? ""
+          : "Invalid password";
+        break;
+      case "username":
+        formErrors.username = usernameRegex.test(value)
+          ? ""
+          : "Invalid username";
         break;
       default:
         break;
@@ -71,8 +81,11 @@ class Register extends Component {
     this.setState({ formErrors, [name]: value });
   };
 
-
   render() {
+    var logged = localStorage.getItem("user");
+    if (logged !== null) {
+      return <Redirect to="/"></Redirect>;
+    }
     const { formErrors } = this.state;
     return (
       <div className="container">
@@ -80,7 +93,8 @@ class Register extends Component {
           <h1>Register</h1>
           <Form.Group controlId="Email">
             <Form.Label>Email address</Form.Label>
-            <Form.Control  className={formErrors.email.length > 0 ? "error" : null}
+            <Form.Control
+              className={formErrors.email.length > 0 ? "error" : null}
               placeholder="Enter email"
               type="email"
               name="email"
@@ -91,7 +105,20 @@ class Register extends Component {
               <span className="errorMessage">{formErrors.email}</span>
             )}
           </Form.Group>
-
+          <Form.Group controlId="username">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              className={formErrors.username.length > 0 ? "error" : null}
+              type="text"
+              placeholder="Username"
+              name="username"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.username.length > 0 && (
+              <span className="errorMessage">{formErrors.username}</span>
+            )}
+          </Form.Group>
           <Form.Group controlId="Password">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -110,9 +137,10 @@ class Register extends Component {
             Register
           </Button>
           <h1 className="form-text">
-           I have an account <Link to ="/login">Login</Link>
+            I have an account <Link to="/login">Login</Link>
           </h1>
         </Form>
+        <NotificationContainer></NotificationContainer>
       </div>
     );
   }
