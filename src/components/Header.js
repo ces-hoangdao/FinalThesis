@@ -1,72 +1,77 @@
 import React from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
+import Fade from "react-reveal/Fade";
 import authService from "../helper/authService";
 
 const Header = () => {
-  var isLogin = localStorage.getItem("user");
-  const logout = (e) => {
-    authService.logout();
-  };
-  var currentUser = localStorage.getItem("userName");
+  const isLogin = localStorage.getItem("token");
+  const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
+  const logout = () => new authService().logout().then(window.location.replace("/"));
+
+  const currentUser = localStorage.getItem("username");
+
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="md">
-        <Container>
-          <NavLink to="/">
-            <Navbar.Brand>Master Travel</Navbar.Brand>
-          </NavLink>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse
-            className="collapse navbar-collapse"
-            id="navbarColor03"
-          >
-            <Nav className="ml-auto">
-              <Nav.Link to="/">Home</Nav.Link>
-              <Nav.Link href="#">Homestay</Nav.Link>
-              <Nav.Link href="#">About Us</Nav.Link>
-              {!isLogin ? (
-                <Nav>
-                    <Link to="/login" className = "nav-link">Login </Link>
-                    <Link to="/register" className="nav-link">Register</Link>
-                </Nav>
-              ) : (
-                <NavDropdown title={currentUser} id="username">
-                  <NavDropdown.Item>
-                    <Link to="#">Profile</Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link to="#">Booking History</Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-                </NavDropdown>
-              )}
+      <Navbar bg="dark" variant="dark" expand="lg" >
+        <Container >
+          <Fade left>
+            <NavLink to="/">
+              <Navbar.Brand>Master Travel</Navbar.Brand>
+            </NavLink>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          </Fade>
 
-              {/* {userInfo ? (
-                
-              ) : (
-                <LinkContainer to="/login">
-                  <Nav.Link>
-                    <i className="fas fa-user"></i> Sign In
-                  </Nav.Link>
-                </LinkContainer>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-              )} */}
-            </Nav>
-          </Navbar.Collapse>
+          <Fade right>
+            <Navbar.Collapse
+              className="collapse navbar-collapse"
+              id="navbarColor03"
+            >
+              <Nav className="ml-auto">
+                <Link to="/" className="nav-link">
+                  Home{" "}
+                </Link>
+                <Link to="/homelist" className="nav-link">
+                  {" "}
+                  Homestay{" "}
+                </Link>
+                <Link to="/about" className="nav-link">
+                  About Us{" "}
+                </Link>
+                {!isLogin ? (
+                  <Nav>
+                    <Link to="/login" className="nav-link">
+                      Login{" "}
+                    </Link>
+                  </Nav>
+                ) : (
+                  <NavDropdown title={currentUser} id="username" >
+                    <NavDropdown.Item >
+                      <Link to="/editprofile" >Profile</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link to="#">Booking History</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={() => logout()}>Logout</NavDropdown.Item>
+                  </NavDropdown>
+                )}
+                {isLogin && isAdmin && (
+                  <NavDropdown title="Admin" id="username">
+                    <NavDropdown.Item>
+                      <Link to="#">User Management</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link to="#">Post Management</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link to="#">Home Management</Link>
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Fade>
         </Container>
       </Navbar>
     </header>

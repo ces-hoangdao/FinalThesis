@@ -21,7 +21,7 @@ h3 {
 
 h1 {
   font-size: 1.8rem;
-  padding: 1rem 0;
+  padding: 3rem 0;
 }
 
 h2 {
@@ -33,7 +33,7 @@ h2 {
   margin: 0.1rem;
 }
 
-/* carousel */
+/* carousel
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -49,18 +49,28 @@ h2 {
 }
 
 .carousel img {
-  height: 300px;
+  
+  width:auto;
+  height: auto;
   padding: 30px;
   margin: 40px;
-  border-radius: 50%;
+  border-radius: 3px;
   margin-left: auto;
   margin-right: auto;
 }
 .carousel a {
   margin: 0 auto;
-}
+} */
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
   }
+}
+.nav-link{
+  font-size:22px;
+  margin-left: 20px;
+}
+.navbar-brand {
+  color: #fff;
+  font-size: 22px;
 }
