@@ -2,19 +2,24 @@ import React from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
-import authService from "../helper/authService";
+import AuthService from "../helper/AuthService";
 
 const Header = () => {
   const isLogin = localStorage.getItem("token");
   const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
-  const logout = () => new authService().logout().then(window.location.replace("/"));
+  const logout = () => {
+    new AuthService().logout().then(() => {
+      localStorage.clear();
+      window.location.replace("/");
+    });
+  };
 
   const currentUser = localStorage.getItem("username");
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" >
-        <Container >
+      <Navbar bg="light" variant="light" expand="lg" sticky-top>
+        <Container>
           <Fade left>
             <NavLink to="/">
               <Navbar.Brand>Master Travel</Navbar.Brand>
@@ -31,7 +36,7 @@ const Header = () => {
                 <Link to="/" className="nav-link">
                   Home{" "}
                 </Link>
-                <Link to="/homelist" className="nav-link">
+                <Link to="/listhouse" className="nav-link">
                   {" "}
                   Homestay{" "}
                 </Link>
@@ -45,15 +50,20 @@ const Header = () => {
                     </Link>
                   </Nav>
                 ) : (
-                  <NavDropdown title={currentUser} id="username" >
-                    <NavDropdown.Item >
-                      <Link to="/editprofile" >Profile</Link>
+                  <NavDropdown title={currentUser} id="username">
+                    <NavDropdown.Item>
+                      <Link to="/editprofile">Profile</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link to="/housemanage">House Management</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
                       <Link to="#">Booking History</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={() => logout()}>Logout</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => logout()}>
+                      Logout
+                    </NavDropdown.Item>
                   </NavDropdown>
                 )}
                 {isLogin && isAdmin && (

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import authService from "../helper/authService";
+import AuthService from "../helper/AuthService";
 import "./ConfirmCode.css";
 
 const ConfirmCode = () => {
   const onSubmit = (e) => {
     e.preventDefault();
-    authService.confirmcode(verifycode).then(window.location.replace("/"));
+    AuthService.confirmCode(verifycode).then(window.location.replace("/"));
   };
 
   const [verifycode, setVerifycode] = useState("");

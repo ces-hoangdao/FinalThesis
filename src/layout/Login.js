@@ -5,7 +5,8 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
-import authService from "../helper/authService";
+// import Loader from "../components/Loader";
+import AuthService from "../helper/AuthService";
 import "./Login.css";
 import {
   emailRegex,
@@ -20,6 +21,7 @@ class Login extends Component {
     this.state = {
       email: null,
       loader: false,
+      password: null,
       formErrors: {
         email: "",
         password: "",
@@ -34,7 +36,7 @@ class Login extends Component {
     if (formValid(this.state)) {
       const email = this.state.email;
       const password = this.state.password;
-      new authService().login(email, password).then(
+      new AuthService().login(email, password).then(
         () => {
           NotificationManager.success(userConstants.LOGIN_SUCCESS);
           window.location.replace("/");
@@ -67,7 +69,7 @@ class Login extends Component {
 
   render() {
     const { formErrors } = this.state;
-    const logged = localStorage.getItem("user");
+    const logged = localStorage.getItem("username");
     if (logged !== null) {
       return <Redirect to="/"></Redirect>;
     }
