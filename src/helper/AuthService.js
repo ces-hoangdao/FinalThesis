@@ -1,12 +1,13 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { ROUTE } from "../constants/route";
-import apiConfig from "./apiConfig.service";
+import AxiosService from "./AxiosService";
 
-class authService extends apiConfig {
-  constructor (){
+class AuthService extends AxiosService {
+  constructor() {
     super();
   }
+  
   //register Api
   register = async (email, username, password) => {
     return axios
@@ -30,6 +31,7 @@ class authService extends apiConfig {
         usernameOrEmail,
         password,
       })
+
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("token", response.data);
@@ -49,14 +51,17 @@ class authService extends apiConfig {
 
   //Logout Api
   logout = async () => {
-    const response = await axios.delete(ROUTE.LOGOUT_PATH, {
-      headers: this.token(),
-    });
-    localStorage.clear();
-    return response.data;
+    const response = await axios
+      .delete(ROUTE.LOGOUT_PATH, {
+        headers: this.token(),
+      })
+      .then(() => {
+       
+      });
+
   };
 
-  confirmcode = async (verifycode) => {
+  confirmCode = async (verifycode) => {
     return axios
       .post(ROUTE.CONFIRMCODE_PATH, {
         verifycode,
@@ -66,4 +71,4 @@ class authService extends apiConfig {
       });
   };
 }
-export default authService;
+export default AuthService;

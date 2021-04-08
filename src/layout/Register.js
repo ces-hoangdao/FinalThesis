@@ -5,7 +5,7 @@ import {
 } from "react-notifications";
 import { Link, Redirect } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import authService from "../helper/authService";
+import AuthService from "../helper/AuthService";
 import "./Login.css";
 import {
   emailRegex,
@@ -42,7 +42,7 @@ class Register extends Component {
       const email = this.state.email;
       const password = this.state.password;
       const username = this.state.username;
-      authService.register(email, username, password).then(
+      AuthService.register(email, username, password).then(
         () => {
           NotificationManager.success(userConstants.REGISTER_SUCCESS);
         },
@@ -82,7 +82,7 @@ class Register extends Component {
   };
 
   render() {
-    var logged = localStorage.getItem("user");
+    var logged = localStorage.getItem("username");
     if (logged !== null) {
       return <Redirect to="/"></Redirect>;
     }

@@ -1,0 +1,31 @@
+.card-homepage {
+  border-radius: 0.2rem 0.2rem 0 0;
+
+  height: 500px;
+  margin-bottom: 20px;
+}
+.card-homepage-img {
+  border-radius: 0.2rem 0.2rem 0 0;
+  display: block;
+  height: 380px;
+  overflow: hidden;
+}
+.text-content {
+  margin-left: 15px;
+  color: #352f51;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+  overflow: hidden;
+}
+.btn-homepage{
+   display: block;
+    width: 300px;
+    align-items:center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.btn-homepage a{
+    color:antiquewhite;
+}
