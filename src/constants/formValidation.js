@@ -22,6 +22,8 @@ export const phoneRegex = RegExp(/^(84|0[3|5|7|8|9])+([0-9]{8})$/ ) ;
 export const passwordRegex = RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/); 
 
 export const usernameRegex = RegExp(/^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/) ;
+    // /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+
 export  const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
   
@@ -36,4 +38,4 @@ export  const formValid = ({ formErrors, ...rest }) => {
     });
   
     return valid;
-  };
+};

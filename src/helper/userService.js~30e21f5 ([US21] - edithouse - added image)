@@ -1,0 +1,142 @@
+import axios from "axios";
+import { API_URL } from "../constants/route";
+import { ROUTE } from "../constants/route";
+import ApiConfig from "./AxiosService";
+
+class userService extends ApiConfig {
+  editprofile = async (
+    firstname,
+    lastname,
+    birthday,
+    country,
+    city,
+    address
+  ) => {
+    return axios
+      .post(
+        ROUTE.EDITPROFILE_PATH,
+        { firstname, lastname, birthday, country, city, address },
+        { headers: this.token() }
+      )
+      .then((response) => {
+        //something act
+        window.location.reload();
+      })
+      .catch((error) => {
+        //error
+      });
+  };
+  loadhouse = async () => {
+    const response = await axios.get(API_URL + "/houses?page=1&size=20 ");
+    return response.data;
+  };
+
+  edithouse = async (
+    idhouse,
+    address,
+    air_conditioner,
+    bedroom,
+    content,
+    country,
+    fridge,
+    max_guest,
+    phoneContact,
+    price,
+    city,
+    size,
+    swimPool,
+    title,
+    tivi,
+    wifi
+  ) => {
+    const requestUrl = `https://thesis-homestay.herokuapp.com/houses/${idhouse}`;
+    return axios
+      .put(
+        requestUrl,
+        {
+          address,
+          air_conditioner,
+          bedroom,
+          content,
+          country,
+          fridge,
+          max_guest,
+          phoneContact,
+          price,
+          city,
+          size,
+          swimPool,
+          title,
+          tivi,
+          wifi,
+        },
+        { headers: { Authorization: "Token " + localStorage.getItem("token") } }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          //edit house success
+        } else {
+          //edit house fail
+        }
+      });
+  };
+
+  deletehouse = async (idHouse) => {
+    const requestUrl = `https://thesis-homestay.herokuapp.com/houses/${idHouse}`;
+    return axios
+      .delete(requestUrl, {
+        headers: { Authorization: "Token " + localStorage.getItem("token") },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          //delete house succes
+        }
+      });
+  };
+
+  posthouse = async (
+    address,
+    air_conditioner,
+    bedroom,
+    content,
+    country,
+    fridge,
+    max_guest,
+    phoneContact,
+    price,
+    city,
+    size,
+    swimPool,
+    title,
+    tivi,
+    wifi
+  ) => {
+    return axios
+      .post(
+        ROUTE.API_URL_POSTHOUSE,
+        {
+          address,
+          air_conditioner,
+          bedroom,
+          content,
+          country,
+          fridge,
+          max_guest,
+          phoneContact,
+          price,
+          city,
+          size,
+          swimPool,
+          title,
+          tivi,
+          wifi,
+        },
+        { headers: { Authorization: "Token " + localStorage.getItem("token") } }
+      )
+      .then((response) => {
+        //success
+      });
+  };
+}
+
+export default userService;

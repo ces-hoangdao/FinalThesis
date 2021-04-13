@@ -11,6 +11,8 @@ const ROUTE = {
     HOUSE_MANAGE : `${API_URL}/houses/username`,
     HOUSE_CREATE : `${API_URL}/houses/create`,
     
+    USERDETAIL_PATH : `${API_URL}/userDetail`,
+    HOUSEDETAIL_PATH : `${API_URL}/houses/detail?`
 }
 
 export {API_URL, ROUTE};

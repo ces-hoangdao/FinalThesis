@@ -4,10 +4,6 @@ import { ROUTE } from "../constants/route";
 import AxiosService from "./AxiosService";
 
 class AuthService extends AxiosService {
-  constructor() {
-    super();
-  }
-  
   //register Api
   register = async (email, username, password) => {
     return axios
@@ -39,6 +35,7 @@ class AuthService extends AxiosService {
           const isAdmin = userInfo.user.role === "admin";
           localStorage.setItem("username", userInfo.user.username);
           localStorage.setItem("isAdmin", isAdmin);
+          localStorage.setItem("email", userInfo.user.email);
         }
         return response.data;
       })

@@ -35,9 +35,11 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit = (e) => {
-    e.preventDefault();
 
-    if (formValid(this.state)) {
+    e.preventDefault();
+    
+    if (formValid(this.state))
+     {
       //CAll API Register
       const email = this.state.email;
       const password = this.state.password;
@@ -45,11 +47,14 @@ class Register extends Component {
       AuthService.register(email, username, password).then(
         () => {
           NotificationManager.success(userConstants.REGISTER_SUCCESS);
-        },
-        (error) => {
+          window.location.reload();
+        })
+        .catch(function (error) {
+          console.log(error);
           NotificationManager.error(userConstants.REGISTER_FAILURE);
-        }
-      );
+        });
+    } else {
+      NotificationManager.error(userConstants.REGISTER_FAILURE);    
     }
   };
 
@@ -108,13 +113,13 @@ class Register extends Component {
           <Form.Group controlId="username">
             <Form.Label>Username</Form.Label>
             <Form.Control
-              className={formErrors.username.length > 0 ? "error" : null}
+            className={formErrors.username.length > 0 ? "error" : null}
               type="text"
               placeholder="Username"
               name="username"
               noValidate
               onChange={this.handleChange}
-            />
+            />      
             {formErrors.username.length > 0 && (
               <span className="errorMessage">{formErrors.username}</span>
             )}
