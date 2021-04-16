@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ListHouse.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Card, Col, Form, Button } from "react-bootstrap";
-import HouseService from "../helper/HouseService";
+import HouseService from "../services/HouseService";
 import Location from "../assets/location.svg";
 import Price from "../assets/price.svg";
 import Square from "../assets/ic-squarmeter@2x.svg";

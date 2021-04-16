@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import * as Locations from "laika-locations";
-import userService from "../helper/userService";
+import UserService from "../services/UserService";
 import {
   NotificationContainer,
   NotificationManager,
@@ -48,7 +48,7 @@ const PostHouse = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    new userService()
+    new UserService()
       .posthouse(
         address,
         ac,

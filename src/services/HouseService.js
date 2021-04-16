@@ -2,16 +2,12 @@ import axios from "axios";
 import { API_URL } from "../constants/route";
 import AxiosService from "./AxiosService";
 import { ROUTE } from "../constants/route";
-import isValidData from "./helper";
+import isValidData from "../helper/helper";
 import queryString from "query-string";
 class HouseService extends AxiosService {
-  constructor() {
-    super();
-  }
-
-  getDetailHouse = async (idHouse) => {
+  getHouseDetail = async (houseId) => {
     try {
-      const paramsString = queryString.stringify(idHouse);
+      const paramsString = queryString.stringify(houseId);
       const requestUrl = API_URL + `/houses/detail?${paramsString}`;
       const response = await axios.get(requestUrl);
       if (isValidData(response.data)) {
@@ -22,7 +18,6 @@ class HouseService extends AxiosService {
       return null;
     }
   };
-
 
   getHouses = async (filter) => {
     try {
@@ -37,6 +32,7 @@ class HouseService extends AxiosService {
       return null;
     }
   };
+
   getListHouseByUsername = async (username) => {
     try {
       const requestUrl = ROUTE.HOUSE_MANAGE + `/${username}`;
@@ -48,13 +44,14 @@ class HouseService extends AxiosService {
     } catch (err) {
       return null;
     }
-  }
+  };
 
   deleteHouse = async (houseid) => {
     const response = await axios
       .delete(API_URL + `/houses/${houseid}`, { headers: this.token() })
       .then(() => {});
   };
+
 }
 
 export default HouseService;

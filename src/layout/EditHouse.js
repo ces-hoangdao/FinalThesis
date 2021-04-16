@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import * as Locations from "laika-locations";
-import userService from "../helper/userService";
+import UserService from "../services/UserService";
 import {
   NotificationContainer,
   NotificationManager,
@@ -18,8 +18,8 @@ const EditHouse = () => {
 
   const isLogin = localStorage.getItem("token");
 
-  const [idHouse, setidHouse] = useState({
-    idHouse: window.location.pathname.substring(
+  const [houseId, sethouseId] = useState({
+    houseId: window.location.pathname.substring(
       window.location.pathname.lastIndexOf("/") + 1
     ),
   });
@@ -46,7 +46,7 @@ const EditHouse = () => {
     async function fetchHouse() {
       try {
         setLoading(true);
-        const paramsString = queryString.stringify(idHouse);
+        const paramsString = queryString.stringify(houseId);
         const requestUrl = `https://thesis-homestay.herokuapp.com/houses/detail?${paramsString}`;
         const response = await axios.get(requestUrl);
         setHouseinfo({
@@ -61,7 +61,7 @@ const EditHouse = () => {
           country: countries.find((c) => c.name === response.data.country).id,
           city: Locations.getCitiesByParam(response.data.city)[0].id,
           address: response.data.address,
-          ac: response.data.air_conditioner,
+          ac: response.data.airConditioner,
           tivi: response.data.tivi,
           wifi: response.data.wifi,
           fridge: response.data.fridge,
@@ -73,7 +73,7 @@ const EditHouse = () => {
       }
     }
     fetchHouse();
-  }, [idHouse]);
+  }, [houseId]);
 
   //get country and city
   const { countries } = Locations.getCountries();
@@ -102,7 +102,7 @@ const EditHouse = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    new userService ()
+    new UserService ()
       .edithouse(
         houseinfo.id,
         houseinfo.address,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Container, Button, Carousel } from "react-bootstrap";
-import HouseService from "../../helper/HouseService";
+import HouseService from "../../services/HouseService";
 import "./HouseDetail.css";
 import Location from "../../assets/location.svg";
 import Wifi from "../../assets/wifi-line.svg";
@@ -13,7 +13,6 @@ import Guest from "../../assets/guest.svg";
 import TV from "../../assets/TV.svg";
 import Pool from "../../assets/swimming.svg";
 import Phone from "../../assets/phone.svg";
-import queryString from "query-string";
 import Loader from "../Loader";
 import { useHistory } from "react-router-dom";
 import Icon from "../Icon/Icon";
@@ -31,7 +30,7 @@ const HouseDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    new HouseService().getDetailHouse(idHouse).then((house) => {
+    new HouseService().getHouseDetail(idHouse).then((house) => {
       if (house) {
         setHouseDetail(house);
         setImages(house.images);
@@ -46,16 +45,15 @@ const HouseDetail = () => {
 
   return (
     <div className="house-detail">
-    
       <div>{loading && <Loader></Loader>}</div>
       {houseDetail && (
         <Container>
-          <h1 className = "text-title">House Details</h1>
+          <h1 className="text-title">House Details</h1>
           <div className="img-wrap">
             <Carousel>
               <Carousel.Item>
                 <img
-                  className="img-slide"y
+                  className="img-slide"
                   src={houseDetail.image}
                   alt="First slide"
                 />
@@ -80,69 +78,119 @@ const HouseDetail = () => {
 
             <Row>
               <Col>
-                <img className="icon-houseDetail" src={Price} alt=" price"></img>
-                <span className="text-houseDetail"> {houseDetail.price} đ/day</span>
+                <Icon
+                  src={Price}
+                  text={houseDetail.price}
+                  unit="/1day"
+                  classTexe="text-houseDetail"
+                  classIcon="icon-houseDetail"
+                ></Icon>
               </Col>
               <Col>
-                <img className="icon-houseDetail" src={Location} alt="location"></img>
-                <span className="text-houseDetail"> {houseDetail.province}</span>
+                <Icon
+                  src={Location}
+                  text={houseDetail.city}
+                  classTexe="text-houseDetail"
+                  classIcon="icon-houseDetail"
+                ></Icon>
               </Col>
               <Col>
-                <img className="icon-houseDetail" src={Square} alt=" Squaremeter"></img>
-                <span className="text-houseDetail"> {houseDetail.size} m &sup2;</span>
+                <Icon
+                  src={Square}
+                  text={houseDetail.size}
+                  unit=" m &sup2;"
+                  classTexe="text-houseDetail"
+                  classIcon="icon-houseDetail"
+                ></Icon>
               </Col>
-              <Col className="">
-                <img className="icon-houseDetail" src={Phone} alt="phone"></img>
-                <span className="text-houseDetail">+ {houseDetail.phoneContact}</span>
+              <Col>
+                <Icon
+                  src={Phone}
+                  text={"+" + houseDetail.phoneContact}
+                  classTexe="text-houseDetail"
+                  classIcon="icon-houseDetail"
+                ></Icon>
               </Col>
             </Row>
-
             <Row>
               <Col sm={3}>
-                <img className="icon-houseDetail" src={Guest} alt=" Guest max"></img>
-                <span className="text-houseDetail"> {houseDetail.maxGuest} people</span>
+                <Icon
+                  src={Guest}
+                  text={houseDetail.maxGuest}
+                  unit="people"
+                  classTexe="text-houseDetail"
+                  classIcon="icon-houseDetail"
+                ></Icon>
               </Col>
               <Col sm={3}>
-                <img className="icon-houseDetail" src={Bed} alt=" Bedroom"></img>
-                <span className="text-houseDetail"> {houseDetail.bedroom} bedroom</span>
+                <Icon
+                  src={Bed}
+                  text={houseDetail.bedroom}
+                  unit="bedroom"
+                  classTexe="text-houseDetail"
+                  classIcon="icon-houseDetail"
+                ></Icon>
               </Col>
               {houseDetail.swimPool && (
                 <Col sm={6}>
-                  <img className="icon-houseDetail" src={Pool} alt="swimming"></img>
-                  <span className="text-houseDetail">Swimming Pool</span>
+                  <Icon
+                    src={Pool}
+                    unit="Swimming Pool"
+                    classTexe="text-houseDetail"
+                    classIcon="icon-houseDetail"
+                  ></Icon>
                 </Col>
               )}
             </Row>
-
             <Row>
               {houseDetail.wifi && (
                 <Col sm={3}>
-                  <img className="icon-houseDetail" src={Wifi} alt="wifi"></img>
-                  <span className="text-houseDetail">Wifi</span>
+                  <Icon
+                    src={Wifi}
+                    unit="Wifi"
+                    classTexe="text-houseDetail"
+                    classIcon="icon-houseDetail"
+                  ></Icon>
                 </Col>
               )}
+              {houseDetail.airConditionerr && (
                 <Col sm={3}>
-                <img className="icon" src={Square} alt=" Squaremeter"></img>
-                <span className="text"> {houseDetail.size} m &sup2;</span>
+                  <Icon
+                    src={AirCondition}
+                    unit="Air Conditioner"
+                    classTexe="text-houseDetail"
+                    classIcon="icon-houseDetail"
+                  ></Icon>
                 </Col>
+              )}
+              {houseDetail.tivi && (
+                <Col sm={3}>
+                  <Icon
+                    src={TV}
+                    unit="Tivi"
+                    classTexe="text-houseDetail"
+                    classIcon="icon-houseDetail"
+                  ></Icon>
+                </Col>
+              )}
+              {houseDetail.fridge && (
+                <Col sm={3}>
+                  <Icon
+                    src={fridge}
+                    unit="Fridge"
+                    classTexe="text-houseDetail"
+                    classIcon="icon-houseDetail"
+                  ></Icon>
+                </Col>
+              )}
             </Row>
-            
-            <Row>
-              <img className="icon" src={Wifi} alt="wifi"></img>
-              <span className="text">
-                {" "}
-                {/* {houseDetail.amenities.idAmenities === 1} */}
-              </span>
-              <img
-                className="icon"
-                src={AirCondition}
-                alt="aircondition"
-              ></img>
-              <span className="text"> 3</span>
-              <span className="phone">
-                Phone: + {houseDetail.phoneContact}
-              </span>
-              <Button className="btn-bookhouse" block size="lg">
+            <Row className="justify-content-md-center">
+              <Button
+                className="btn-bookhouse"
+                block
+                size="lg"
+                variant="outline-dark"
+              >
                 Book house
               </Button>
             </Row>
@@ -156,7 +204,6 @@ const HouseDetail = () => {
       )}
       <div className="container">
         <h1 className="text-center">Related Projects</h1>
-        
       </div>
     </div>
   );

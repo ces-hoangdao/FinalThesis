@@ -5,7 +5,7 @@ import {
 } from "react-notifications";
 import { Link, Redirect } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import AuthService from "../helper/AuthService";
+import AuthService from "../services/AuthService";
 import "./Login.css";
 import {
   emailRegex,

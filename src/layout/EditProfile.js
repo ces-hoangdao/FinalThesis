@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import * as Locations from "laika-locations";
 import "./EditProfile.css";
-import userService from "../helper/userService";
+import UserService from "../services/UserService";
 import {
   NotificationContainer,
   NotificationManager,
@@ -10,12 +10,14 @@ import {
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { ROUTE } from "../constants/route";
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 const EditProfile = () => {
   const email = localStorage.getItem("email");
-  const [userinfo, setUserinfo] = useState({
-    firstname: "",
-    lastname: "",
+  const [userInfo, setUserinfo] = useState({
+    id: "",
+    firstName: "",
+    lastName: "",
     birthday: "",
     country: "",
     city: "",
@@ -26,62 +28,59 @@ const EditProfile = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    new userService()
+    new UserService()
       .editprofile(
-        userinfo.firstname,
-        userinfo.lastname,
-        userinfo.birthday,
-        Locations.getCountryById(userinfo.country).name,
-        Locations.getCityNameById(userinfo.city),
-        userinfo.address
+        userInfo.id,
+        userInfo.firstName,
+        userInfo.lastName,
+        userInfo.birthday,
+        Locations.getCountryById(userInfo.country).name,
+        Locations.getCityNameById(userInfo.city),
+        userInfo.address
       )
       .then
       //success
       ();
   };
-
+  
   //fetch data from database
   useEffect(() => {
-    async function fetchUserInfo() {
-      try {
-        const URL = ROUTE.USERDETAIL_PATH;
-        const response = await axios.get(URL, {
-          headers: { Authorization: "Token " + localStorage.getItem("token") },
-        });
+    new UserService().getCurrentUser().then((data) => {
+      if (data !== null) {
         setUserinfo({
-          ...userinfo,
-          firstname: response.data.firstname,
-          lastname: response.data.lastname,
-          birthday: response.data.birthday,
-          country: countries.find((c) => c.name === response.data.country).id,
-          city: Locations.getCitiesByParam(response.data.city)[0].id,
-          address: response.data.address,
+          ...userInfo,
+          ...data,
+          country: countries.find((c) => c.name === data.country).id,
+          city: Locations.getCitiesByParam(data.city)[0].id,
         });
-      } catch (err) {
-        //error
       }
-    }
-    fetchUserInfo();
+    });
   }, []);
 
   //get country and city
   const { countries } = Locations.getCountries();
 
+  console.log(countries.find((c) => c.name === 'Vietnam').id);
+
   const cities = useMemo(
-    () => (userinfo.country ? Locations.getCitiesByCountry(userinfo.country.id) : []),
-    [userinfo.country]
+    () =>
+      userInfo.country ? Locations.getCitiesByCountry(userInfo.country) : [],
+    [userInfo.country]
   );
+
+  console.log(cities);
 
   const onSelectCountry = ({ currentTarget }) => {
     setUserinfo({
-      ...userinfo,
+      ...userInfo,
       country: currentTarget.value,
     });
+    console.log(currentTarget.value);
   };
 
   const onSelectCity = ({ currentTarget }) => {
     setUserinfo({
-      ...userinfo,
+      ...userInfo,
       city: currentTarget.value,
     });
   };
@@ -92,18 +91,17 @@ const EditProfile = () => {
   return (
     <Form className="edit-form" onSubmit={onSubmit}>
       <h1> Edit Profile</h1>
-
+      <CountryDropdown></CountryDropdown>
       <Form.Group as={Row} controlId="Email">
         <Form.Label column sm="3">
           Email
         </Form.Label>
         <Col sm="9">
           <Form.Control plaintext readOnly defaultValue={email} />
-          <Form.Control plaintext readOnly defaultValue="load from database " />
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row} controlId="firstname">
+      <Form.Group as={Row} controlId="firstName">
         <Form.Label column sm="3">
           First Name
         </Form.Label>
@@ -112,27 +110,27 @@ const EditProfile = () => {
             placeholder="First name"
             onChange={(e) =>
               setUserinfo({
-                ...userinfo,
-                firstname: e.target.value,
+                ...userInfo,
+                firstName: e.target.value,
               })
             }
-            value={userinfo.firstname}
-          ></Form.Control>       
+            value={userInfo.firstName}
+          ></Form.Control>
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row} controlId="lastname">
+      <Form.Group as={Row} controlId="lastName">
         <Form.Label column sm="3">
           Last Name
         </Form.Label>
         <Col sm="9">
           <Form.Control
             placeholder="Last name"
-            value={userinfo.lastname}
+            value={userInfo.lastName}
             onChange={(e) =>
               setUserinfo({
-                ...userinfo,
-                lastname: e.target.value,
+                ...userInfo,
+                lastName: e.target.value,
               })
             }
           ></Form.Control>
@@ -141,16 +139,16 @@ const EditProfile = () => {
 
       <Form.Group as={Row} controlId="birthday">
         <Form.Label column sm="3">
-          Birthday
+          birthday
         </Form.Label>
         <Col sm="9">
           <Form.Control
             as="input"
             type="date"
-            value={userinfo.birthday}
+            value={userInfo.birthday}
             onChange={(e) =>
               setUserinfo({
-                ...userinfo,
+                ...userInfo,
                 birthday: e.target.value,
               })
             }
@@ -168,7 +166,7 @@ const EditProfile = () => {
               <option
                 key={countryObj.id}
                 value={countryObj.id}
-                selected={countryObj.id === +userinfo.country}
+                selected={countryObj.id === +userInfo.country}
               >
                 {countryObj.name}
               </option>
@@ -187,7 +185,7 @@ const EditProfile = () => {
               <option
                 key={cityObj.id}
                 value={cityObj.id}
-                selected={cityObj.id === +userinfo.city}
+                selected={cityObj.id === +userInfo.city}
               >
                 {cityObj.name}
               </option>
@@ -204,12 +202,13 @@ const EditProfile = () => {
           <Form.Control
             as="input"
             placeholder="Address"
-            value={userinfo.address}
-            onChange={(e) => setUserinfo({
-              ...userinfo,
-              address: e.target.value,
-            })
-          }
+            value={userInfo.address}
+            onChange={(e) =>
+              setUserinfo({
+                ...userInfo,
+                address: e.target.value,
+              })
+            }
           ></Form.Control>
         </Col>
       </Form.Group>

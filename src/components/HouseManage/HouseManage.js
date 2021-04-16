@@ -6,7 +6,7 @@ import {
 } from "react-notifications";
 import { Link } from "react-router-dom";
 import "./HouseManage.css";
-import HouseService from "../../helper/HouseService";
+import HouseService from "../../services/HouseService";
 
 function HouseManage() {
   const [loading, setLoading] = useState(false);

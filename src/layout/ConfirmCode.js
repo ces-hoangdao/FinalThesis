@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import AuthService from "../helper/AuthService";
+import AuthService from "../services/AuthService";
 import "./ConfirmCode.css";
 
 const ConfirmCode = () => {

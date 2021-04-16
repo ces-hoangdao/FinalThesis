@@ -15,4 +15,16 @@ const ROUTE = {
     HOUSEDETAIL_PATH : `${API_URL}/houses/detail?`
 }
 
-export {API_URL, ROUTE};
+const AUTH_ROUTE = {
+    LOGIN: `${API_URL}/login`,
+    REGISTER : `${API_URL}/register`,
+    LOGOUT : `${API_URL}/log-out`,
+    CHANGE_PASSWORD : `${API_URL}/`,
+}
+
+const USER_ROUTE = {
+    GET_USER : `${API_URL}/userDetail`,
+    EDIT_INFOR : `${API_URL}/editUser`,
+}
+
+export {API_URL, ROUTE, AUTH_ROUTE, USER_ROUTE};

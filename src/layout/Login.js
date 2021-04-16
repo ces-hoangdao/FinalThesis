@@ -6,7 +6,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 // import Loader from "../components/Loader";
-import AuthService from "../helper/AuthService";
+import AuthService from "../services/AuthService";
 import "./Login.css";
 import {
   emailRegex,

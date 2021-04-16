@@ -52,10 +52,7 @@ class AuthService extends AxiosService {
       .delete(ROUTE.LOGOUT_PATH, {
         headers: this.token(),
       })
-      .then(() => {
-       
-      });
-
+      .then(() => {});
   };
 
   confirmCode = async (verifycode) => {
