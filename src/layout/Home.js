@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Row, Container, Button, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Loader from "../components/Loader";
 import Banner from "../components/Banner/Banner";
 import HouseService from "../services/HouseService";
 import "./Home.css";
+import CardHome from "../components/PlaceHolder/CardHome";
 
 const Home = () => {
-  const [houses, setHouses] = useState(null);
+  const [houses, setHouses] = useState([]);
   const [loading, setLoading] = useState(false);
   const randomPage = Math.floor(Math.random() * 10);
   const totalHouse = 6;
@@ -32,10 +32,10 @@ const Home = () => {
   return (
     <div>
       <Banner></Banner>
-      <Container>
+      <Container >
         <h1 className="text-header">Feature Properties</h1>
         {loading ? (
-          <Loader></Loader>
+          <CardHome></CardHome>
         ) : (
           <Row>
             {houses &&

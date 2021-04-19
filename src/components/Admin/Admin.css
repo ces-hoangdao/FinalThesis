@@ -1,0 +1,85 @@
+.Icon-statictis {
+  height: 35px;
+  width: 35px;
+}
+.text-card {
+  color: #262b40;
+  font-weight: 600;
+  font-size: 20px;
+  margin-left: 10px;
+}
+.card-body {
+  height: 120px;
+  border-radius: 1em;
+}
+.sidebar {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 100vh !important;
+  z-index: 100;
+  background-color: #262b40;
+}
+.content {
+  background-color: #f5f8fb;
+}
+.content-tab {
+  margin-top: 5%;
+}
+
+.footer-admin {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+.nav-pills .nav-link.active {
+  color: #eaedf2;
+  background-color: #2e3650;
+  
+
+}
+.nav-link {
+  border-radius:5px;
+  font-size: 1.5em;;
+  color: #eaedf2;
+
+}
+.card-title {
+  margin-top: 15px;
+}
+#table-house,#table-user{
+  background-color: white;
+}
+.holder   :nth-last-child(2){
+  padding: 0;
+}
+.holder   :nth-last-child(3){
+  padding: 0;
+}
+.holder   :nth-last-child(4){
+  padding: 0;
+}
+.holder   :nth-last-child(5){
+  padding: 0;
+}
+.holder   :nth-last-child(6){
+  padding: 0;
+}
+.holder   :nth-last-child(8){
+  padding: 0;
+}
+.U :nth-child(1){
+  padding:0;
+}
+.U :nth-child(3){
+  padding:0;
+}
+
+.U :nth-child(4){
+  padding:0;
+}
+
+.U :nth-child(5){
+  padding:0;
+}
+

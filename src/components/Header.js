@@ -3,7 +3,6 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import AuthService from "../services/AuthService";
-
 const Header = () => {
   const isLogin = localStorage.getItem("token");
   const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
@@ -18,7 +17,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="light" variant="light" expand="lg" sticky-top>
+      <Navbar bg="light" variant="light" expand="lg" >
         <Container>
           <Fade left>
             <NavLink to="/">
@@ -55,7 +54,7 @@ const Header = () => {
                       <Link to="/editprofile">Profile</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link to="/housemanage">House Management</Link>
+                      <Link to="/hostmanage">Host Management</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
                       <Link to="/bookingmanage">Booking Management</Link>
@@ -66,19 +65,6 @@ const Header = () => {
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={() => logout()}>
                       Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                )}
-                {isLogin && isAdmin && (
-                  <NavDropdown title="Admin" id="username">
-                    <NavDropdown.Item>
-                      <Link to="#">User Management</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link to="#">Post Management</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link to="#">Home Management</Link>
                     </NavDropdown.Item>
                   </NavDropdown>
                 )}

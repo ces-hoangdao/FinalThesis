@@ -31,8 +31,8 @@ class About extends Component {
                 </article>
                 
               </div>
-              <div class="col-6 offset-sm-1 order-1 order-md-2 ">
-                    <img width="100%" class="my-3" src={caurong} alt=""></img>
+              <div className="col-6 offset-sm-1 order-1 order-md-2 ">
+                    <img width="100%" className="my-3" src={caurong} alt=""></img>
                 </div>
             </div>
           </div>

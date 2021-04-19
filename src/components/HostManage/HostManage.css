@@ -1,0 +1,80 @@
+.btn-housemanage {
+  margin-left: 30px;
+}
+.host-manager {
+  margin: 50px 50px 50px;
+}
+.house-manager{
+  margin: 50px 0px 50px;
+}
+
+.tr-house {
+  height: 90px;
+}
+.thead th {
+  border-top: none;
+}
+.tbody th {
+  align-content: center;
+}
+.Name {
+  text-align: center;
+}
+.Name-content {
+  width: 25%;
+  font-weight: 600;
+}
+.Address {
+  width: 25%;
+}
+.Address-content {
+  width: 25%;
+  font-weight: 400;
+}
+
+.filter-status {
+  width: 10%;
+  margin-bottom: 12px;
+  margin-left: 14px;
+}
+.text-center {
+  text-align: center;
+}
+
+.Icon {
+  width: 84px;
+  height: 60px;
+}
+.Tabs {
+  margin-top: 2em;
+}
+.status-house {
+  text-transform: capitalize;
+  color: #fb9236;
+}
+.noresult {
+  font-size: 30px;
+  text-align: center;
+}
+.text500 {
+  font-weight: 500;
+}
+
+.House-holder :nth-child(1) {
+  padding: 0;
+}
+.House-holder :nth-child(3) {
+  padding: 0;
+}
+.House-holder :nth-child(4) {
+  padding: 0;
+}
+.House-holder :nth-child(5) {
+  padding: 0;
+}
+.House-holder :nth-child(6) {
+  padding: 0;
+}
+.House-holder :nth-child(7) {
+  padding: 0;
+}

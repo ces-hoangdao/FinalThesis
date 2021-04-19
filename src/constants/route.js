@@ -8,7 +8,7 @@ const ROUTE = {
     EDITPROFILE_PATH : `${API_URL}/editUser`,
     SEARCH_PATH : `${API_URL}/houses/filter`,
     HOUSE_DETAIL : `${API_URL}/houses/detail`,
-    HOUSE_MANAGE : `${API_URL}/houses`,
+    HOUSE_MANAGE : `${API_URL}/houses/host`,
     HOUSE_CREATE : `${API_URL}/houses/create`,
     RATING_PATH : `${API_URL}/ratings`,
     BOOKING_PATH : `${API_URL}/bookings`,

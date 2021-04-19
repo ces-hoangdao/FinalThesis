@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer/Footer";
+import Admin from "./components/Admin/Admin";
 import Login from "./layout/Login";
 import Register from "./layout/Register";
 import EditProfile from "./containters/EditProfile/EditProfile";
@@ -13,7 +14,23 @@ import ConfirmCode from "./layout/ConfirmCode";
 import AddHouse from "./containters/AddHouse/AddHouse";
 
 import ListHouse from "./containters/ListHouse/ListHouse";
+
+import AddHouse from "./containters/AddHouse/AddHouse";
+
+import HostManage from "./components/HostManage/HostManage";
+import ConfirmCode from "./layout/ConfirmCode";
+
 function App() {
+  const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
+  if (isAdmin) {
+    return (
+      <div>
+        <Router>
+          <Route path="/admin" component={Admin} />
+        </Router>
+      </div>
+    );
+  }
   return (
     <Router>
       <Header />
@@ -28,11 +45,13 @@ function App() {
         <Route path="/confirmcode" component={ConfirmCode} />
         <Route path="/notfoundpage" component={NotFoundPage} />
         <Route path="/bookinghistory" component={BookingHistory} />
+
+        <Route path="/hostmanage" component={HostManage} />
+
         <Route path="/" component={Home} exact />
       </main>
       <Footer />
     </Router>
   );
 }
-
 export default App;
