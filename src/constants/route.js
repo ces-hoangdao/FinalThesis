@@ -27,4 +27,7 @@ const USER_ROUTE = {
     EDIT_INFOR : `${API_URL}/editUser`,
 }
 
-export {API_URL, ROUTE, AUTH_ROUTE, USER_ROUTE};
+const HOUSE_ROUTE = {
+    CREATE_HOUSE : `${API_URL}/houses/create`,
+}
+export {API_URL, ROUTE, AUTH_ROUTE, USER_ROUTE, HOUSE_ROUTE};

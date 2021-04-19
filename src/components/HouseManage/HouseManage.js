@@ -12,6 +12,7 @@ function HouseManage() {
   const [loading, setLoading] = useState(false);
   const username = localStorage.getItem("username");
   const [houses, setHouses] = useState([]);
+  
   useEffect(() => {
     setLoading(true);
     new HouseService().getListHouseByUsername(username).then((response) => {
@@ -44,7 +45,7 @@ function HouseManage() {
         <Spinner animation="border" role="status"></Spinner>
       ) : (
         <div>
-          <Link to="posthouse">
+          <Link to="AddHouse">
             <Button className="mr">Add House</Button>
           </Link>
 

@@ -1,87 +1,62 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
-import * as Locations from "laika-locations";
-import UserService from "../services/UserService";
+import HouseService from "../../services/HouseService";
 import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
 import { Redirect } from "react-router-dom";
-import MultipleImageUploadComponent from "../layout/ImageUpload/MultipleImageUplad/MultipleImageUploadComponent"
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
 const AddHouse = () => {
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [address, setAddress] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [area, setArea] = useState("");
-  const [maxguest, setMaxGuest] = useState("");
-  const [phone, setPhone] = useState("");
-  const [ac, setAC] = useState(false);
-  const [wifi, setWifi] = useState(false);
-  const [tv, setTV] = useState(false);
-  const [pool, setPool] = useState(false);
-  const [fridge, setFridge] = useState(false);
-  const [bedroom, setBedRoom] = useState("");
+  const [house, setHouse] = useState({
+    title: "",
+    content: "",
+    price: "",
+    size: "",
+    maxGuest: "",
+    phoneContact: "",
+    bedroom: "",
+    country: "",
+    city: "",
+    address: "",
+    airConditioner: false,
+    wifi: false,
+    tivi: false,
+    fridge: false,
+    swimPool: false,
+  });
+
   const isLogin = localStorage.getItem("token");
 
-  //get country and city
-  const { countries } = Locations.getCountries();
-
-  const cities = useMemo(
-    () =>
-      country ? Locations.getCitiesByCountry(country) : [],
-    [country]
-  );
-
-  const onSelectCountry = ({ currentTarget }) => {
-    console.log(currentTarget.value);
-    setCountry(currentTarget.value);
-  };
-
-  const onSelectCity = ({ currentTarget }) => {
-    console.log(currentTarget.value);
-    setCity(currentTarget.value);
-  };
   const onSubmit = (e) => {
     e.preventDefault();
-
-    new UserService()
-      .AddHouse(
-        address,
-        ac,
-        bedroom,
-        description,
-        Locations.getCountryById(country).name,
-        fridge,
-        maxguest,
-        phone,
-        price,
-        Locations.getCityNameById(city),
-        area,
-        pool,
-        title,
-        wifi,
-        tv
-      )
-      .then(
-        () => {
-          NotificationManager.success("Post House success");
-          window.location.replace("/");
-        },
-        (error) => {
-          NotificationManager.error("Have Something wrong");
-          console.log(error);
+    new HouseService()
+      .addHouse(house)
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+        } else {
+          NotificationManager.error(response.message);
         }
-      );
+      })
+      .catch((error) => {
+        NotificationManager.error('Something went wrong!');
+      });
+  };
+
+  const selectCountry = (val) => {
+    setHouse({ ...house, country: val });
+  };
+
+  const selectRegion = (val) => {
+    setHouse({ ...house, city: val });
   };
 
   if (isLogin == null) {
     return <Redirect to="/login"></Redirect>;
   }
-  
+
   return (
     <Container>
       <h1>Add New House</h1>
@@ -93,7 +68,11 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  title: e.target.value
+                })}
             ></Form.Control>
           </Col>
         </Form.Group>
@@ -107,7 +86,6 @@ const AddHouse = () => {
           <Col>
             <Form.File>
               <Form.File.Label>Images </Form.File.Label>
-              <Form.File.Input />
             </Form.File>
           </Col>
         </Form.Group>
@@ -120,7 +98,11 @@ const AddHouse = () => {
             <Form.Control
               required
               placeholder="price for a day"
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  price: e.target.value
+                })}
             ></Form.Control>
           </Col>
           <Form.Label column sm="2">
@@ -129,7 +111,11 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
-              onChange={(e) => setArea(e.target.value)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  size: e.target.value
+                })}
               placeholder="m &sup2;"
             ></Form.Control>
           </Col>
@@ -141,7 +127,11 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  phoneContact: e.target.value
+                })}
               placeholder="Phone contact"
             ></Form.Control>
           </Col>
@@ -151,7 +141,11 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
-              onChange={(e) => setMaxGuest(e.target.value)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  maxGuest: e.target.value
+                })}
               placeholder="Max Guest available"
             ></Form.Control>
           </Col>
@@ -165,27 +159,47 @@ const AddHouse = () => {
               controlId="AC"
               type="checkbox"
               label="AC"
-              onChange={(e) => setAC(e.target.checked)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  ac: e.target.checked
+                })}
             />
             <Form.Check
               type="checkbox"
               label="Wifi"
-              onChange={(e) => setWifi(e.target.checked)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  wifi: e.target.checked
+                })}
             />
             <Form.Check
               type="checkbox"
               label="TV"
-              onChange={(e) => setTV(e.target.checked)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  tivi: e.target.checked
+                })}
             />
             <Form.Check
               type="checkbox"
               label="Fridge"
-              onChange={(e) => setFridge(e.target.checked)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  fridge: e.target.checked
+                })}
             />
             <Form.Check
               type="checkbox"
               label="Swimming pool"
-              onChange={(e) => setPool(e.target.checked)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  pool: e.target.checked
+                })}
             />
           </Col>
           <Form.Label column sm="2">
@@ -194,7 +208,11 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
-              onChange={(e) => setBedRoom(e.target.value)}
+              onChange={(e) =>
+                setHouse({
+                  ...house,
+                  bedroom: e.target.value
+                })}
               placeholder="How many bedroom?"
             ></Form.Control>
           </Col>
@@ -205,28 +223,26 @@ const AddHouse = () => {
             Country
           </Form.Label>
           <Col sm="4">
-            <Form.Control as="select" name="country" onChange={onSelectCountry}>
-              <option value=""> Select country </option>
-              {countries.map((country) => (
-                <option key={country.id} value={country.id}>
-                  {country.name}
-                </option>
-              ))}
-            </Form.Control>
+            <CountryDropdown
+              className="form-control"
+              defaultOptionLabel="Select a country"
+              value={house.country}
+              onChange={(val) => selectCountry(val)}
+            ></CountryDropdown>
           </Col>
 
           <Form.Label column sm="2">
             City
           </Form.Label>
           <Col sm="4">
-            <Form.Control as="select" onChange={onSelectCity}>
-              <option value=""> Select city </option>
-              {cities.map((city) => (
-                <option key={city.id} value={city.id}>
-                  {city.name}
-                </option>
-              ))}
-            </Form.Control>
+            <RegionDropdown
+              className="form-control"
+              blankOptionLabel="No country is selected"
+              defaultOptionLabel="Select a city"
+              country={house.country}
+              value={house.city}
+              onChange={(val) => selectRegion(val)}
+            ></RegionDropdown>
           </Col>
         </Form.Group>
 
@@ -234,7 +250,11 @@ const AddHouse = () => {
           <Form.Label>Address</Form.Label>
           <Form.Control
             required
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) =>
+              setHouse({
+                ...house,
+                address: e.target.value
+              })}
             placeholder="exact address"
           ></Form.Control>
         </Form.Group>
@@ -245,11 +265,14 @@ const AddHouse = () => {
             required
             as="textarea"
             rows={5}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) =>
+              setHouse({
+                ...house,
+                content: e.target.value
+              })}
             placeholder="Full Description"
           ></Form.Control>
         </Form.Group>
-
         <Button
           variant="outline-secondary"
           size="lg"
@@ -260,7 +283,6 @@ const AddHouse = () => {
         />
       </Form>
       <NotificationContainer></NotificationContainer>
-      <MultipleImageUploadComponent />
     </Container>
   );
 };

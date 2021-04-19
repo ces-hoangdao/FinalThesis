@@ -4,16 +4,15 @@ import Header from "./components/Header";
 import Footer from "./components/Footer/Footer";
 import Login from "./layout/Login";
 import Register from "./layout/Register";
-import EditProfile from "./layout/EditProfile";
+import EditProfile from "./containters/EditProfile/EditProfile";
 import ListHouse from "./layout/ListHouse";
 import Home from "./layout/Home";
 import About from "./layout/About";
 import HouseDetail from "./components/HouseDetails/HouseDetail";
 import HouseManage from "./components/HouseManage/HouseManage";
 import ConfirmCode from "./layout/ConfirmCode";
-import NotFoundPage from "./layout/NotFoundPage"
 
-import PostHouse from "./layout/PostHouse";
+import AddHouse from "./containters/AddHouse/AddHouse";
 import EditHouse from "./layout/EditHouse";
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/about" component={About} />
           <Route path="/listhouse" component={ListHouse} />
-          <Route path="/posthouse" component={PostHouse} />
+          <Route path="/AddHouse" component={AddHouse} />
           <Route path="/housemanage" component={HouseManage} />
           <Route path="/edithouse/:id" component={EditHouse} />    
           <Route path="/housedetail/:id" component={HouseDetail} />

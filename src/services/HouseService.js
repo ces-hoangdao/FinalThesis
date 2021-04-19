@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../constants/route";
 import AxiosService from "./AxiosService";
-import { ROUTE } from "../constants/route";
+import { ROUTE, HOUSE_ROUTE } from "../constants/route";
 import isValidData from "../helper/helper";
 import queryString from "query-string";
 class HouseService extends AxiosService {
@@ -50,6 +50,27 @@ class HouseService extends AxiosService {
     const response = await axios
       .delete(API_URL + `/houses/${houseid}`, { headers: this.token() })
       .then(() => {});
+  };
+
+  addHouse = async (house) => {
+    try {
+      const response = await axios.post(
+        `${HOUSE_ROUTE.CREATE_HOUSE}`,
+        { ...house },
+        { headers: this.token() }
+      );
+      // Validate response data
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error.response);
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: 'Something went wrong! service' };
   };
 
 }

@@ -13,8 +13,6 @@ import queryString from "query-string";
 
 const EditHouse = () => {
   const [loading, setLoading] = useState(false);
-  const [country, setCountry] = useState({});
-  const [city, setCity] = useState("");
 
   const isLogin = localStorage.getItem("token");
 

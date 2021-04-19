@@ -1,20 +1,16 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
-import * as Locations from "laika-locations";
 import "./EditProfile.css";
-import UserService from "../services/UserService";
+import UserService from "../../services/UserService";
 import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
-import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { ROUTE } from "../constants/route";
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
 const EditProfile = () => {
-  const email = localStorage.getItem("email");
-  const [userInfo, setUserinfo] = useState({
+  const [user, setUser] = useState({
     id: "",
     firstName: "",
     lastName: "",
@@ -24,74 +20,59 @@ const EditProfile = () => {
     address: "",
   });
 
+  const email = localStorage.getItem("email");
   const isLogin = localStorage.getItem("token");
 
   const onSubmit = (e) => {
     e.preventDefault();
     new UserService()
-      .editprofile(
-        userInfo.id,
-        userInfo.firstName,
-        userInfo.lastName,
-        userInfo.birthday,
-        Locations.getCountryById(userInfo.country).name,
-        Locations.getCityNameById(userInfo.city),
-        userInfo.address
-      )
-      .then
-      //success
-      ();
+      .editprofile(user)
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+          setUser({ ...response.data })
+        } else {
+          NotificationManager.error(response.message);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error('Something went wrong!');
+      });
   };
-  
+
   //fetch data from database
   useEffect(() => {
-    new UserService().getCurrentUser().then((data) => {
-      if (data !== null) {
-        setUserinfo({
-          ...userInfo,
-          ...data,
-          country: countries.find((c) => c.name === data.country).id,
-          city: Locations.getCitiesByParam(data.city)[0].id,
-        });
-      }
-    });
+    new UserService()
+      .getCurrentUser()
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+          setUser({ ...response.data })
+        } else {
+          NotificationManager.error(response.message);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error('Something went wrong!');
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //get country and city
-  const { countries } = Locations.getCountries();
-
-  console.log(countries.find((c) => c.name === 'Vietnam').id);
-
-  const cities = useMemo(
-    () =>
-      userInfo.country ? Locations.getCitiesByCountry(userInfo.country) : [],
-    [userInfo.country]
-  );
-
-  console.log(cities);
-
-  const onSelectCountry = ({ currentTarget }) => {
-    setUserinfo({
-      ...userInfo,
-      country: currentTarget.value,
-    });
-    console.log(currentTarget.value);
+  const selectCountry = (val) => {
+    setUser({ ...user, country: val });
   };
 
-  const onSelectCity = ({ currentTarget }) => {
-    setUserinfo({
-      ...userInfo,
-      city: currentTarget.value,
-    });
+  const selectRegion = (val) => {
+    setUser({ ...user, city: val });
   };
 
   if (isLogin == null) {
     return <Redirect to="/login"></Redirect>;
   }
+
   return (
     <Form className="edit-form" onSubmit={onSubmit}>
       <h1> Edit Profile</h1>
-      <CountryDropdown></CountryDropdown>
       <Form.Group as={Row} controlId="Email">
         <Form.Label column sm="3">
           Email
@@ -109,12 +90,12 @@ const EditProfile = () => {
           <Form.Control
             placeholder="First name"
             onChange={(e) =>
-              setUserinfo({
-                ...userInfo,
+              setUser({
+                ...user,
                 firstName: e.target.value,
               })
             }
-            value={userInfo.firstName}
+            value={user.firstName}
           ></Form.Control>
         </Col>
       </Form.Group>
@@ -126,10 +107,10 @@ const EditProfile = () => {
         <Col sm="9">
           <Form.Control
             placeholder="Last name"
-            value={userInfo.lastName}
+            value={user.lastName}
             onChange={(e) =>
-              setUserinfo({
-                ...userInfo,
+              setUser({
+                ...user,
                 lastName: e.target.value,
               })
             }
@@ -145,10 +126,10 @@ const EditProfile = () => {
           <Form.Control
             as="input"
             type="date"
-            value={userInfo.birthday}
+            value={user.birthday}
             onChange={(e) =>
-              setUserinfo({
-                ...userInfo,
+              setUser({
+                ...user,
                 birthday: e.target.value,
               })
             }
@@ -161,17 +142,12 @@ const EditProfile = () => {
           Country
         </Form.Label>
         <Col sm="9">
-          <Form.Control as="select" name="country" onChange={onSelectCountry}>
-            {countries.map((countryObj) => (
-              <option
-                key={countryObj.id}
-                value={countryObj.id}
-                selected={countryObj.id === +userInfo.country}
-              >
-                {countryObj.name}
-              </option>
-            ))}
-          </Form.Control>
+          <CountryDropdown
+            className="form-control"
+            defaultOptionLabel="Select a country"
+            value={user.country}
+            onChange={(val) => selectCountry(val)}
+          ></CountryDropdown>
         </Col>
       </Form.Group>
 
@@ -180,17 +156,14 @@ const EditProfile = () => {
           City
         </Form.Label>
         <Col sm="9">
-          <Form.Control as="select" onChange={onSelectCity}>
-            {cities.map((cityObj) => (
-              <option
-                key={cityObj.id}
-                value={cityObj.id}
-                selected={cityObj.id === +userInfo.city}
-              >
-                {cityObj.name}
-              </option>
-            ))}
-          </Form.Control>
+          <RegionDropdown
+            className="form-control"
+            blankOptionLabel="No country is selected"
+            defaultOptionLabel="Select a city"
+            country={user.country}
+            value={user.city}
+            onChange={(val) => selectRegion(val)}
+          ></RegionDropdown>
         </Col>
       </Form.Group>
 
@@ -202,10 +175,10 @@ const EditProfile = () => {
           <Form.Control
             as="input"
             placeholder="Address"
-            value={userInfo.address}
+            value={user.address}
             onChange={(e) =>
-              setUserinfo({
-                ...userInfo,
+              setUser({
+                ...user,
                 address: e.target.value,
               })
             }
