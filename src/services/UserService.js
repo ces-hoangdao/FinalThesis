@@ -1,8 +1,8 @@
 import axios from "axios";
-import { USER_ROUTE, API_URL } from "../constants/route";
+import { USER_ROUTE, ROUTE, API_URL } from "../constants/route";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
-import {isValidData} from "../helper/helper";
+import { isValidData } from "../helper/helper";
 
 class UserService extends AxiosService {
   getCurrentUser = async () => {
@@ -59,8 +59,31 @@ class UserService extends AxiosService {
       }
     }
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
-
-  }
+  };
+  getStatisticOwner = async (accountId) => {
+    try {
+      const requestUrl = API_URL + `/statisticOwner/${accountId}`;
+      const response = await axios.get(requestUrl, { headers: this.token() });
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+      return null;
+    } catch (err) {
+      return null;
+    }
+  };
+  getAllUsers = async () => {
+    try {
+      const requestUrl = ROUTE.USER_PATH;
+      const response = await axios.get(requestUrl, { headers: this.token() });
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+      return null;
+    } catch (err) {
+      return null;
+    }
+  };
 }
 
 export default UserService;

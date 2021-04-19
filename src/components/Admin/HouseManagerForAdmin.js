@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Table, Form } from "react-bootstrap";
 import House from "../HostManage/House";
+<<<<<<< HEAD
+=======
+import AdminService from "../../services/AdminService";
+>>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
 import { NotificationManager } from "react-notifications";
 import TextHolder from "../PlaceHolder/TextHolder";
 import ImageCard from "../PlaceHolder/ImageCard";
@@ -17,6 +21,7 @@ function HostManager() {
   });
   useEffect(() => {
     setLoading(true);
+<<<<<<< HEAD
     if (paramsString.status === "blocked") {
       setParams({
         size: 20,
@@ -25,6 +30,9 @@ function HostManager() {
       });
     }
     new HouseService().getHouseForHost(paramsString).then((response) => {
+=======
+    new AdminService().getAllHouse(paramsString).then((response) => {
+>>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
       if (response) {
         setHouses(response.data.listObject);
         setLoading(false);
@@ -110,11 +118,15 @@ function HostManager() {
         {houses.map((houses, index) => {
           return (
             <tbody key={index}>
+<<<<<<< HEAD
               <House
                 houses={houses}
                 index={index}
                 blockHouse={blockHouse}
               ></House>
+=======
+              <House houses={houses} index={index} blockHouse={blockHouse}></House>
+>>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
             </tbody>
           );
         })}

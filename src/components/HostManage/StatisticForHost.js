@@ -33,7 +33,7 @@ function StatisticForHost(props) {
   return (
     <Container>
       <h3>Hosting progress</h3>
-     
+
       {loading ? (
         <Statistic></Statistic>
       ) : (
@@ -95,7 +95,7 @@ function StatisticForHost(props) {
         </CardDeck>
       )}
       <h3>Recent reservations</h3>
-<CardBooking></CardBooking>
+      <CardBooking></CardBooking>
       {listbookings.map((booking) => {
         const checkIn = new Date(booking.dateCheckIn);
         const checkOut = new Date(booking.dateCheckOut);
@@ -107,7 +107,10 @@ function StatisticForHost(props) {
               <Card.Text>Customer Name: {booking.customerName}</Card.Text>
               <Card.Text>Total: {booking.bill} đ</Card.Text>
             </Card.Body>
-            <Card.Footer>CheckIn Day : {checkIn.toLocaleDateString()} - CheckOut Day : {checkOut.toLocaleDateString()}</Card.Footer>
+            <Card.Footer>
+              CheckIn Day : {checkIn.toLocaleDateString()} - CheckOut Day :{" "}
+              {checkOut.toLocaleDateString()}
+            </Card.Footer>
           </Card>
         );
       })}
