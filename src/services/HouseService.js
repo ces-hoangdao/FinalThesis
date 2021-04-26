@@ -2,8 +2,10 @@ import axios from "axios";
 import { API_URL } from "../constants/route";
 import AxiosService from "./AxiosService";
 import { ROUTE, HOUSE_ROUTE } from "../constants/route";
+import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import isValidData from "../helper/helper";
 import queryString from "query-string";
+
 class HouseService extends AxiosService {
   getHouseDetail = async (houseId) => {
     try {
@@ -15,7 +17,7 @@ class HouseService extends AxiosService {
       }
       return null;
     } catch (err) {
-      return null;
+      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
     }
   };
 
@@ -29,7 +31,7 @@ class HouseService extends AxiosService {
       }
       return null;
     } catch (error) {
-      return null;
+      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
     }
   };
 
@@ -42,7 +44,7 @@ class HouseService extends AxiosService {
       }
       return null;
     } catch (err) {
-      return null;
+      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
     }
   };
 
@@ -64,15 +66,13 @@ class HouseService extends AxiosService {
         return response.data;
       }
     } catch (error) {
-      console.log(error.response);
       // Check if error is catched by BE
       if (isValidData(error.response.data.message)) {
         return error.response.data;
       }
     }
-    return { status: 500, message: 'Something went wrong! service' };
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
-
 }
 
 export default HouseService;

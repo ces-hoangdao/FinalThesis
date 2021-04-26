@@ -7,6 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import "./HouseManage.css";
 import HouseService from "../../services/HouseService";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 
 function HouseManage() {
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ function HouseManage() {
         setHouses(filteredHouse);
       },
       (error) => {
-        NotificationManager.error("Have Something Wrong");
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
       }
     );
   };

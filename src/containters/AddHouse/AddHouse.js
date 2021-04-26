@@ -5,6 +5,7 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 import { Redirect } from "react-router-dom";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
@@ -41,7 +42,7 @@ const AddHouse = () => {
         }
       })
       .catch((error) => {
-        NotificationManager.error('Something went wrong!');
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
       });
   };
 

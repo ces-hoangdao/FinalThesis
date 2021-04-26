@@ -7,6 +7,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 import { Redirect } from "react-router-dom";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
 const EditProfile = () => {
@@ -36,7 +37,7 @@ const EditProfile = () => {
         }
       })
       .catch((error) => {
-        NotificationManager.error('Something went wrong!');
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
       });
   };
 
@@ -53,7 +54,7 @@ const EditProfile = () => {
         }
       })
       .catch((error) => {
-        NotificationManager.error('Something went wrong!');
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

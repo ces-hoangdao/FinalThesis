@@ -50,7 +50,6 @@ class Register extends Component {
           window.location.reload();
         })
         .catch(function (error) {
-          console.log(error);
           NotificationManager.error(userConstants.REGISTER_FAILURE);
         });
     } else {

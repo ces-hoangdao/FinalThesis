@@ -1,5 +1,6 @@
 import axios from "axios";
 import { USER_ROUTE } from "../constants/route";
+import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
 import isValidData from "../helper/helper";
 
@@ -20,7 +21,7 @@ class UserService extends AxiosService {
         return error.response.data;
       }
     }
-    return { status: 500, message: "Something went wrong!" };
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
   editprofile = async (user) => {
@@ -41,7 +42,7 @@ class UserService extends AxiosService {
         return error.response.data;
       }
     }
-    return { status: 500, message: "Something went wrong!" };
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 }
 
