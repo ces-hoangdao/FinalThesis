@@ -1,13 +1,12 @@
-.form-confirm{
-    margin:auto;
-    width: 500px;
-   
+.form-confirm {
+  margin: auto;
+  width: 500px;
 }
-.form-confirm{
-    font-size: 2rem;
-    margin-top: 15px;
+.form-confirm {
+  font-size: 2rem;
+  margin-top: 15px;
 }
-.btn-confirm{
-    width:100%;
-    border-radius: 12px
+.btn-confirm {
+  width: 100%;
+  border-radius: 12px;
 }

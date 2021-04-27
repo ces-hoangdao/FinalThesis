@@ -3,7 +3,7 @@ import { Row, Container, Button, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Banner from "../components/Banner/Banner";
-import HouseService from "../helper/HouseService";
+import HouseService from "../services/HouseService";
 import "./Home.css";
 
 const Home = () => {

@@ -1,13 +1,10 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { ROUTE } from "../constants/route";
+import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
 
 class AuthService extends AxiosService {
-  constructor() {
-    super();
-  }
-  
   //register Api
   register = async (email, username, password) => {
     return axios
@@ -34,11 +31,12 @@ class AuthService extends AxiosService {
 
       .then((response) => {
         if (response.status === 200) {
-          localStorage.setItem("token", response.data);
+          localStorage.setItem("token", response.data.data);
           const userInfo = jwt_decode(localStorage.getItem("token"));
           const isAdmin = userInfo.user.role === "admin";
           localStorage.setItem("username", userInfo.user.username);
           localStorage.setItem("isAdmin", isAdmin);
+          localStorage.setItem("email", userInfo.user.email);
         }
         return response.data;
       })
@@ -55,10 +53,7 @@ class AuthService extends AxiosService {
       .delete(ROUTE.LOGOUT_PATH, {
         headers: this.token(),
       })
-      .then(() => {
-       
-      });
-
+      .then(() => {});
   };
 
   confirmCode = async (verifycode) => {

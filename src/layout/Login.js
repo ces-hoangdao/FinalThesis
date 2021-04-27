@@ -6,7 +6,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 // import Loader from "../components/Loader";
-import AuthService from "../helper/AuthService";
+import AuthService from "../services/AuthService";
 import "./Login.css";
 import {
   emailRegex,
@@ -32,6 +32,7 @@ class Login extends Component {
   }
 
   handleSubmit = (e) => {
+  
     e.preventDefault();
     if (formValid(this.state)) {
       const email = this.state.email;
@@ -41,12 +42,12 @@ class Login extends Component {
           NotificationManager.success(userConstants.LOGIN_SUCCESS);
           window.location.replace("/");
         },
-        (error) => {
+        (error) => {     
           NotificationManager.error(userConstants.LOGIN_FAILURE);
           window.location.replace("/confirmcode");
         }
       );
-    }
+    };
   };
 
   handleChange = (e) => {
@@ -76,7 +77,6 @@ class Login extends Component {
     return (
       <div className="container">
         <Form className="form-login" onSubmit={this.handleSubmit} noValidate>
-          {/* <Loader loader={this.state.loader}></Loader> */}
           <h1>Login </h1>
           <Form.Group controlId="Email">
             <Form.Label>Email address</Form.Label>

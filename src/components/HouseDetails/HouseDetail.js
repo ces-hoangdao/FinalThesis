@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Container, Button, Carousel } from "react-bootstrap";
-import HouseService from "../../helper/HouseService";
+import HouseService from "../../services/HouseService";
 import "./HouseDetail.css";
 import Location from "../../assets/location.svg";
 import Wifi from "../../assets/wifi-line.svg";
@@ -30,7 +30,7 @@ const HouseDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    new HouseService().getDetailHouse(idHouse).then((house) => {
+    new HouseService().getHouseDetail(idHouse).then((house) => {
       if (house) {
         setHouseDetail(house);
         setImages(house.images);

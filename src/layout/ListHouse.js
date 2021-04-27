@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ListHouse.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Card, Col, Form, Button } from "react-bootstrap";
-import HouseService from "../helper/HouseService";
+import HouseService from "../services/HouseService";
 import Location from "../assets/location.svg";
 import Price from "../assets/price.svg";
 import Square from "../assets/ic-squarmeter@2x.svg";
@@ -14,6 +14,7 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import { RegionDropdown } from "react-country-region-selector";
 
 const DEFAULT_FILTER = {
   size: 20,
@@ -38,6 +39,7 @@ const HomeList = () => {
   const [filter, setFilter] = useState(DEFAULT_FILTER);
   const [search, setSearch] = useState(DEFAULT_FILTER);
   let history = useHistory();
+
   useEffect(() => {
     setLoading(true);
     new HouseService().getHouses(filter).then((response) => {
@@ -50,9 +52,12 @@ const HomeList = () => {
         history.push("/notfoundpage");
       }
     });
-   
   }, [filter]);
   //Effect chay lai moi lam filter thay doi
+
+  const selectRegion = (val) => {
+    setSearch({ ...search, city: val });
+  };
 
   function handlePageChange(newPage) {
     setFilter({
@@ -70,13 +75,13 @@ const HomeList = () => {
             <Form.Group>
               <Form.Label as="legend">City</Form.Label>
               <Col>
-                <Form.Control
-                  type="text"
-                  onChange={(e) => {
-                    setSearch({ ...search, city: e.target.value });
-                  }}
-                  placeholder="City"
-                />
+                <RegionDropdown
+                  className="form-control"
+                  defaultOptionLabel="Select city"
+                  country={'Vietnam'}
+                  value={search.city}
+                  onChange={(val) => selectRegion(val)}
+                ></RegionDropdown>
               </Col>
             </Form.Group>
 

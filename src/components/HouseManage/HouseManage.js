@@ -6,12 +6,14 @@ import {
 } from "react-notifications";
 import { Link } from "react-router-dom";
 import "./HouseManage.css";
-import HouseService from "../../helper/HouseService";
+import HouseService from "../../services/HouseService";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 
 function HouseManage() {
   const [loading, setLoading] = useState(false);
   const username = localStorage.getItem("username");
   const [houses, setHouses] = useState([]);
+  
   useEffect(() => {
     setLoading(true);
     new HouseService().getListHouseByUsername(username).then((response) => {
@@ -33,7 +35,7 @@ function HouseManage() {
         setHouses(filteredHouse);
       },
       (error) => {
-        NotificationManager.error("Have Something Wrong");
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
       }
     );
   };
@@ -44,7 +46,7 @@ function HouseManage() {
         <Spinner animation="border" role="status"></Spinner>
       ) : (
         <div>
-          <Link to="posthouse">
+          <Link to="AddHouse">
             <Button className="mr">Add House</Button>
           </Link>
 

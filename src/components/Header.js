@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
-import AuthService from "../helper/AuthService";
+import AuthService from "../services/AuthService";
 
 const Header = () => {
   const isLogin = localStorage.getItem("token");

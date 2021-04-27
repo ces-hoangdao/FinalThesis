@@ -25,7 +25,72 @@
   align-items: center;
 }
 .text-title{
-  
+  margin-left: 150px;
+  margin-bottom: 26px;
+  font-size: 30px;;
+}
+
+.house-info {
+  background-color: #fff;
+  height: 450px;
+}
+.house-detail {
+  background-color: #f6f6f6;
+}
+.house-title {
+  color: #352f51;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  margin-left: 100px;
+  padding-top: 40px;
+  padding-bottom: 10px !important;
+}
+.btn-bookhouse{
+  width: 300px;
+  height: 65px;
+  margin-top: 30px;
+}
+.house-address {
+  padding-top: 0px;
+  margin-left: 100px;
+  color: #352f51;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+.text-content{
+  height:auto;
+}
+
+.text-center {
+    align-items: center;
+}
+
+.img-slide{
+  height: 700px;
+  width: 1280px;
+}
+
+.icon-houseDetail{
+    height: 28px;
+    width: 28px;
+    margin: 15px 20px 20px 45px;
+   
+}
+.text-houseDetail{
+  color: #352F51;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+ 
+}
+.text-center {
+  align-items: center;
+}
+.text-title{
+  margin-left: 150px;
   margin-bottom: 26px;
   font-size: 30px;;
 }
@@ -45,6 +110,11 @@
   margin-left: 100px;
   padding-top: 40px;
   padding-bottom: 10px;
+}
+.btn-bookhouse{
+  width: 300px;
+  height: 65px;
+  margin-top: 30px;
 }
 .btn-bookhouse{
   width: 300px;

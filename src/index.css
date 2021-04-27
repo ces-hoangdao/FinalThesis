@@ -50,7 +50,6 @@ h2 {
 }
 
 .carousel img {
-  
   width:auto;
   height: auto;
   padding: 30px;
@@ -74,4 +73,5 @@ h2 {
 .navbar-brand {
   color: #fff;
   font-size: 22px;
+  font-size:20px;
 }
