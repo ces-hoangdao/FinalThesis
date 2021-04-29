@@ -6,9 +6,6 @@ import queryString from "query-string";
 import _ from "lodash";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 class AdminService extends AxiosService {
-  constructor() {
-    super();
-  }
   getAccounts = async () => {
     try {
       const requestUrl = API_URL + `/accounts?`;

@@ -7,57 +7,42 @@ function Statistic() {
       <Grid.Column>
         <Segment raised>
           <Placeholder>
-            <Placeholder.Header image>
-              <Placeholder.Line />
-              <Placeholder.Line />
-            </Placeholder.Header>
             <Placeholder.Paragraph>
-              <Placeholder.Line length="medium" />
-              <Placeholder.Line length="medium" />
+              <Placeholder.Line />
+              <Placeholder.Line />
             </Placeholder.Paragraph>
+            <Placeholder.Header image>
+              <Placeholder.Line length="long" />
+              <Placeholder.Line length="long" />
+            </Placeholder.Header>
           </Placeholder>
         </Segment>
       </Grid.Column>
       <Grid.Column>
         <Segment raised>
           <Placeholder>
-            <Placeholder.Header image>
-              <Placeholder.Line />
-              <Placeholder.Line />
-            </Placeholder.Header>
             <Placeholder.Paragraph>
-              <Placeholder.Line length="medium" />
-              <Placeholder.Line length="medium" />
+              <Placeholder.Line />
+              <Placeholder.Line />
             </Placeholder.Paragraph>
+            <Placeholder.Header image>
+              <Placeholder.Line length="long" />
+              <Placeholder.Line length="long" />
+            </Placeholder.Header>
           </Placeholder>
         </Segment>
       </Grid.Column>
       <Grid.Column>
         <Segment raised>
           <Placeholder>
-            <Placeholder.Header image>
-              <Placeholder.Line />
-              <Placeholder.Line />
-            </Placeholder.Header>
             <Placeholder.Paragraph>
-              <Placeholder.Line length="medium" />
-              <Placeholder.Line length="medium" />
+              <Placeholder.Line />
+              <Placeholder.Line />
             </Placeholder.Paragraph>
-          </Placeholder>
-        </Segment>
-      </Grid.Column>
-
-      <Grid.Column>
-        <Segment raised>
-          <Placeholder>
             <Placeholder.Header image>
-              <Placeholder.Line />
-              <Placeholder.Line />
+              <Placeholder.Line length="long" />
+              <Placeholder.Line length="long" />
             </Placeholder.Header>
-            <Placeholder.Paragraph>
-              <Placeholder.Line length="medium" />
-              <Placeholder.Line length="short" />
-            </Placeholder.Paragraph>
           </Placeholder>
         </Segment>
       </Grid.Column>
@@ -65,14 +50,29 @@ function Statistic() {
       <Grid.Column>
         <Segment raised>
           <Placeholder>
-            <Placeholder.Header image>
-              <Placeholder.Line />
-              <Placeholder.Line />
-            </Placeholder.Header>
             <Placeholder.Paragraph>
-              <Placeholder.Line length="medium" />
-              <Placeholder.Line length="short" />
+              <Placeholder.Line />
+              <Placeholder.Line />
             </Placeholder.Paragraph>
+            <Placeholder.Header image>
+              <Placeholder.Line length="long" />
+              <Placeholder.Line length="long" />
+            </Placeholder.Header>
+          </Placeholder>
+        </Segment>
+      </Grid.Column>
+
+      <Grid.Column>
+        <Segment raised>
+          <Placeholder>
+            <Placeholder.Paragraph>
+              <Placeholder.Line />
+              <Placeholder.Line />
+            </Placeholder.Paragraph>
+            <Placeholder.Header image>
+              <Placeholder.Line length="long" />
+              <Placeholder.Line length="long" />
+            </Placeholder.Header>
           </Placeholder>
         </Segment>
       </Grid.Column>

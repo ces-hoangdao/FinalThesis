@@ -73,7 +73,7 @@ class HouseService extends AxiosService {
       const paramsString = queryString.stringify(accountId);
       const requestUrl = ROUTE.HOUSE_MANAGE + `?${paramsString}`;
       const response = await axios.get(requestUrl, { headers: this.token() });
-      const house = _.get(response, "data.data");
+      const house = _.get(response, "data");
       if (isValidData(house)) {
         return house;
       }
@@ -108,7 +108,7 @@ class HouseService extends AxiosService {
   // hid or unhide house with id
   hiddenHouse = async (houseid) => {
     try {
-      const response = await axios.put(
+      const response = await axios.get(
         API_URL + `/houses/unlistedHouse/${houseid}`,
         { headers: this.token() }
       );
@@ -142,7 +142,6 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // add new house
   addHouse = async (house) => {
     try {
       const response = await axios.post(

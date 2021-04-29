@@ -9,18 +9,12 @@ import Icon from "../Icon/Icon";
 import "./Admin.css";
 import AdminService from "../../services/AdminService";
 import Statistic from "../PlaceHolder/Statistic";
-<<<<<<< HEAD
 import Chart from "./Chart";
-=======
->>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
 
 function StatisticForAdmin() {
   const [statistics, setStatistics] = useState([]);
   const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
   const [data1, setData1] = useState([]);
-=======
->>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
   useEffect(() => {
     setLoading(true);
     new AdminService().getStatistic().then((response) => {
@@ -111,10 +105,7 @@ function StatisticForAdmin() {
           </Card>
         </CardDeck>
       )}
-<<<<<<< HEAD
       <Chart></Chart>
-=======
->>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
     </div>
   );
 }

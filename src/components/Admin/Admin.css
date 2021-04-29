@@ -31,10 +31,7 @@
   position: fixed;
   left: 0;
   bottom: 0;
-<<<<<<< HEAD
   margin-top: 50px;
-=======
->>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
 }
 .nav-pills .nav-link.active {
   color: #eaedf2;
@@ -87,12 +84,10 @@
   padding:0;
 }
 
-<<<<<<< HEAD
 .chart{
   margin-top: 20px;
 }
 .text-chart{
   margin-bottom: 50px;
 }
-=======
->>>>>>> 978889e ([US30]-admin refactor code, add statistic for admin, manager house and)
+

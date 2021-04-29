@@ -19,12 +19,45 @@ function House(props) {
 
   let button = <></>;
 
-  if(houses.status === "listed"){
-    button = <><Button variant="secondary" onClick={() => hiddenHouse(houses.id)}>Hidden</Button></>;
+  if (houses.block === true) {
+    button = <>House blocked</>;
+  } else if (houses.status === "listed") {
+    button = (
+      <>
+        <Button variant="secondary" onClick={() => hiddenHouse(houses.id)}>
+          Hidden
+        </Button>
+      </>
+    );
   } else if (houses.status === "unlisted") {
-    button = <><Button variant="primary" onClick={() => hiddenHouse(houses.id)}>Show</Button></>;
+    button = (
+      <>
+        <Button variant="primary" onClick={() => hiddenHouse(houses.id)}>
+          Show
+        </Button>
+      </>
+    );
   } else {
     button = <></>;
+  }
+
+  let buttonDeactive = <></>;
+  if (houses.block === true) {
+    buttonDeactive = <></>;
+  } else if (houses.status === "deactived") {
+    buttonDeactive = <></>;
+  } else {
+    buttonDeactive = (
+      <>
+        {" "}
+        <Link to={"/edithouse/" + String(houses.id)}>
+          <Button variant="warning">Edit</Button>
+        </Link>
+        <Button variant="danger" onClick={() => deactiveHouse(houses.id)}>
+          Deactive
+        </Button>
+      </>
+    );
   }
 
   return (
@@ -46,31 +79,19 @@ function House(props) {
       {isAdmin ? (
         <th className="text-center">
           {houses.block === true ? (
-            <Button variant="warning"
-              onClick={() => blockHouse(houses.id)}>
+            <Button variant="warning" onClick={() => blockHouse(houses.id)}>
               UnBlock
             </Button>
           ) : (
-            <Button
-              variant="danger"
-              onClick={() => blockHouse(houses.id)}
-            >
+            <Button variant="danger" onClick={() => blockHouse(houses.id)}>
               Block House
             </Button>
           )}
         </th>
       ) : (
         <>
-          <th className="text-center">
-            {button}
-          </th>
-          <th className="text-center">
-            <Link to={"/edithouse/" + String(houses.id)}>
-              <Button variant="warning">Edit</Button>
-            </Link>
-            <Button variant="danger"
-              onClick={() => deactiveHouse(houses.id)} >Deactive</Button>
-          </th>
+          <th className="text-center">{button}</th>
+          <th className="text-center">{buttonDeactive}</th>
         </>
       )}
     </tr>
