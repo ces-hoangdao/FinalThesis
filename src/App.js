@@ -15,10 +15,8 @@ import AddHouse from "./containters/AddHouse/AddHouse";
 
 import ListHouse from "./containters/ListHouse/ListHouse";
 
-import AddHouse from "./containters/AddHouse/AddHouse";
 
 import HostManage from "./components/HostManage/HostManage";
-import ConfirmCode from "./layout/ConfirmCode";
 
 function App() {
   const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));

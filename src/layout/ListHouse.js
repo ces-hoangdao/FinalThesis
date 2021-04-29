@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useHistory } from "react";
+import React, { useState, useEffect } from "react";
 import "./ListHouse.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Card, Col, Form, Button } from "react-bootstrap";
@@ -7,10 +7,8 @@ import Location from "../assets/location.svg";
 import Price from "../assets/price.svg";
 import Square from "../assets/ic-squarmeter@2x.svg";
 import Pagination from "../components/Pagination";
-import Loader from "../components/Loader";
-import { Link } from "react-router-dom";
 import CardHome from "../components/PlaceHolder/CardHome";
-import { Link, useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Icon from "../components/Icon/Icon";
 import notfound from "../assets/not-found.svg";
 import {

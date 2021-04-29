@@ -1,9 +1,5 @@
 import axios from "axios";
-<<<<<<< HEAD
-import { API_URL, USER_ROUTE } from "../constants/route";
-=======
-import { USER_ROUTE, ROUTE, API_URL } from "../constants/route";
->>>>>>> dbeb381 ([US30]-admin refactor code, add statistic for admin, manager house and)
+import { USER_ROUTE, API_URL } from "../constants/route";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
 import {isValidData} from "../helper/helper";
@@ -47,7 +43,6 @@ class UserService extends AxiosService {
     }
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
-<<<<<<< HEAD
 
   getStatisticOwner = async (accountId) => {
     const requestUrl = `${API_URL}/statisticOwner/${accountId}`;
@@ -64,34 +59,8 @@ class UserService extends AxiosService {
       }
     }
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
-=======
-  getStatisticOwner = async (accountId) => {
-    try {
-      const requestUrl = API_URL + `/statisticOwner/${accountId}`;
-      const response = await axios.get(requestUrl, { headers: this.token() });
-      if (isValidData(response.data)) {
-        return response.data;
-      }
-      return null;
-    } catch (err) {
-      return null;
-    }
-  };
-  getAllUsers = async () => {
-    try {
-      const requestUrl = ROUTE.USER_PATH;
-      const response = await axios.get(requestUrl, { headers: this.token() });
-      if (isValidData(response.data)) {
-        return response.data;
-      }
-      return null;
-    } catch (err) {
-      return null;
-    }
->>>>>>> dbeb381 ([US30]-admin refactor code, add statistic for admin, manager house and)
-  };
+
+  }
 }
-
-
 
 export default UserService;

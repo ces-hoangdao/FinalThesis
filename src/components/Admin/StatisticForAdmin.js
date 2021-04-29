@@ -9,10 +9,12 @@ import Icon from "../Icon/Icon";
 import "./Admin.css";
 import AdminService from "../../services/AdminService";
 import Statistic from "../PlaceHolder/Statistic";
+import Chart from "./Chart";
 
 function StatisticForAdmin() {
   const [statistics, setStatistics] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [data1, setData1] = useState([]);
   useEffect(() => {
     setLoading(true);
     new AdminService().getStatistic().then((response) => {
@@ -103,6 +105,7 @@ function StatisticForAdmin() {
           </Card>
         </CardDeck>
       )}
+      <Chart></Chart>
     </div>
   );
 }

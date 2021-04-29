@@ -5,34 +5,35 @@ import Booking from "../../assets/booking.svg";
 import Average from "../../assets/gold.svg";
 import Rating from "../../assets/rating.svg";
 import Statistic from "../PlaceHolder/Statistic";
+import CardBooking from "../PlaceHolder/CardBooking";
 import UserService from "../../services/UserService";
-import {
-    NotificationManager,
-  } from "react-notifications";
-  import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
-  import Icon from "../Icon/Icon";
-
+import { NotificationManager } from "react-notifications";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
+import Icon from "../Icon/Icon";
 
 function StatisticForHost(props) {
-    const {accountId} = props
-    const [loading, setLoading] = useState(false);
-    const [statistics, setStatistics] = useState([]);
-    useEffect(() => {
-        setLoading(true);
-        new UserService().getStatisticOwner(accountId).then((response) => {
-          if (response) {
-            setStatistics(response.data);
-            NotificationManager.success(response.message);
-            setLoading(false);
-          } else {
-            setLoading(false);
-            NotificationManager.error(DEFAULT_ERROR_MESSAGE);
-          }
-        });
-      }, [accountId]);
+  const { accountId } = props;
+  const [loading, setLoading] = useState(false);
+  const [statistics, setStatistics] = useState([]);
+  const [listbookings, setListbookings] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    new UserService().getStatisticOwner(accountId).then((response) => {
+      if (response) {
+        setStatistics(response.data);
+        setListbookings(response.data.listBooking);
+        NotificationManager.success(response.message);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+      }
+    });
+  }, [accountId]);
   return (
     <Container>
       <h3>Hosting progress</h3>
+     
       {loading ? (
         <Statistic></Statistic>
       ) : (
@@ -94,13 +95,22 @@ function StatisticForHost(props) {
         </CardDeck>
       )}
       <h3>Recent reservations</h3>
-      <Card>
-        <Card.Header>Featured</Card.Header>
-        <Card.Body>
-          <Card.Title>Special title treatment</Card.Title>
-          <Card.Text>No booking(s) found</Card.Text>
-        </Card.Body>
-      </Card>
+<CardBooking></CardBooking>
+      {listbookings.map((booking) => {
+        const checkIn = new Date(booking.dateCheckIn);
+        const checkOut = new Date(booking.dateCheckOut);
+        return (
+          <Card>
+            <Card.Header>{booking.status}</Card.Header>
+            <Card.Body>
+              <Card.Title>{booking.houseName}</Card.Title>
+              <Card.Text>Customer Name: {booking.customerName}</Card.Text>
+              <Card.Text>Total: {booking.bill} đ</Card.Text>
+            </Card.Body>
+            <Card.Footer>CheckIn Day : {checkIn.toLocaleDateString()} - CheckOut Day : {checkOut.toLocaleDateString()}</Card.Footer>
+          </Card>
+        );
+      })}
     </Container>
   );
 }

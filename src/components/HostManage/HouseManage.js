@@ -18,17 +18,21 @@ function HouseManage(props) {
   });
   useEffect(() => {
     setLoading(true);
-    new HouseService().getHouseForHost(paramsString).then((response) => {
-      if (response) {
-        setHouses(response.data.listObject);
-        NotificationManager.success(response.message);
-        setLoading(false);
-      } else {
-        NotificationManager.error("Don't have house to display");
-        setLoading(false);
-        setHouses([]);
-      }
-    });
+    new HouseService()
+      .getHouseForHost(paramsString)
+      .then((response) => {
+        if (response.status < 300) {
+          setHouses(response.data.listObject);
+          NotificationManager.success(response.message);
+          setLoading(false);
+        } else {
+          NotificationManager.error(response.message);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+      });
   }, [paramsString]);
 
   const deactiveHouse = (houseId) => {

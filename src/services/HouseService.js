@@ -127,10 +127,9 @@ class HouseService extends AxiosService {
   // block house (admin)
   blockHouse = async (houseid) => {
     try {
-      const response = await axios.delete(
-        API_URL + `/block/${houseid}`,
-        { headers: this.token() }
-      );
+      const response = await axios.get(API_URL + `/houses/block/${houseid}`, {
+        headers: this.token(),
+      });
       if (isValidData(response.data)) {
         return response.data;
       }

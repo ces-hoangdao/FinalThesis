@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Form } from "react-bootstrap";
 import House from "../HostManage/House";
-import AdminService from "../../services/AdminService";
 import { NotificationManager } from "react-notifications";
 import TextHolder from "../PlaceHolder/TextHolder";
 import ImageCard from "../PlaceHolder/ImageCard";
@@ -18,7 +17,14 @@ function HostManager() {
   });
   useEffect(() => {
     setLoading(true);
-    new AdminService().getAllHouse(paramsString).then((response) => {
+    if (paramsString.status === "blocked") {
+      setParams({
+        size: 20,
+        page: 0,
+        blocked: "true",
+      });
+    }
+    new HouseService().getHouseForHost(paramsString).then((response) => {
       if (response) {
         setHouses(response.data.listObject);
         setLoading(false);
@@ -104,7 +110,11 @@ function HostManager() {
         {houses.map((houses, index) => {
           return (
             <tbody key={index}>
-              <House houses={houses} index={index} blockHouse={blockHouse}></House>
+              <House
+                houses={houses}
+                index={index}
+                blockHouse={blockHouse}
+              ></House>
             </tbody>
           );
         })}

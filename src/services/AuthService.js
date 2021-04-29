@@ -1,7 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { ROUTE } from "../constants/route";
-import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
 
 class AuthService extends AxiosService {
