@@ -1,0 +1,9 @@
+.card-related{
+    border-radius: 0.2rem 0.2rem 0 0;
+    width: 400px;
+    height: 420px;
+    margin-bottom: 20px;
+}
+.card-img-related{
+    height: 300px;
+}

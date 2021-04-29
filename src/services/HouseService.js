@@ -13,14 +13,36 @@ class HouseService extends AxiosService {
       const paramsString = queryString.stringify(houseId);
       const requestUrl = API_URL + `/houses/detail?${paramsString}`;
       const response = await axios.get(requestUrl);
-      const houseDetail = _.get(response, 'data.data')
+      const houseDetail = _.get(response, "data.data");
       if (isValidData(houseDetail)) {
         return houseDetail;
       }
       return null;
-    } catch (err) {
-      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
     }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+  };
+  getHouseRelated = async (houseId) => {
+    try {
+      const paramsString = queryString.stringify(houseId);
+      const requestUrl = HOUSE_ROUTE.RELATED_HOUSE + `?${paramsString}`;
+      const response = await axios.get(requestUrl);
+      const house = _.get(response, "data.data.listHouseRecommend");
+      // Validate response data
+      if (isValidData(house)) {
+        return house;
+      }
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
   getHouses = async (filter) => {
@@ -28,34 +50,88 @@ class HouseService extends AxiosService {
       const paramsString = queryString.stringify(filter);
       const requestUrl = ROUTE.SEARCH_PATH + `?${paramsString}`;
       const response = await axios.get(requestUrl);
-      const house =  _.get(response, 'data.data');
+      const house = _.get(response, "data.data");
       if (isValidData(house.listObject)) {
         return house.listObject;
       }
       return null;
     } catch (error) {
-      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+       // Check if error is catched by BE
+       if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
     }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
   getHouseForHost = async (accountId) => {
     try {
       const paramsString = queryString.stringify(accountId);
       const requestUrl = ROUTE.HOUSE_MANAGE + `?${paramsString}`;
       const response = await axios.get(requestUrl, { headers: this.token() });
-      const house =  _.get(response, 'data.data');
+      const house = _.get(response, "data.data");
       if (isValidData(house)) {
         return house;
       }
-      return null;
-    } catch (err) {
-      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
     }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  deleteHouse = async (houseId) => {
-    const response = await axios
-      .delete(API_URL + `/houses/${houseId}`, { headers: this.token() })
-      .then(() => {});
+  deactiveHouse = async (houseid) => {
+    try {
+      const response = await axios.delete(
+        API_URL + `/houses/deactiveHouse/${houseid}`,
+        { headers: this.token() }
+      );
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+  };
+
+  hiddenHouse = async (houseid) => {
+    try {
+      const response = await axios.put(
+        API_URL + `/houses/unlistedHouse/${houseid}`,
+        { headers: this.token() }
+      );
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+  };
+
+  blockHouse = async (houseid) => {
+    try {
+      const response = await axios.delete(API_URL + `/block/${houseid}`, {
+        headers: this.token(),
+      });
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
   addHouse = async (house) => {

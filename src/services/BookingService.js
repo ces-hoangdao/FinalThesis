@@ -4,25 +4,28 @@ import AxiosService from "./AxiosService";
 import isValidData from "../helper/helper";
 import queryString from "query-string";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
+import _ from "lodash";
 
 class BookingService extends AxiosService {
   //booking services
   getBookingForCustomer = async (userId) => {
     try {
       const paramsString = queryString.stringify(userId);
-
       const requestUrl = ROUTE.BOOKING_PATH + `/customer?${paramsString}`;
-
       const response = await axios.get(requestUrl, {
         headers: this.token(),
       });
-      if (isValidData(response.data)) {
-        return response.data.data;
+      const booking = _.get(response, "data.data");
+      if (isValidData(booking)) {
+        return booking;
       }
-      return null;
-    } catch (err) {
-      return null;
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
     }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
   getBookingsByHouseId = async (houseId) => {
@@ -31,13 +34,17 @@ class BookingService extends AxiosService {
         ROUTE.BOOKING_PATH + `/house/${houseId}`,
         { headers: this.token() }
       );
-      if (isValidData(response.data)) {
-        return response.data.data;
+      const booking = _.get(response, "data.data");
+      if (isValidData(booking)) {
+        return booking;
       }
-      return null;
-    } catch (err) {
-      return null;
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
     }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
   cancelBooking = async (idbooking) => {
@@ -47,30 +54,15 @@ class BookingService extends AxiosService {
     );
   };
 
-  // rating services
-
-  getRatingByHouseId = async (houseId) => {
-    try {
-      const response = await axios.get(
-        ROUTE.RATING_PATH + `/houses/${houseId}`
-      );
-      if (isValidData(response.data)) {
-        return response.data.data;
-      }
-      return null;
-    } catch (err) {
-      return null;
-    }
-  };
-
   writeRating = async (idbooking, star, content) => {
     const response = await axios.post(
       ROUTE.RATING_PATH + `/write/${idbooking}`,
       { star, content },
       { headers: this.token() }
     );
-    if (isValidData(response.data)) {
-      return response.data.data;
+    const rating = _.get(response, "data.data");
+    if (isValidData(rating)) {
+      return rating;
     }
     return null;
   };
@@ -83,13 +75,17 @@ class BookingService extends AxiosService {
         { star, content },
         { headers: this.token() }
       );
-      if (isValidData(response.data.data)) {
-        return response.data.data;
+      const rating = _.get(response, "data.data");
+      if (isValidData(rating)) {
+        return rating;
       }
-      return null;
-    } catch (err) {
-      return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
     }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 }
 

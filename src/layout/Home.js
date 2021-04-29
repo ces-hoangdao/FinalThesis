@@ -19,8 +19,13 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     new HouseService().getHouses(filter).then((houses) => {
+     if(houses ){
       setHouses(houses);
       setLoading(false);
+     }
+     else{
+      setLoading(false);
+     }
     });
   }, [filter]);
 
