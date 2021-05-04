@@ -34,6 +34,7 @@ class AuthService extends AxiosService {
           localStorage.setItem("token", response.data.data);
           const userInfo = jwt_decode(localStorage.getItem("token"));
           const isAdmin = userInfo.user.role === "admin";
+          localStorage.setItem("userId", userInfo.user.userId);
           localStorage.setItem("username", userInfo.user.username);
           localStorage.setItem("isAdmin", isAdmin);
           localStorage.setItem("email", userInfo.user.email);

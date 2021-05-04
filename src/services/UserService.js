@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_ROUTE } from "../constants/route";
+import { API_URL, USER_ROUTE } from "../constants/route";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
 import isValidData from "../helper/helper";
@@ -7,10 +7,9 @@ import isValidData from "../helper/helper";
 class UserService extends AxiosService {
   getCurrentUser = async () => {
     try {
-      const response = await axios.get(
-        `${USER_ROUTE.GET_USER}`,
-        { headers: this.token(), }
-      );
+      const response = await axios.get(`${USER_ROUTE.GET_USER}`, {
+        headers: this.token(),
+      });
       // Validate response data
       if (isValidData(response.data)) {
         return response.data;
@@ -32,6 +31,23 @@ class UserService extends AxiosService {
         { ...userData },
         { headers: this.token() }
       );
+      // Validate response data
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      // Check if error is catched by BE
+      if (isValidData(error.response.data.message)) {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+  };
+
+  getStatisticOwner = async (accountId) => {
+    const requestUrl = `${API_URL}/statisticOwner/${accountId}`;
+    try {
+      const response = await axios.get(requestUrl, { headers: this.token() });
       // Validate response data
       if (isValidData(response.data)) {
         return response.data;
