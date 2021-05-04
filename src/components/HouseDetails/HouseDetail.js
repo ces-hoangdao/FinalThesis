@@ -16,32 +16,35 @@ import Phone from "../../assets/phone.svg";
 import Loader from "../Loader";
 import { useHistory } from "react-router-dom";
 import Icon from "../Icon/Icon";
+import Rating from "../Ratings/Ratings";
 
 const HouseDetail = () => {
-  const [houseDetail, setHouseDetail] = useState(null);
+  const [houseDetail, setHouseDetail] = useState({});
   let history = useHistory();
   const [loading, setLoading] = useState(false);
-  const [idHouse, setIdHouse] = useState({
+  const [ratings, setRatings] = useState([]);
+  const houseId = useState({
     houseId: window.location.pathname.substring(
       window.location.pathname.lastIndexOf("/") + 1
     ),
   });
+
   const [images, setImages] = useState([]);
 
   useEffect(() => {
     setLoading(true);
-    new HouseService().getHouseDetail(idHouse).then((house) => {
+
+    new HouseService().getHouseDetail(houseId[0]).then((house) => {
       if (house) {
         setHouseDetail(house);
+        setRatings(house.listRating);
         setImages(house.images);
         setLoading(false);
-      }
-      else{
+      } else {
         history.push("/notfoundpage");
       }
     });
-    
-  }, [idHouse]);
+  }, []);
 
   return (
     <div className="house-detail">
@@ -202,9 +205,8 @@ const HouseDetail = () => {
           </div>
         </Container>
       )}
-      <div className="container">
-        <h1 className="text-center">Related Projects</h1>
-      </div>
+
+      {ratings.length ? <Rating ratings={ratings}></Rating> : <div></div>}
     </div>
   );
 };

@@ -18,12 +18,10 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    new HouseService().getHouses(filter).then(houses =>{
+    new HouseService().getHouses(filter).then((houses) => {
       setHouses(houses);
       setLoading(false);
-    })
-    
- 
+    });
   }, [filter]);
 
   return (
@@ -75,12 +73,25 @@ const Home = () => {
           </Row>
         )}
         <Row className="justify-content-md-center">
-          <Button variant="primary" className="btn-homepage" size="lg">
-            <Link to="/listhouse">View More</Link>
-          </Button>
+          <Link to="/listhouse">
+            <Button variant="primary" className="btn-homepage" size="lg">
+              View More
+            </Button>
+          </Link>
         </Row>
         <div className="feedback">
           <h1 className="text-header">What our clients are saying</h1>
+          <div ClassName="feedback-content">
+            <p>
+              {" "}
+              Non eu exercitation dolor consectetur anim non aliquip sunt qui.
+              Esse consectetur eu sunt amet aliquip duis laborum do magna
+              tempor. Occaecat cillum veniam veniam anim in. Sunt laborum ex
+              dolore qui nisi ullamco. Tempor irure aliqua magna esse Lorem
+              pariatur. Enim ex nisi qui consequat Lorem ex tempor aliquip
+              eiusmod eu aliqua.
+            </p>
+          </div>
         </div>
       </Container>
     </div>

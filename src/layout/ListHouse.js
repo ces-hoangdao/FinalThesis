@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useHistory } from "react";
 import "./ListHouse.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Card, Col, Form, Button } from "react-bootstrap";
@@ -8,8 +8,9 @@ import Price from "../assets/price.svg";
 import Square from "../assets/ic-squarmeter@2x.svg";
 import Pagination from "../components/Pagination";
 import Loader from "../components/Loader";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from "../components/Icon/Icon";
+import notfound from "../assets/not-found.svg";
 import {
   NotificationContainer,
   NotificationManager,
@@ -36,9 +37,9 @@ const DEFAULT_FILTER = {
 const HomeList = () => {
   const [houses, setHouses] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [notfoundpage, setNotFoundPage] = useState(false);
   const [filter, setFilter] = useState(DEFAULT_FILTER);
   const [search, setSearch] = useState(DEFAULT_FILTER);
-  let history = useHistory();
 
   useEffect(() => {
     setLoading(true);
@@ -46,10 +47,11 @@ const HomeList = () => {
       if (response) {
         setHouses(response);
         setLoading(false);
+        setNotFoundPage(false);
       } else {
         NotificationManager.error("Result not found");
         setLoading(false);
-        history.push("/notfoundpage");
+        setNotFoundPage(true);
       }
     });
   }, [filter]);
@@ -67,8 +69,11 @@ const HomeList = () => {
   }
 
   return (
-    <div className="container">
-      <h1>Top Results</h1>
+    <div >
+      <div className="cover">
+        <h1 className="title-result">TOP RESULTS</h1>
+      </div>
+      <div className="container result">
       <Row>
         <aside className="col-md-3">
           <Form>
@@ -78,10 +83,32 @@ const HomeList = () => {
                 <RegionDropdown
                   className="form-control"
                   defaultOptionLabel="Select city"
-                  country={'Vietnam'}
+                  country={"Vietnam"}
                   value={search.city}
                   onChange={(val) => selectRegion(val)}
                 ></RegionDropdown>
+              </Col>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label as="legend">Price </Form.Label>
+              <Col>
+                {" "}
+                <Form.Control
+                  type="text"
+                  onChange={(e) => {
+                    setSearch({ ...search, lowestPrice: e.target.value });
+                  }}
+                  placeholder="From: đ"
+                />
+                -{" "}
+                <Form.Control
+                  type="text"
+                  onChange={(e) => {
+                    setSearch({ ...search, highestPrice: e.target.value });
+                  }}
+                  placeholder="To: đ"
+                />
               </Col>
             </Form.Group>
 
@@ -154,7 +181,10 @@ const HomeList = () => {
                   type="checkbox"
                   label="Air Conditioner"
                   onChange={(e) => {
-                    setSearch({ ...search, airConditioner: e.target.checked });
+                    setSearch({
+                      ...search,
+                      airConditioner: e.target.checked,
+                    });
                   }}
                 ></Form.Check>
                 <Form.Check
@@ -208,80 +238,80 @@ const HomeList = () => {
           </Form>
         </aside>
         <main className="col-md-9">
-          <header className="border-bottom mb-4 pb-3">
-            <div className="form-inline">
-              <h4>Short by </h4>
-              <select className="mr-2 form-control">
-                <option>Latest items</option>
-                <option>Trending</option>
-                <option>Most Popular</option>
-                <option>Cheapest</option>
-              </select>
-            </div>
-          </header>
-
           {loading ? (
             <Loader></Loader>
           ) : (
             <div>
-              <Row>
-                {houses &&
-                  houses.map((house, index) => {
-                    return (
-                      <div className="col-md-6" key={index}>
-                        <Card className="card-house">
-                          <Link to={"/housedetail/" + String(house.id)}>
-                            <Card.Img
-                              className="card-house-img"
-                              src={house.image}
-                              alt="house"
-                            />
-                          </Link>
-                          <Card.Body className="card-body">
-                            <Card.Title> {house.title}</Card.Title>
-                            <Card.Text className="info-content">
-                              <Row>
-                                <Col>
-                                  <Icon
-                                    src={Price}
-                                    text={house.price}
-                                    unit="/1day"
-                                    classText="text-content"
-                                    classIcon="icon-house"
-                                  ></Icon>
-                                </Col>
-                                <Col>
-                                  <Icon
-                                    src={Square}
-                                    text={house.size}
-                                    unit="m &sup2;"
-                                    classText="text-content"
-                                    classIcon="icon-house"
-                                  ></Icon>
-                                </Col>
-                              </Row>
-                              <Icon
-                                src={Location}
-                                text={house.city}
-                                classText="text-content"
-                                classIcon="icon-house"
-                              ></Icon>
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </div>
-                    );
-                  })}
+              {notfoundpage ? (
+                <div className="notfound">
+                  <h3> Sorry! No Results Found :( </h3>
+                  <img src={notfound} alt="Not Found"></img>
+                  <h5>
+                    We're sorry what you were looking for. Please try another
+                    way
+                  </h5>
+                </div>
+              ) : (
+                <Row>
+                  {houses &&
+                    houses.map((house, index) => {
+                      return (
+                        <div className="col-md-6" key={index}>
+                          <Card className="card-house">
+                            <Link to={"/housedetail/" + String(house.id)}>
+                              <Card.Img
+                                className="card-house-img"
+                                src={house.image}
+                                alt="house"
+                              />
+                            </Link>
+                            <Card.Body className="card-body">
+                              <Card.Title> {house.title}</Card.Title>
+                              <Card.Text className="info-content">
+                                <Row>
+                                  <Col>
+                                    <Icon
+                                      src={Price}
+                                      text={house.price}
+                                      unit="/1day"
+                                      classText="text-content"
+                                      classIcon="icon-house"
+                                    ></Icon>
+                                  </Col>
+                                  <Col>
+                                    <Icon
+                                      src={Square}
+                                      text={house.size}
+                                      unit="m &sup2;"
+                                      classText="text-content"
+                                      classIcon="icon-house"
+                                    ></Icon>
+                                  </Col>
+                                </Row>
+                                <Icon
+                                  src={Location}
+                                  text={house.city}
+                                  classText="text-content"
+                                  classIcon="icon-house"
+                                ></Icon>
+                              </Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </div>
+                      );
+                    })}
 
-                <Pagination
-                  pagination={filter}
-                  onPageChange={handlePageChange}
-                ></Pagination>
-              </Row>
+                  <Pagination
+                    pagination={filter}
+                    onPageChange={handlePageChange}
+                  ></Pagination>
+                </Row>
+              )}
             </div>
           )}
         </main>
       </Row>
+      </div>
       <NotificationContainer></NotificationContainer>
     </div>
   );

@@ -23,7 +23,6 @@ class Register extends Component {
       email: null,
       username: null,
       password: null,
-      confirmPassword: null,
       isLogin: false,
       formErrors: {
         email: "",
@@ -44,7 +43,7 @@ class Register extends Component {
       const email = this.state.email;
       const password = this.state.password;
       const username = this.state.username;
-      AuthService.register(email, username, password).then(
+     new AuthService().register(email, username, password).then(
         () => {
           NotificationManager.success(userConstants.REGISTER_SUCCESS);
           window.location.reload();

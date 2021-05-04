@@ -5,7 +5,7 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
-// import Loader from "../components/Loader";
+
 import AuthService from "../services/AuthService";
 import "./Login.css";
 import {

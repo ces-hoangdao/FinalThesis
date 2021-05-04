@@ -8,28 +8,28 @@ import EditProfile from "./containters/EditProfile/EditProfile";
 import ListHouse from "./layout/ListHouse";
 import Home from "./layout/Home";
 import About from "./layout/About";
+import NotFoundPage from "./layout/NotFoundPage";
 import HouseDetail from "./components/HouseDetails/HouseDetail";
-import HouseManage from "./components/HouseManage/HouseManage";
+import BookingHistory from "./containters/BookingHistory/BookingHistory";
 import ConfirmCode from "./layout/ConfirmCode";
-
 import AddHouse from "./containters/AddHouse/AddHouse";
-import EditHouse from "./layout/EditHouse";
+
 function App() {
   return (
     <Router>
       <Header />
-      <main className="py-3">
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/about" component={About} />
-          <Route path="/listhouse" component={ListHouse} />
-          <Route path="/AddHouse" component={AddHouse} />
-          <Route path="/housemanage" component={HouseManage} />
-          <Route path="/edithouse/:id" component={EditHouse} />    
-          <Route path="/housedetail/:id" component={HouseDetail} />
-          <Route path="/editprofile" component={EditProfile}/>
-          <Route path="/confirmcode" component={ConfirmCode}/>
-          <Route path='/' component={Home} exact />
+      <main>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/about" component={About} />
+        <Route path="/listhouse" component={ListHouse} />
+        <Route path="/AddHouse" component={AddHouse} />
+        <Route path="/housedetail/:id" component={HouseDetail} />
+        <Route path="/editprofile" component={EditProfile} />
+        <Route path="/confirmcode" component={ConfirmCode} />
+        <Route path="/notfoundpage" component={NotFoundPage} />
+        <Route path="/bookinghistory" component={BookingHistory} />
+        <Route path="/" component={Home} exact />
       </main>
       <Footer />
     </Router>

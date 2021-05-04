@@ -58,7 +58,10 @@ const Header = () => {
                       <Link to="/housemanage">House Management</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link to="#">Booking History</Link>
+                      <Link to="/bookingmanage">Booking Management</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link to="/bookinghistory">Booking History</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={() => logout()}>
