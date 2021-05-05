@@ -210,7 +210,7 @@ const HouseDetail = () => {
       {ratings.length ? <Rating ratings={ratings}></Rating> : <div></div>}
       <div className="container">
         <h1 className="text-center">Related Projects</h1>
-        <RelatedHouse houseId = {houseId[0]}></RelatedHouse>
+        <RelatedHouse houseId = {houseId}></RelatedHouse>
       </div>
     </div>
   );
