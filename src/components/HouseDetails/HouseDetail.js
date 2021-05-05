@@ -17,13 +17,14 @@ import Loader from "../Loader";
 import { useHistory } from "react-router-dom";
 import Icon from "../Icon/Icon";
 import Rating from "../Ratings/Ratings";
+import RelatedHouse from "../../containters/RelatedHouse/RelatedHouse";
 
 const HouseDetail = () => {
   const [houseDetail, setHouseDetail] = useState({});
   let history = useHistory();
   const [loading, setLoading] = useState(false);
   const [ratings, setRatings] = useState([]);
-  const houseId = useState({
+  const [houseId,setHouseId] = useState({
     houseId: window.location.pathname.substring(
       window.location.pathname.lastIndexOf("/") + 1
     ),
@@ -34,7 +35,7 @@ const HouseDetail = () => {
   useEffect(() => {
     setLoading(true);
 
-    new HouseService().getHouseDetail(houseId[0]).then((house) => {
+    new HouseService().getHouseDetail(houseId).then((house) => {
       if (house) {
         setHouseDetail(house);
         setRatings(house.listRating);
@@ -44,7 +45,7 @@ const HouseDetail = () => {
         history.push("/notfoundpage");
       }
     });
-  }, []);
+  }, [houseId]);
 
   return (
     <div className="house-detail">
@@ -207,6 +208,10 @@ const HouseDetail = () => {
       )}
 
       {ratings.length ? <Rating ratings={ratings}></Rating> : <div></div>}
+      <div className="container">
+        <h1 className="text-center">Related Projects</h1>
+        <RelatedHouse houseId = {houseId}></RelatedHouse>
+      </div>
     </div>
   );
 };
