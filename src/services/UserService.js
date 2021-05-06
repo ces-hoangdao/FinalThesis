@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_URL, USER_ROUTE } from "../constants/route";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 import AxiosService from "./AxiosService";
-import isValidData from "../helper/helper";
+import {isValidData} from "../helper/helper";
 
 class UserService extends AxiosService {
   getCurrentUser = async () => {

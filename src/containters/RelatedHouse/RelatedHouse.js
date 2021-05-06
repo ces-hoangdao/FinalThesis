@@ -4,19 +4,16 @@ import { Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 function RelatedHouse(props) {
   const [houses, setHouses] = useState([]);
-  const [loading, setLoading] = useState(false);
   const { houseId } = props;
   useEffect(() => {
-    setLoading(true);
-    new HouseService().getHouseRelated(houseId).then((houses) => {
-      if (houses) {
-        setHouses(houses);
-        setLoading(false);
-      }
-      else {
-        setLoading(false);
-      }
-    });
+    new HouseService()
+      .getHouseRelated(houseId)
+      .then((response) => {
+        if (response.status < 300) {
+          setHouses(response.data.listHouseRecommend);
+        } 
+              })
+      
   }, []);
   return (
     <Row>

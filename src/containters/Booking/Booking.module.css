@@ -1,0 +1,87 @@
+.DateWrap {
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+}
+
+.DateWrap label {
+  position: relative;
+  font-weight: 700;
+  display: block;
+  font-size: 1rem;
+}
+
+.DateContainer {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.BookingCard {
+    flex-basis: 50%;
+    max-width: 50%;
+    flex: 0 0 auto;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    width: 45%;
+    cursor: pointer;
+}
+
+.BookingCardDiv {
+    border: solid 1px rgb(0, 0, 0, 0.3);
+    border-radius: 7px;
+    overflow: hidden;
+    padding: 12px;
+    background-color: #fff;
+}
+
+.BookingCard hr {
+    margin-top: 5px;
+    position: relative;
+    height: 4px;
+    border: 0;
+    overflow: visible;
+}
+
+.Green{
+    margin-left: 0px;
+    background-color: #28ca6e;
+    content: "";
+    display: block;
+    border-radius: 2.5px;
+    width: 40%;
+    height: 100%;
+}
+
+.Yellow {
+    margin-left: 0px;
+    background-color: #fbdb91;
+    content: "";
+    display: block;
+    border-radius: 2.5px;
+    width: 40%;
+    height: 100%;
+}
+
+.BookingCard p {
+    margin-bottom: 0px;
+}
+
+.Grey {
+    color: #999;
+}
+
+.Giant {
+    font-size: 24px;
+}
+
+.Small {
+    font-size: 12px;
+}
+
+.DatePicker {
+    border: none;
+    padding: 0px;
+}
