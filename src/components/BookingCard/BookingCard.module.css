@@ -1,0 +1,143 @@
+.BookingCard {
+  border-radius: 8px;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  padding: 16px;
+  animation: fadeIn 0.4s ease-in-out;
+  margin: 23px 0 23px 0;
+
+  font-weight: 500;
+  font-size: 1rem;
+  color: #222;
+}
+
+.Status {
+  margin-bottom: 18px;
+}
+
+.Status span {
+  padding: 4px;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.Completed {
+  background-color: #28ca6e
+}
+
+.Pending {
+  background-color: #ffc107;
+}
+
+.Paid {
+  background-color: #222222;
+}
+
+.Canceled {
+  background-color: #f65e39;
+}
+
+.Incompleted {
+  background-color: #7e8d9a;
+}
+
+.BookingCardContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.BookingCardHead {
+  flex: 1 30%;
+  margin-bottom: 0;
+}
+
+.BookingCardBody {
+  flex: 1 1 45%;
+  padding: 0 60px;
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #efefef;
+}
+
+.BookingCardBottom {
+  width: auto;
+  flex: 1 1 24%;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  border-top: none;
+  flex-direction: column;
+}
+
+.BookingCardHead a {
+  color: #222;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.BookingCardHead p {
+  padding-right: 20%;
+  font-size: 24px;
+  margin-bottom: 6px;
+  margin: 0 0 1rem;
+}
+
+.Row {
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  display: flex;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.Row div {
+  flex-basis: 33.33333%;
+  min-width: 33.33333%;
+  flex: 0 0 auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.PSmall {
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 1rem;
+}
+
+.Row div {
+  margin-bottom: 1rem;
+}
+
+.BookingCardBottom a {
+    padding: 10px 30px;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #fff;
+    outline: 0;
+    display: inline-block;
+    transition: all .3s;
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 17px;
+    text-decoration: none;
+}
+
+.BookAgain {
+  background-color: #28ca6e;
+  background: #28ca6e;
+}
+
+.Pay {
+  background-color: #222;
+  background: #222;
+}
+
+.Cancel {
+  background-color: #f65e39;
+  background: #f65e39;
+}

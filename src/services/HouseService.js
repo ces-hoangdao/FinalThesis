@@ -8,7 +8,7 @@ import queryString from "query-string";
 import _ from "lodash";
 
 class HouseService extends AxiosService {
-  // get house details with id
+  // Get house's details
   getHouseDetail = async (houseId) => {
     try {
       const paramsString = queryString.stringify(houseId);
@@ -28,7 +28,7 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // get recommended house with id
+  // Get suggested houses
   getHouseRelated = async (houseId) => {
     try {
       const paramsString = queryString.stringify(houseId);
@@ -48,7 +48,7 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // get list house
+  // Get list house
   getHouses = async (filter) => {
     try {
       const paramsString = queryString.stringify(filter);
@@ -67,15 +67,16 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // get list houses for host
+  // Get house of user
   getHouseForHost = async (accountId) => {
     try {
       const paramsString = queryString.stringify(accountId);
       const requestUrl = ROUTE.HOUSE_MANAGE + `?${paramsString}`;
       const response = await axios.get(requestUrl, { headers: this.token() });
-      const house = _.get(response, "data");
+      const house = _.get(response, "data.data.listObject");
       if (isValidData(house)) {
-        return house;
+        console.log(response);
+        return response.data;
       }
     } catch (error) {
       // Check if error is catched by BE
@@ -86,7 +87,7 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // deactive house with id
+  // Delete a house
   deactiveHouse = async (houseid) => {
     try {
       const response = await axios.delete(
@@ -105,10 +106,10 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // hid or unhide house with id
+  // Hide or unhide house
   hiddenHouse = async (houseid) => {
     try {
-      const response = await axios.get(
+      const response = await axios.put(
         API_URL + `/houses/unlistedHouse/${houseid}`,
         { headers: this.token() }
       );
@@ -124,7 +125,7 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
-  // block house (admin)
+  // Block house (admin)
   blockHouse = async (houseid) => {
     try {
       const response = await axios.get(API_URL + `/houses/block/${houseid}`, {
@@ -142,6 +143,7 @@ class HouseService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
+  // Add new house
   addHouse = async (house) => {
     try {
       const response = await axios.post(

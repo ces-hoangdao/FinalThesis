@@ -10,6 +10,7 @@ import UserService from "../../services/UserService";
 import { NotificationManager } from "react-notifications";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 import Icon from "../Icon/Icon";
+import BookingCard from '../BookingCard/BookingCard';
 
 function StatisticForHost(props) {
   const { accountId } = props;
@@ -33,7 +34,7 @@ function StatisticForHost(props) {
   return (
     <Container>
       <h3>Hosting progress</h3>
-     
+
       {loading ? (
         <Statistic></Statistic>
       ) : (
@@ -95,7 +96,8 @@ function StatisticForHost(props) {
         </CardDeck>
       )}
       <h3>Recent reservations</h3>
-<CardBooking></CardBooking>
+      <CardBooking></CardBooking>
+      <BookingCard></BookingCard>
       {listbookings.map((booking) => {
         const checkIn = new Date(booking.dateCheckIn);
         const checkOut = new Date(booking.dateCheckOut);
@@ -107,7 +109,10 @@ function StatisticForHost(props) {
               <Card.Text>Customer Name: {booking.customerName}</Card.Text>
               <Card.Text>Total: {booking.bill} đ</Card.Text>
             </Card.Body>
-            <Card.Footer>CheckIn Day : {checkIn.toLocaleDateString()} - CheckOut Day : {checkOut.toLocaleDateString()}</Card.Footer>
+            <Card.Footer>
+              CheckIn Day : {checkIn.toLocaleDateString()} - CheckOut Day :{" "}
+              {checkOut.toLocaleDateString()}
+            </Card.Footer>
           </Card>
         );
       })}

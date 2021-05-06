@@ -4,7 +4,7 @@ import { ROUTE } from "../constants/route";
 import AxiosService from "./AxiosService";
 
 class AuthService extends AxiosService {
-  //register Api
+  // Create new account
   register = async (email, username, password) => {
     return axios
       .post(ROUTE.REGISTER_PATH, {
@@ -20,7 +20,7 @@ class AuthService extends AxiosService {
       });
   };
 
-  //Login Api
+  // Login
   login = async (usernameOrEmail, password) => {
     return axios
       .post(ROUTE.LOGIN_PATH, {
@@ -47,7 +47,7 @@ class AuthService extends AxiosService {
       });
   };
 
-  //Logout Api
+  // Log out
   logout = async () => {
     const response = await axios
       .delete(ROUTE.LOGOUT_PATH, {
@@ -56,6 +56,7 @@ class AuthService extends AxiosService {
       .then(() => {});
   };
 
+  // Confirm code
   confirmCode = async (verifycode) => {
     return axios
       .post(ROUTE.CONFIRMCODE_PATH, {

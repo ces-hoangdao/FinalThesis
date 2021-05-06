@@ -5,6 +5,8 @@ import AxiosService from "./AxiosService";
 import { isValidData } from "../helper/helper";
 
 class UserService extends AxiosService {
+
+  // Get user's details
   getCurrentUser = async () => {
     try {
       const response = await axios.get(`${USER_ROUTE.GET_USER}`, {
@@ -23,6 +25,7 @@ class UserService extends AxiosService {
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
 
+  // Update user's details
   editprofile = async (user) => {
     const { id, ...userData } = user;
     try {

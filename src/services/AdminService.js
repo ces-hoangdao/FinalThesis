@@ -6,6 +6,7 @@ import queryString from "query-string";
 import _ from "lodash";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/message";
 class AdminService extends AxiosService {
+  // Get list accounts
   getAccounts = async () => {
     try {
       const requestUrl = API_URL + `/accounts?`;
@@ -19,6 +20,7 @@ class AdminService extends AxiosService {
     }
   };
 
+  // Get list house (admin)
   getAllHouse = async (accountId) => {
     try {
       const paramsString = queryString.stringify(accountId);
@@ -54,6 +56,7 @@ class AdminService extends AxiosService {
       return null;
     }
   };
+
   totalHouseMonthly = async (years) => {
     try {
       const requestUrl = API_URL + `/totalHouse/${years}`;
@@ -70,6 +73,7 @@ class AdminService extends AxiosService {
     }
     return { status: 500, message: DEFAULT_ERROR_MESSAGE };
   };
+  
   monthlyRevenue = async (years) => {
     try {
       const requestUrl = API_URL + `/revenue/${years}`;

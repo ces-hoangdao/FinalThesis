@@ -15,7 +15,9 @@ function HostManager() {
     page: 0,
     status: "",
   });
+
   useEffect(() => {
+    setHouses([]);
     setLoading(true);
     if (paramsString.status === "blocked") {
       setParams({
@@ -24,16 +26,21 @@ function HostManager() {
         blocked: "true",
       });
     }
-    new HouseService().getHouseForHost(paramsString).then((response) => {
-      if (response) {
-        setHouses(response.data.listObject);
+    new HouseService()
+      .getHouseForHost(paramsString)
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+          setHouses(response.data.listObject);
+          setLoading(false);
+        } else {
+          NotificationManager.error(response.message);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
         setLoading(false);
-      } else {
-        NotificationManager.error("Don't have house to display");
-        setLoading(false);
-        setHouses([]);
-      }
-    });
+      });
   }, [paramsString]);
 
   const blockHouse = (houseId) => {
@@ -48,6 +55,7 @@ function HostManager() {
       }
     );
   };
+  
   return (
     <div>
       <Form.Control
@@ -68,7 +76,7 @@ function HostManager() {
           <tr>
             <th className="text-center text500">ID</th>
 
-            <th className="Name text500">Name</th>
+            <th className="text500">Name</th>
             <th></th>
             <th className="Address text500">Addresss</th>
             <th className="text500">City</th>

@@ -3,7 +3,7 @@ import { Grid, Placeholder, Segment } from "semantic-ui-react";
 
 function Statistic() {
   return (
-    <Grid columns={5} stackable>
+    <Grid columns={4} stackable>
       <Grid.Column>
         <Segment raised>
           <Placeholder>
@@ -62,7 +62,7 @@ function Statistic() {
         </Segment>
       </Grid.Column>
 
-      <Grid.Column>
+      {/* <Grid.Column>
         <Segment raised>
           <Placeholder>
             <Placeholder.Paragraph>
@@ -75,7 +75,7 @@ function Statistic() {
             </Placeholder.Header>
           </Placeholder>
         </Segment>
-      </Grid.Column>
+      </Grid.Column> */}
     </Grid>
   );
 }

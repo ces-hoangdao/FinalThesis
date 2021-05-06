@@ -1,4 +1,6 @@
+import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer/Footer";
 import Admin from "./components/Admin/Admin";
@@ -40,7 +42,6 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/listhouse" component={ListHouse} />
         <Route path="/AddHouse" component={AddHouse} />
-        <Route path="/housedetail/:id" component={HouseDetail} />
         <Route path="/editprofile" component={EditProfile} />
         <Route path="/confirmcode" component={ConfirmCode} />
         <Route path="/notfoundpage" component={NotFoundPage} />
