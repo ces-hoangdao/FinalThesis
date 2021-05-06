@@ -1,34 +1,58 @@
 
-import { Card, Button } from "react-bootstrap";
+import React from 'react';
+import { Card, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+
+import Location from "../../assets/location.svg";
+import Price from "../../assets/price.svg";
+import Square from "../../assets/ic-squarmeter@2x.svg";
+import Icon from "../Icon/Icon";
+import { numberWithCommas } from "../../helper/helper";
+import styles from './House.module.css';
 import "./House.css";
-import A from "../../assets/a.jpg";
 
-import Bed from "../../assets/bed.svg";
-
-const House = () => {
+const House = (props) => {
+  const { house } = props;
   return (
-    <Card className="card card-house-grid">
-      <div className="img-wrap">
-        <Card.Img src={A} alt="Anh nha" />
-      </div>
-      <Card.Body className="info-wrap">
-        <div className="fix-height">
-          <Card.Title> Hoa Vang, Da Nang</Card.Title>
-          <Card.Text className="price-wrap mt-2">
-            <img  className="icon" src={Bed} alt=" gia"></img>
-            <span className="text"> $80/Day</span>
-            <img className="icon" src={Bed} alt=" gia"></img>
-            <span className="text"> 2</span>
-            <img className="icon" src={Bed} alt=" gia"></img>
-            <span className="text"> 3</span>
+    <div className="col-md-6">
+      <Card className="card-house">
+        <Link to={"/housedetail/" + String(house.id)}>
+          <Card.Img
+            className="card-house-img"
+            src={house.image}
+            alt="house"
+          />
+        </Link>
+        <Card.Body className="card-body">
+          <Card.Title>{house.title}</Card.Title>
+          <Card.Text className="info-content">
+            <div className={styles.Container}>
+              <Icon
+                src={Price}
+                text={numberWithCommas(house.price)}
+                unit="/1day"
+                classText="text-content"
+                classIcon="icon-house"
+              ></Icon>
+              <Icon
+                src={Location}
+                text={house.city}
+                classText="text-content"
+                classIcon="icon-house"
+              ></Icon>
+              <Icon
+                src={Square}
+                text={house.size}
+                unit="m &sup2;"
+                classText="text-content"
+                classIcon="icon-house"
+              ></Icon>
+            </div>
           </Card.Text>
-        </div>
-        <Button size="lg" block>
-          Book House{" "}
-        </Button>
-      </Card.Body>
-    </Card>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 export default House;

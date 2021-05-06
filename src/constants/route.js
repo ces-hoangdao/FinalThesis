@@ -34,4 +34,8 @@ const HOUSE_ROUTE = {
     CREATE_HOUSE : `${API_URL}/houses/create`,
     RELATED_HOUSE : `${API_URL}/houses/userRecs`,
 }
-export {API_URL, ROUTE, AUTH_ROUTE, USER_ROUTE, HOUSE_ROUTE};
+
+const BOOKING_ROUTE = {
+    CREATE_BOOOKING : `${API_URL}/bookings`,
+}
+export {API_URL, ROUTE, AUTH_ROUTE, USER_ROUTE, HOUSE_ROUTE, BOOKING_ROUTE};

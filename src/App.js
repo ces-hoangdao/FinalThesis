@@ -4,15 +4,15 @@ import Footer from "./components/Footer/Footer";
 import Login from "./layout/Login";
 import Register from "./layout/Register";
 import EditProfile from "./containters/EditProfile/EditProfile";
-import ListHouse from "./layout/ListHouse";
 import Home from "./layout/Home";
 import About from "./layout/About";
 import NotFoundPage from "./layout/NotFoundPage";
-import HouseDetail from "./components/HouseDetails/HouseDetail";
 import BookingHistory from "./containters/BookingHistory/BookingHistory";
+import HouseDetail from "./containters/HouseDetails/HouseDetail";
 import ConfirmCode from "./layout/ConfirmCode";
 import AddHouse from "./containters/AddHouse/AddHouse";
 
+import ListHouse from "./containters/ListHouse/ListHouse";
 function App() {
   return (
     <Router>
