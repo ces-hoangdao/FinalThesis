@@ -1,6 +1,6 @@
 import { API_URL, ROUTE } from "../constants/route";
 import AxiosService from "../services/AxiosService";
-import isValidData from "../helper/helper";
+import {isValidData} from "../helper/helper";
 import axios from "axios";
 import queryString from "query-string";
 import _ from "lodash";

@@ -18,7 +18,7 @@ class UserService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }
@@ -40,7 +40,7 @@ class UserService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }
@@ -57,7 +57,7 @@ class UserService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }

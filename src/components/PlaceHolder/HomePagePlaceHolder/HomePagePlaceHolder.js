@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Placeholder } from "semantic-ui-react";
-function CardHome(props) {
 
+function HomePagePlaceHolder(props) {
   return (
     <Card.Group itemsPerRow={2}>
       <Card>
@@ -78,4 +78,4 @@ function CardHome(props) {
   );
 }
 
-export default CardHome;
+export default HomePagePlaceHolder;

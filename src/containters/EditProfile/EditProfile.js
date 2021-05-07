@@ -20,9 +20,9 @@ const EditProfile = () => {
     city: "",
     address: "",
   });
-
+  const [dob, setDob] = useState(null);
   const email = localStorage.getItem("email");
-  const isLogin = localStorage.getItem("token");
+  const isLogin = localStorage.getItem("token")
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +31,6 @@ const EditProfile = () => {
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
-          setUser({ ...response.data })
         } else {
           NotificationManager.error(response.message);
         }
@@ -48,7 +47,7 @@ const EditProfile = () => {
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
-          setUser({ ...response.data })
+          setUser({ ...response.data });
         } else {
           NotificationManager.error(response.message);
         }
@@ -127,13 +126,14 @@ const EditProfile = () => {
           <Form.Control
             as="input"
             type="date"
-            value={user.birthday}
-            onChange={(e) =>
+            value={dob}
+            onChange={(e) =>{
               setUser({
                 ...user,
                 birthday: e.target.value,
-              })
-            }
+              });
+              setDob(e.target.value);
+            }}
           ></Form.Control>
         </Col>
       </Form.Group>

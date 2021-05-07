@@ -104,34 +104,34 @@ function Completed(props) {
             //       <th>{checkEnd.toLocaleDateString()}</th>
             //       <th>{booking.status}</th>
             //       <th>
-            //         {booking.rating !== null ? (
-            //           <div>
-                        // <BeautyStars
-                        //   size="25px"
-                        //   value={booking.rating.star}
-                        //   onChange={() => {
-                        //     setIdBooking(booking.id);
-                        //     setStar(booking.rating.star);
-                        //     setContent(booking.rating.content);
-                        //     setIdRating(booking.rating.id);
-                        //     handleShow();
-                        //   }}
-                        // />
-            //           </div>
-            //         ) : (
-            //           <BeautyStars
-            //             size="25px"
-            //             editable="false"
-            //             value={0}
-            //             onChange={() => {
-            //               setIdBooking(booking.id);
-            //               setIdRating(null);
-            //               setStar(0);
-            //               setContent("");
-            //               handleShow();
-            //             }}
-            //           />
-            //         )}
+                    // {booking.rating !== null ? (
+                    //   <div>
+                    //     <BeautyStars
+                    //       size="25px"
+                    //       value={booking.rating.star}
+                    //       onChange={() => {
+                    //         setIdBooking(booking.id);
+                    //         setStar(booking.rating.star);
+                    //         setContent(booking.rating.content);
+                    //         setIdRating(booking.rating.id);
+                    //         handleShow();
+                    //       }}
+                    //     />
+                    //   </div>
+                    // ) : (
+                    //   <BeautyStars
+                    //     size="25px"
+                    //     editable="false"
+                    //     value={0}
+                    //     onChange={() => {
+                    //       setIdBooking(booking.id);
+                    //       setIdRating(null);
+                    //       setStar(0);
+                    //       setContent("");
+                    //       handleShow();
+                    //     }}
+                    //   />
+                    // )}
             //       </th>
             //     </tr>
                 // <Modal

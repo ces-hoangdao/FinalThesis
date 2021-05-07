@@ -1,0 +1,32 @@
+.cover-about {
+  background: url("../../assets/coverabout.jpg") no-repeat center;
+  background-size: cover;
+  height: 800px;
+}
+
+.title-about h4 {
+  color: floralwhite;
+  padding-top: 50px;
+  font-size: 40px;
+}
+
+.content-about {
+  text-align: justify;
+  color: floralwhite;
+  padding-top: 30px;
+  font-weight: 500;
+  font-size: 24px;
+}
+.count-box {
+  color: floralwhite;
+  margin-top: 50px;
+  font-size: 32px;
+}
+.count-box h4 {
+  font-size: 32px;
+  font-weight: 400;
+}
+.about{
+    margin-left: 250px;
+    padding-top: 100px;
+}

@@ -43,11 +43,14 @@ function HostManager() {
       });
   }, [paramsString]);
 
-  const blockHouse = (houseId) => {
+  const blockHouse = (houseId,index) => {
     new HouseService().blockHouse(houseId).then(
       (responese) => {
         if (responese) {
           NotificationManager.success(responese.message);
+          const newHouses = [...houses];
+          newHouses[index].block = !newHouses[index].block;
+          setHouses(newHouses);
         }
       },
       (error) => {

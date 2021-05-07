@@ -49,7 +49,7 @@ function StatisticForAdmin() {
           </Card>
           <Card>
             <Card.Body>
-              <Card.Title>Total Account Host</Card.Title>
+              <Card.Title>Total Host Account</Card.Title>
               <Card.Text>
                 <Icon
                   src={Host}
@@ -77,7 +77,7 @@ function StatisticForAdmin() {
           </Card>
           <Card>
             <Card.Body>
-              <Card.Title>Total Booking Paid</Card.Title>
+              <Card.Title>Total Paid Bookings</Card.Title>
               <Card.Text>
                 <Icon
                   src={Paid}
@@ -91,7 +91,7 @@ function StatisticForAdmin() {
           </Card>
           <Card>
             <Card.Body>
-              <Card.Title>Total Booking Completed</Card.Title>
+              <Card.Title>Total Completed Bookings</Card.Title>
               <Card.Text>
                 <Icon
                   src={Booking}

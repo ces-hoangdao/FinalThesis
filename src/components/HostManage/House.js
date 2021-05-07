@@ -13,7 +13,7 @@ House.protoTypes = {
   blockHouse: PropTypes.func,
 };
 function House(props) {
-  const { houses, deactiveHouse, hiddenHouse, blockHouse } = props;
+  const { houses, deactiveHouse, hiddenHouse, blockHouse,index } = props;
   const modifiedDate = new Date(houses.modifiedDate);
   const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
 
@@ -24,15 +24,15 @@ function House(props) {
   } else if (houses.status === "listed") {
     button = (
       <>
-        <Button variant="secondary" onClick={() => hiddenHouse(houses.id)}>
-          Hidden
+        <Button variant="outline-secondary" onClick={() => hiddenHouse(houses.id,index)}>
+          Hide
         </Button>
       </>
     );
   } else if (houses.status === "unlisted") {
     button = (
       <>
-        <Button variant="primary" onClick={() => hiddenHouse(houses.id)}>
+        <Button variant="outline-primary" onClick={() => hiddenHouse(houses.id,index)}>
           Show
         </Button>
       </>
@@ -51,9 +51,9 @@ function House(props) {
       <>
         {" "}
         <Link to={"/edithouse/" + String(houses.id)}>
-          <Button variant="warning">Edit</Button>
+          <Button variant="outline-warning" className='ButtonMargin'>Edit</Button>
         </Link>
-        <Button variant="danger" onClick={() => deactiveHouse(houses.id)}>
+        <Button variant="outline-danger" onClick={() => deactiveHouse(houses.id,index)}>
           Deactive
         </Button>
       </>
@@ -79,11 +79,11 @@ function House(props) {
       {isAdmin ? (
         <th className="text-center">
           {houses.block === true ? (
-            <Button variant="warning" onClick={() => blockHouse(houses.id)}>
+            <Button variant="warning" onClick={() => blockHouse(houses.id,index)}>
               UnBlock
             </Button>
           ) : (
-            <Button variant="danger" onClick={() => blockHouse(houses.id)}>
+            <Button variant="danger" onClick={() => blockHouse(houses.id,index)}>
               Block House
             </Button>
           )}

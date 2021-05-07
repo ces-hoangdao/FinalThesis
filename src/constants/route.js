@@ -33,6 +33,7 @@ const USER_ROUTE = {
 const HOUSE_ROUTE = {
     CREATE_HOUSE : `${API_URL}/houses/create`,
     RELATED_HOUSE : `${API_URL}/houses/userRecs`,
+    EDIT_HOUSE : `${API_URL}/houses`
 }
 
 const BOOKING_ROUTE = {

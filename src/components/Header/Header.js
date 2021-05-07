@@ -2,22 +2,26 @@ import React from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
-import AuthService from "../services/AuthService";
+
+import AuthService from "../../services/AuthService";
+
+import "./Header.css";
+
 const Header = () => {
   const isLogin = localStorage.getItem("token");
-  const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
   const logout = () => {
-    new AuthService().logout().then(() => {
-      localStorage.clear();
-      window.location.replace("/");
-    });
+    new AuthService().logout();
+    localStorage.clear();
+    window.location.replace("/");
+    ;
   };
 
   const currentUser = localStorage.getItem("username");
 
   return (
-    <header>
-      <Navbar bg="light" variant="light" expand="lg" >
+    <>
+    <header className="Header">
+      <Navbar bg="dark" variant="dark" expand="lg" >
         <Container>
           <Fade left>
             <NavLink to="/">
@@ -57,9 +61,6 @@ const Header = () => {
                       <Link to="/hostmanage">Host Management</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link to="/bookingmanage">Booking Management</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
                       <Link to="/bookinghistory">Booking History</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
@@ -74,6 +75,8 @@ const Header = () => {
         </Container>
       </Navbar>
     </header>
+    <div className="HeaderContent"/>
+    </>
   );
 };
 export default Header;

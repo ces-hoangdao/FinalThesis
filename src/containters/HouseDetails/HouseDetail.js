@@ -16,7 +16,7 @@ import Loader from "../../components/Loader";
 import Icon from "../../components/Icon/Icon";
 import RelatedHouse from "../RelatedHouse/RelatedHouse";
 import Booking from "../Booking/Booking";
-import Rating from "../../components/Ratings/Ratings";
+import Rating from "./Ratings/Ratings";
 import { numberWithCommas } from "../../helper/helper";
 import HouseService from "../../services/HouseService";
 

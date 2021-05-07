@@ -1,63 +1,137 @@
 import React from "react";
-import BeautyStars from "beauty-stars";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import { useHistory } from "react-router-dom";
 
 import Rating from "../Rating/Rating";
+import BookingService from "../../services/BookingService";
+import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 
 import styles from "./BookingCard.module.css";
 
 const BookingCard = (props) => {
+  let history = useHistory();
   let statusStyle;
   let status;
-  let rating;
+  let rating = (
+    <div>
+      <Rating
+        idBooking={props.id}
+        rating={props.rating}
+        houseName={props.title}
+        checkIn={new Date(props.checkIn)}
+        checkOut={new Date(props.checkOut)}
+      />
+    </div>
+  );
 
-  let cardBottom =
-    <a
-      href={`/housedetail/${props.houseId}`}
-      className={styles.BookAgain}>Book again
-    </a>
+  const handleCancelClick = (id) => {
+    let click = { click: false };
+    new BookingService()
+      .cancelBooking(id, click)
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+          props.change(props.index, "canceled");
+          click = { click: true };
+          new BookingService().cancelBooking(id, click);
+        } else {
+          NotificationManager.error(response.message);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+      });
+  };
+
+  const handleBookAgainClick = (id) => {
+    history.push(`/housedetail/${props.houseId}`);
+  };
+
+  const handlePayClick = (id) => {
+    const click = { click: false };
+    new BookingService()
+      .payment(id, click)
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+          props.change(props.index, "paid");
+        } else {
+          NotificationManager.error(response.message);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+      });
+  };
+
+  const cancelButton = (
+    <div
+      onClick={() => handleCancelClick(props.id)}
+      className={`${styles.BookingCardButton} ${styles.Cancel}`}
+    >
+      Cancel
+    </div>
+  );
+
+  const payButton = (
+    <div
+      onClick={() => handlePayClick(props.id)}
+      className={`${styles.BookingCardButton} ${styles.Pay}`}
+    >
+      Pay
+    </div>
+  );
+
+  const bookAgainButton = (
+    <div
+      onClick={() => handleBookAgainClick(props.houseId)}
+      className={`${styles.BookingCardButton} ${styles.BookAgain}`}
+    >
+      Book Again
+    </div>
+  );
+
+  const Button = () => {
+    if (props.status === "paid") return cancelButton;
+    else if (props.status === "pending") return payButton;
+    else if (props.host) {
+      rating = <></>;
+
+      return (
+        <div
+          onClick={() => handleBookAgainClick(props.houseId)}
+          className={`${styles.BookingCardButton} ${styles.BookAgain}`}
+        >
+          View House
+        </div>
+      );
+    }
+    return bookAgainButton;
+  };
 
   if (props.status === "completed") {
     statusStyle = styles.Completed;
     status = "Completed";
-    rating =
-      <div>
-        <Rating 
-          rating={props.rating} 
-          houseName={props.title} 
-          checkIn={new Date(props.checkIn)}
-          checkOut={new Date(props.checkOut)}
-           />
-      </div>
-  }
-  else if (props.status === "pending") {
+  } else if (props.status === "pending") {
     statusStyle = styles.Pending;
     status = "Pending";
-    cardBottom =
-      <a
-        href={`/housedetail/${props.houseId}`}
-        className={styles.Pay}>Pay
-      </a>
-  }
-  else if (props.status === "paid") {
+  } else if (props.status === "paid") {
     statusStyle = styles.Paid;
     status = "Paid";
-    cardBottom = 
-      <a
-        href={`/housedetail/${props.houseId}`}
-        className={styles.Cancel}>Cancel
-      </a>
-  }
-  else if (props.status === "canceled") {
+  } else if (props.status === "canceled") {
     statusStyle = styles.Canceled;
-    status = "Canceled"
-  }
-  else {
+    status = "Canceled";
+  } else {
     statusStyle = styles.Incompleted;
     status = "Incompleted";
   }
 
   return (
     <div className={styles.BookingCard}>
+      <NotificationContainer />
       <div className={styles.Status}>
         <span className={statusStyle}>{status}</span>
       </div>
@@ -74,15 +148,17 @@ const BookingCard = (props) => {
                 <p className={styles.PSmall}>Booking Id</p>
                 <p>{props.id}</p>
               </div>
-              {props.bookDate ? <div>
-                <p className={styles.PSmall}>Booked at</p>
-                <p>{new Date(props.bookDate).toLocaleDateString()}</p>
-              </div>
-                : <div>
+              {props.bookDate ? (
+                <div>
+                  <p className={styles.PSmall}>Booked at</p>
+                  <p>{new Date(props.bookDate).toLocaleDateString()}</p>
+                </div>
+              ) : (
+                <div>
                   <p className={styles.PSmall}>Customer</p>
                   <p>{props.customer}</p>
                 </div>
-              }
+              )}
               <div>
                 <p className={styles.PSmall}>Check In</p>
                 <p>{props.checkIn}</p>
@@ -103,8 +179,8 @@ const BookingCard = (props) => {
           </div>
         </div>
         <div className={styles.BookingCardBottom}>
-          {cardBottom}
-          {rating}
+          {Button()}
+          {props.status === "completed" ? rating : null}
         </div>
       </div>
     </div>

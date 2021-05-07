@@ -2,10 +2,12 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import "./Footer.css";
+
 const Footer = () => {
   return (
-    <footer>
-      <Container className="footer">
+    <footer className="Dis">
+      <Container className="Footer">
         <Row>
           <Col sm={3}>
             <Row>Travel Master</Row>

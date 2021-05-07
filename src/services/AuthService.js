@@ -2,7 +2,6 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { ROUTE } from "../constants/route";
 import AxiosService from "./AxiosService";
-
 class AuthService extends AxiosService {
   // Create new account
   register = async (email, username, password) => {
@@ -27,7 +26,6 @@ class AuthService extends AxiosService {
         usernameOrEmail,
         password,
       })
-
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("token", response.data.data);
@@ -49,11 +47,10 @@ class AuthService extends AxiosService {
 
   // Log out
   logout = async () => {
-    const response = await axios
-      .delete(ROUTE.LOGOUT_PATH, {
-        headers: this.token(),
-      })
-      .then(() => {});
+    axios.delete(
+      ROUTE.LOGOUT_PATH,
+      { headers: this.token(), }
+    )
   };
 
   // Confirm code

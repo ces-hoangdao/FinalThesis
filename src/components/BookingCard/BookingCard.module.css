@@ -111,7 +111,7 @@
   margin-bottom: 1rem;
 }
 
-.BookingCardBottom a {
+.BookingCardButton {
     padding: 10px 30px;
     width: 100%;
     font-weight: 600;
@@ -125,6 +125,7 @@
     margin-top: 12px;
     margin-bottom: 17px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .BookAgain {

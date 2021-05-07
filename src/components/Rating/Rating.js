@@ -1,48 +1,57 @@
 import { React, useState } from "react";
 import { Button, Modal, Form, Col, Row } from "react-bootstrap";
 
+import BookingService from "../../services/BookingService";
+
 import BeautyStars from "beauty-stars";
 
 // import RatingModal from "./RatingModal/RatingModal"
 
 const Rating = (props) => {
   const [show, setShow] = useState(false);
+  const [star, setStar] = useState(props.rating === null ? null : props.rating.star);
+  const [content, setContent] = useState(props.rating === null ? null : props.rating.content);
+  const idRating = props.rating === null ? null : props.rating.id;
+
   const handleClose = () => {
     setShow(false);
   };
   const handleShow = () => {
     setShow(true);
   };
+
+  const handleEditRating = () => {
+    new BookingService().editRating(idRating, star, content).then(
+      () => {
+        handleClose();
+      },
+      (error) => {
+      }
+    );
+  };
+
+  const handleWriteRating = () => {
+    setShow(false);
+    new BookingService().writeRating(props.idBooking, star, content).then(
+      () => {
+        handleClose();
+      },
+      (error) => {
+      }
+    );
+  };
   return (
     <>
-      {props.rating !== null ? (
-        <div>
-          <BeautyStars
-            size="25px"
-            value={props.rating.star}
-            onChange={() => {
-              // setIdBooking(booking.id);
-              // setStar(booking.rating.star);
-              // setContent(booking.rating.content);
-              // setIdRating(booking.rating.id);
-              handleShow();
-            }}
-          />
-        </div>
-      ) : (
+      <div>
         <BeautyStars
           size="25px"
-          editable="false"
-          value={0}
+          value={star}
           onChange={() => {
-            // setIdBooking(booking.id);
-            // setIdRating(null);
-            // setStar(0);
-            // setContent("");
             handleShow();
           }}
         />
-      )}
+      </div>
+
       <Modal
         show={show}
         onHide={handleClose}
@@ -73,21 +82,27 @@ const Rating = (props) => {
               <Form.Label>Check In</Form.Label>
             </Col>
             <Col lg={4}>
-              <Form.Control value={props.checkIn.toLocaleDateString()} disabled />
+              <Form.Control
+                value={props.checkIn.toLocaleDateString()}
+                disabled
+              />
             </Col>
             <Col lg={2}>
               <Form.Label>Check Out</Form.Label>
             </Col>
             <Col lg={4}>
-              <Form.Control value={props.checkOut.toLocaleDateString()} disabled />
+              <Form.Control
+                value={props.checkOut.toLocaleDateString()}
+                disabled
+              />
             </Col>
           </Form.Row>
           <h2>Your Rating </h2>
           <span>
-            <BeautyStars 
-              value={props.rating.star} 
-              // onChange={(star) => setStar(star)} 
-              />
+            <BeautyStars
+              value={star}
+              onChange={(star) => setStar(star)}
+            />
           </span>
 
           <Form.Group>
@@ -96,14 +111,14 @@ const Rating = (props) => {
             </Form.Label>
             <Form.Control
               as="textarea"
-              defaultValue={props.rating.content}
+              defaultValue={content}
               rows={5}
-              // onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => setContent(e.target.value)}
             ></Form.Control>
           </Form.Group>
         </Modal.Body>
 
-        {/* {idRating !== null ? (
+        {idRating !== null ? (
           <Row>
             <Col>
               <Button
@@ -122,8 +137,7 @@ const Rating = (props) => {
                 className="btn-bookingmanagement"
                 variant="primary"
                 onClick={() => {
-                  console.log(index);
-                  handleEditRating(index);
+                  handleEditRating();
                   handleClose();
                 }}
               >
@@ -149,16 +163,14 @@ const Rating = (props) => {
                 className="btn-bookingmanagement"
                 variant="primary"
                 onClick={() => {
-                  console.log(index);
-                  setIdBooking(booking.id);
-                  handleWriteRating(index);
+                  handleWriteRating();
                 }}
               >
                 Save{" "}
               </Button>
             </Col>
           </Row>
-        )} */}
+        )}
       </Modal>
     </>
   );

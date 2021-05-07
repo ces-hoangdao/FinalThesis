@@ -21,7 +21,7 @@ class HouseService extends AxiosService {
       return null;
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }
@@ -41,7 +41,7 @@ class HouseService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }
@@ -60,7 +60,7 @@ class HouseService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }
@@ -75,7 +75,6 @@ class HouseService extends AxiosService {
       const response = await axios.get(requestUrl, { headers: this.token() });
       const house = _.get(response, "data.data.listObject");
       if (isValidData(house)) {
-        console.log(response);
         return response.data;
       }
     } catch (error) {
@@ -109,7 +108,7 @@ class HouseService extends AxiosService {
   // Hide or unhide house
   hiddenHouse = async (houseid) => {
     try {
-      const response = await axios.put(
+      const response = await axios.get(
         API_URL + `/houses/unlistedHouse/${houseid}`,
         { headers: this.token() }
       );
@@ -157,7 +156,27 @@ class HouseService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (isValidData(error.response.data.message)) {
+      if (error.response.data.message !== '') {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+  };
+
+  edit = async (id, house) => {
+    try {
+      const response = await axios.put(
+        `${HOUSE_ROUTE.EDIT_HOUSE}/${id.houseId}`,
+        { ...house },
+        { headers: this.token() }
+      );
+      // Validate response data
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      // Check if error is catched by BE
+      if (error.response.data.message !== '') {
         return error.response.data;
       }
     }

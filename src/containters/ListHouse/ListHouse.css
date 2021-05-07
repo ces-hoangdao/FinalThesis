@@ -71,3 +71,15 @@
   width: 399px;
   overflow: hidden;
 }
+.CheckBox {
+  margin: 5px 0 5px 0;
+}
+.ButtonContainer{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Paginate {
+  margin-bottom: 20px;
+  margin-left: 950px;
+}

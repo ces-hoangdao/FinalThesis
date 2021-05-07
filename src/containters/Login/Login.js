@@ -1,59 +1,47 @@
 import React, { Component } from "react";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
 import { Link, Redirect } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import AuthService from "../services/AuthService";
-import "./Login.css";
-import {
-  emailRegex,
-  formValid,
-  usernameRegex,
-  passwordRegex,
-  userConstants,
-} from "../constants/formValidation";
+import { NotificationContainer, NotificationManager, } from "react-notifications";
 
-class Register extends Component {
+import { emailRegex, formValid, userConstants,} from "../../constants/formValidation";
+import AuthService from "../../services/AuthService";
+
+import "./Login.css";
+
+class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: null,
-      username: null,
+      loader: false,
       password: null,
-      isLogin: false,
       formErrors: {
         email: "",
         password: "",
-        username: "",
       },
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit = (e) => {
 
+  handleSubmit = (e) => {
+  
     e.preventDefault();
-    
-    if (formValid(this.state))
-     {
-      //CAll API Register
+    if (formValid(this.state)) {
       const email = this.state.email;
       const password = this.state.password;
-      const username = this.state.username;
-     new AuthService().register(email, username, password).then(
+      new AuthService().login(email, password).then(
         () => {
-          NotificationManager.success(userConstants.REGISTER_SUCCESS);
-          window.location.reload();
-        })
-        .catch(function (error) {
-          NotificationManager.error(userConstants.REGISTER_FAILURE);
-        });
-    } else {
-      NotificationManager.error(userConstants.REGISTER_FAILURE);    
-    }
+          NotificationManager.success(userConstants.LOGIN_SUCCESS);
+          window.location.replace("/");
+        },
+        (error) => {     
+          NotificationManager.error(userConstants.LOGIN_FAILURE);
+          window.location.replace("/confirmcode");
+        }
+      );
+    };
   };
 
   handleChange = (e) => {
@@ -67,16 +55,6 @@ class Register extends Component {
           ? ""
           : "invalid email address";
         break;
-      case "password":
-        formErrors.password = passwordRegex.test(value)
-          ? ""
-          : "Invalid password";
-        break;
-      case "username":
-        formErrors.username = usernameRegex.test(value)
-          ? ""
-          : "Invalid username";
-        break;
       default:
         break;
     }
@@ -85,15 +63,15 @@ class Register extends Component {
   };
 
   render() {
-    var logged = localStorage.getItem("username");
+    const { formErrors } = this.state;
+    const logged = localStorage.getItem("username");
     if (logged !== null) {
       return <Redirect to="/"></Redirect>;
     }
-    const { formErrors } = this.state;
     return (
       <div className="container">
         <Form className="form-login" onSubmit={this.handleSubmit} noValidate>
-          <h1>Register</h1>
+          <h1>Login </h1>
           <Form.Group controlId="Email">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -108,20 +86,7 @@ class Register extends Component {
               <span className="errorMessage">{formErrors.email}</span>
             )}
           </Form.Group>
-          <Form.Group controlId="username">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-            className={formErrors.username.length > 0 ? "error" : null}
-              type="text"
-              placeholder="Username"
-              name="username"
-              noValidate
-              onChange={this.handleChange}
-            />      
-            {formErrors.username.length > 0 && (
-              <span className="errorMessage">{formErrors.username}</span>
-            )}
-          </Form.Group>
+
           <Form.Group controlId="Password">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -137,10 +102,10 @@ class Register extends Component {
             )}
           </Form.Group>
           <Button variant="outline-dark" type="submit" className="btn-login">
-            Register
+            Login
           </Button>
           <h1 className="form-text">
-            I have an account <Link to="/login">Login</Link>
+            Don't have an account? <Link to="/register">Resigter</Link>
           </h1>
         </Form>
         <NotificationContainer></NotificationContainer>
@@ -149,4 +114,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default Login;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import HouseService from "../../services/HouseService";
 import {
@@ -31,10 +31,32 @@ const AddHouse = () => {
   });
   const isLogin = localStorage.getItem("token");
 
+  const houseId = {
+    houseId: window.location.pathname.substring(
+      window.location.pathname.lastIndexOf("/") + 1
+    )
+  };
+
+  useEffect(() => {
+    new HouseService()
+      .getHouseDetail(houseId)
+      .then((response) => {
+        if (response.status < 300) {
+          NotificationManager.success(response.message);
+          setHouse(response.data);
+        } else {
+          NotificationManager.error(response.message);
+        }
+      })
+      .catch((error) => {
+        NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+      });
+  }, []);
+
   const onSubmit = (e) => {
     e.preventDefault();
     new HouseService()
-      .addHouse(house)
+      .edit(houseId, house)
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
@@ -61,7 +83,7 @@ const AddHouse = () => {
 
   return (
     <Container className="Margin">
-      <h1>Add New House</h1>
+      <h1>Edit House</h1>
       <Form onSubmit={onSubmit}>
         <Form.Group as={Row} controlId="HouseTitle">
           <Form.Label column sm="2">
@@ -70,6 +92,7 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
+              value={house.title}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -100,6 +123,7 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
+              value={house.price}
               placeholder="price for a day"
               onChange={(e) =>
                 setHouse({
@@ -115,6 +139,7 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
+              value={house.size}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -132,6 +157,7 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
+              value={house.phoneContact}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -147,6 +173,7 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
+              value={house.maxGuest}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -166,6 +193,7 @@ const AddHouse = () => {
               controlId="AC"
               type="checkbox"
               label="AC"
+              defaultChecked={house.ac}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -176,6 +204,7 @@ const AddHouse = () => {
             <Form.Check
               type="checkbox"
               label="Wifi"
+              defaultChecked={house.wifi}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -186,6 +215,7 @@ const AddHouse = () => {
             <Form.Check
               type="checkbox"
               label="TV"
+              defaultChecked={house.tivi}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -196,6 +226,7 @@ const AddHouse = () => {
             <Form.Check
               type="checkbox"
               label="Fridge"
+              defaultChecked={house.fridge}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -206,6 +237,7 @@ const AddHouse = () => {
             <Form.Check
               type="checkbox"
               label="Swimming pool"
+              defaultChecked={house.pool}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -220,6 +252,7 @@ const AddHouse = () => {
           <Col sm="4">
             <Form.Control
               required
+              value={house.bedroom}
               onChange={(e) =>
                 setHouse({
                   ...house,
@@ -263,6 +296,7 @@ const AddHouse = () => {
           <Form.Label>Address</Form.Label>
           <Form.Control
             required
+            value={house.address}
             onChange={(e) =>
               setHouse({
                 ...house,
@@ -278,7 +312,8 @@ const AddHouse = () => {
           <Form.Control
             required
             as="textarea"
-            rows={5}
+            rows={8}
+            value={house.content  }
             onChange={(e) =>
               setHouse({
                 ...house,

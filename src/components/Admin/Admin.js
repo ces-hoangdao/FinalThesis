@@ -16,7 +16,7 @@ function Admin() {
       <Tab.Container  defaultActiveKey="statistic">
         <Col xs={2} className="sidebar">
           <Nav className="flex-column" variant="pills" >
-            <h1>Travel Master</h1>
+            <h1 className="TM">Travel Master</h1>
             <Nav.Item>
               <Nav.Link eventKey="statistic">Statistic For Admin</Nav.Link>
             </Nav.Item>

@@ -10,7 +10,8 @@ import UserService from "../../services/UserService";
 import { NotificationManager } from "react-notifications";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 import Icon from "../Icon/Icon";
-import BookingCard from '../BookingCard/BookingCard';
+import BookingCard from "../BookingCard/BookingCard";
+import { numberWithCommas } from "../../helper/helper";
 
 function StatisticForHost(props) {
   const { accountId } = props;
@@ -32,9 +33,8 @@ function StatisticForHost(props) {
     });
   }, [accountId]);
   return (
-    <Container>
+    <Container className="Margin">
       <h3>Hosting progress</h3>
-
       {loading ? (
         <Statistic></Statistic>
       ) : (
@@ -96,24 +96,25 @@ function StatisticForHost(props) {
         </CardDeck>
       )}
       <h3>Recent reservations</h3>
-      <CardBooking></CardBooking>
-      <BookingCard></BookingCard>
-      {listbookings.map((booking) => {
+      {listbookings.map((booking, index) => {
         const checkIn = new Date(booking.dateCheckIn);
         const checkOut = new Date(booking.dateCheckOut);
         return (
-          <Card>
-            <Card.Header>{booking.status}</Card.Header>
-            <Card.Body>
-              <Card.Title>{booking.houseName}</Card.Title>
-              <Card.Text>Customer Name: {booking.customerName}</Card.Text>
-              <Card.Text>Total: {booking.bill} đ</Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              CheckIn Day : {checkIn.toLocaleDateString()} - CheckOut Day :{" "}
-              {checkOut.toLocaleDateString()}
-            </Card.Footer>
-          </Card>
+          <BookingCard
+            key={index}
+            title={booking.houseName}
+            status={booking.status}
+            id={booking.id}
+            night={booking.night}
+            checkIn={checkIn.toLocaleDateString()}
+            checkOut={checkOut.toLocaleDateString()}
+            price={numberWithCommas(booking.bill)}
+            rating={booking.rating}
+            customer={booking.customerName}
+            houseId={booking.houseId}
+            index={index}
+            host={true}
+          />
         );
       })}
     </Container>

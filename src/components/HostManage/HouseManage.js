@@ -35,12 +35,18 @@ function HouseManage(props) {
       });
   }, [paramsString]);
 
-  const deactiveHouse = (houseId) => {
-    const filteredHouse = houses.filter((item) => item.id !== houseId);
+  const deactiveHouse = (houseId, index) => {
+    // const filteredHouse = houses.filter((item) =>
+    //   item.id === houseId ? (item.status = "deactived") : null
+    // );
     new HouseService().deactiveHouse(houseId).then(
       () => {
         NotificationManager.success("Deactive House Success");
-        setHouses(filteredHouse);
+        const newHouses = [...houses];
+        newHouses[index].status = "deactived";
+        console.log(newHouses);
+        setHouses(newHouses);
+        // setHouses(filteredHouse);
       },
       (error) => {
         NotificationManager.error(DEFAULT_ERROR_MESSAGE);
@@ -48,11 +54,17 @@ function HouseManage(props) {
     );
   };
 
-  const hiddenHouse = (houseId) => {
+  const hiddenHouse = (houseId, index) => {
     new HouseService().hiddenHouse(houseId).then(
       (responese) => {
         if (responese) {
           NotificationManager.success(responese.message);
+          const newHouses = [...houses];
+          if (newHouses[index].status === 'listed')
+            newHouses[index].status = 'unlisted';
+          else
+            newHouses[index].status = 'listed'
+          setHouses(newHouses);
         }
       },
       (error) => {

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { RegionDropdown } from "react-country-region-selector";
-import { NotificationContainer, NotificationManager, } from "react-notifications";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 import notfound from "../../assets/not-found.svg";
 import Pagination from "../../components/Pagination";
@@ -36,8 +39,9 @@ const HomeList = () => {
   const [notfoundpage, setNotFoundPage] = useState(false);
   const [filter, setFilter] = useState(DEFAULT_FILTER);
   const [search, setSearch] = useState(DEFAULT_FILTER);
-
+  const [pageMax, setPageMax] = useState(null);
   useEffect(() => {
+    setNotFoundPage(false);
     setLoading(true);
     new HouseService()
       .getHouses(filter)
@@ -45,13 +49,16 @@ const HomeList = () => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
           setHouses(response.data.listObject);
+          setPageMax(response.data.pageMax);
           setLoading(false);
         } else {
           NotificationManager.error(response.message);
+          setNotFoundPage(true)
         }
       })
       .catch((error) => {
         NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+        setNotFoundPage(true);
       });
   }, [filter]);
 
@@ -77,20 +84,18 @@ const HomeList = () => {
             <Form>
               <Form.Group>
                 <Form.Label as="legend">City</Form.Label>
-                <Col>
-                  <RegionDropdown
-                    className="form-control"
-                    defaultOptionLabel="Select city"
-                    country={"Vietnam"}
-                    value={search.city}
-                    onChange={(val) => selectRegion(val)}
-                  ></RegionDropdown>
-                </Col>
+                <RegionDropdown
+                  className="form-control"
+                  defaultOptionLabel="Select city"
+                  country={"Vietnam"}
+                  value={search.city}
+                  onChange={(val) => selectRegion(val)}
+                ></RegionDropdown>
               </Form.Group>
 
               <Form.Group>
                 <Form.Label as="legend">Price </Form.Label>
-                <Col>
+                <>
                   {" "}
                   <Form.Control
                     type="text"
@@ -107,34 +112,12 @@ const HomeList = () => {
                     }}
                     placeholder="To: đ"
                   />
-                </Col>
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label as="legend">Price </Form.Label>
-                <Col>
-                  {" "}
-                  <Form.Control
-                    type="text"
-                    onChange={(e) => {
-                      setSearch({ ...search, lowestPrice: e.target.value });
-                    }}
-                    placeholder="From: đ"
-                  />
-                  -{" "}
-                  <Form.Control
-                    type="text"
-                    onChange={(e) => {
-                      setSearch({ ...search, highestPrice: e.target.value });
-                    }}
-                    placeholder="To: đ"
-                  />
-                </Col>
+                </>
               </Form.Group>
 
               <Form.Group>
                 <Form.Label as="legend">Size</Form.Label>
-                <Col>
+                <>
                   <Form.Control
                     type="text"
                     onChange={(e) => {
@@ -150,11 +133,11 @@ const HomeList = () => {
                     }}
                     placeholder="To: m&sup2;"
                   />
-                </Col>
+                </>
               </Form.Group>
               <Form.Group>
                 <Form.Label as="legend">How many people?</Form.Label>
-                <Col>
+                <>
                   <Form.Control
                     type="text"
                     onChange={(e) => {
@@ -170,12 +153,13 @@ const HomeList = () => {
                     }}
                     placeholder="Max "
                   />
-                </Col>
+                </>
               </Form.Group>
               <Form.Group>
                 <Form.Label as="legend">Features</Form.Label>
-                <Col>
+                <>
                   <Form.Check
+                    className="CheckBox"
                     type="checkbox"
                     label="Air Conditioner"
                     onChange={(e) => {
@@ -186,6 +170,7 @@ const HomeList = () => {
                     }}
                   ></Form.Check>
                   <Form.Check
+                    className="CheckBox"
                     type="checkbox"
                     label="Tivi"
                     onChange={(e) => {
@@ -193,6 +178,7 @@ const HomeList = () => {
                     }}
                   ></Form.Check>
                   <Form.Check
+                    className="CheckBox"
                     type="checkbox"
                     label="Wifi"
                     onChange={(e) => {
@@ -200,6 +186,7 @@ const HomeList = () => {
                     }}
                   ></Form.Check>
                   <Form.Check
+                    className="CheckBox"
                     type="checkbox"
                     label="Swimming Pool"
                     onChange={(e) => {
@@ -207,32 +194,35 @@ const HomeList = () => {
                     }}
                   ></Form.Check>
                   <Form.Check
+                    className="CheckBox"
                     type="checkbox"
                     label="Fridge"
                     onChange={(e) => {
                       setSearch({ ...search, fridge: e.target.checked });
                     }}
                   ></Form.Check>
-                </Col>
+                </>
               </Form.Group>
-              <Button
-                className="btn-filter"
-                variant="success"
-                size="lg"
-                onClick={(e) => {
-                  setFilter(search);
-                }}
-              >
-                Apply
-              </Button>
-              <Button
-                className="btn-filter"
-                variant="danger"
-                size="lg"
-                type="reset"
-              >
-                Clear
-              </Button>
+              <div className="ButtonContainer">
+                <Button
+                  className="btn-filter"
+                  variant="outline-dark"
+                  size="lg"
+                  onClick={(e) => {
+                    setFilter(search);
+                  }}
+                >
+                  Apply
+                </Button>
+                <Button
+                  className="btn-filter"
+                  variant="outline-danger"
+                  size="lg"
+                  type="reset"
+                >
+                  Clear
+                </Button>
+              </div>
             </Form>
           </aside>
           <main className="col-md-9">
@@ -253,19 +243,22 @@ const HomeList = () => {
                   <Row>
                     {houses.length !== 0
                       ? houses.map((house, index) => {
-                          return <House key={index} house={house} />;
-                        })
+                        return <House key={index} house={house} />;
+                      })
                       : null}
-                    <Pagination
-                      pagination={filter}
-                      onPageChange={handlePageChange}
-                    ></Pagination>
                   </Row>
                 )}
               </>
             )}
           </main>
+          <div className="Paginate">
+            <Pagination
+              pagination={filter}
+              onPageChange={handlePageChange}
+              max={pageMax} />
+          </div>
         </Row>
+
       </div>
       <NotificationContainer></NotificationContainer>
     </div>
