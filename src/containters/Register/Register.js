@@ -4,7 +4,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 import { Link, Redirect } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button,Spinner } from "react-bootstrap";
 import AuthService from "../../services/AuthService";
 import {
   emailRegex,
@@ -23,6 +23,7 @@ class Register extends Component {
     this.state = {
       email: null,
       username: null,
+      loader: false,
       password: null,
       isLogin: false,
       formErrors: {
@@ -37,7 +38,7 @@ class Register extends Component {
   handleSubmit = (e) => {
 
     e.preventDefault();
-    
+    this.setState({ loader: true });
     if (formValid(this.state))
      {
       //CAll API Register
@@ -48,6 +49,7 @@ class Register extends Component {
         () => {
           NotificationManager.success(userConstants.REGISTER_SUCCESS);
           window.location.reload();
+          this.setState({ loader: false });
         })
         .catch(function (error) {
           NotificationManager.error(userConstants.REGISTER_FAILURE);
@@ -137,9 +139,23 @@ class Register extends Component {
               <span className="errorMessage">{formErrors.password}</span>
             )}
           </Form.Group>
-          <Button variant="outline-dark" type="submit" className="btn-login">
+         
+          {this.state.loader === true ? (
+            <Button variant="primary" disabled className="btn-login">
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Loading...
+            </Button>
+          ) : (
+            <Button variant="outline-dark" type="submit" className="btn-login">
             Register
           </Button>
+          )}
           <h1 className="form-text">
             I have an account <Link to="/login">Login</Link>
           </h1>

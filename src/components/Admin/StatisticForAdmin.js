@@ -10,11 +10,12 @@ import "./Admin.css";
 import AdminService from "../../services/AdminService";
 import Statistic from "../PlaceHolder/Statistic";
 import Chart from "./Chart";
+import { numberWithCommas } from "../../helper/helper";
 
 function StatisticForAdmin() {
   const [statistics, setStatistics] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [data1, setData1] = useState([]);
+
   useEffect(() => {
     setLoading(true);
     new AdminService().getStatistic().then((response) => {

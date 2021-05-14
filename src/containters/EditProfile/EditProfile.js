@@ -22,7 +22,7 @@ const EditProfile = () => {
   });
   const [dob, setDob] = useState(null);
   const email = localStorage.getItem("email");
-  const isLogin = localStorage.getItem("token")
+  const isLogin = localStorage.getItem("token");
 
   const onSubmit = (e) => {
     e.preventDefault();

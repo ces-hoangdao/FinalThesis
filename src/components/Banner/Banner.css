@@ -1,5 +1,5 @@
 .hero-image {
-    background: url("../../assets/cauvang.jpg") no-repeat center; 
+    background: url("../../assets/banner.jpg") no-repeat center; 
     background-size: cover;
     height: 500px;
   }
@@ -11,4 +11,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    font-size: 3em;
+    font-weight: 700;
   }

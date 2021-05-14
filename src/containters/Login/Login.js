@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
-import { NotificationContainer, NotificationManager, } from "react-notifications";
+import { Form, Button, Spinner } from "react-bootstrap";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
-import { emailRegex, formValid, userConstants,} from "../../constants/formValidation";
+import {
+  emailRegex,
+  formValid,
+  userConstants,
+} from "../../constants/formValidation";
 import AuthService from "../../services/AuthService";
 
 import "./Login.css";
@@ -26,8 +33,8 @@ class Login extends Component {
   }
 
   handleSubmit = (e) => {
-  
     e.preventDefault();
+    this.setState({ loader: true });
     if (formValid(this.state)) {
       const email = this.state.email;
       const password = this.state.password;
@@ -35,13 +42,14 @@ class Login extends Component {
         () => {
           NotificationManager.success(userConstants.LOGIN_SUCCESS);
           window.location.replace("/");
+          this.setState({ loader: false });
         },
-        (error) => {     
+        (error) => {
           NotificationManager.error(userConstants.LOGIN_FAILURE);
           window.location.replace("/confirmcode");
         }
       );
-    };
+    }
   };
 
   handleChange = (e) => {
@@ -101,9 +109,23 @@ class Login extends Component {
               <span className="errorMessage">{formErrors.password}</span>
             )}
           </Form.Group>
-          <Button variant="outline-dark" type="submit" className="btn-login">
-            Login
-          </Button>
+          {this.state.loader === true ? (
+            <Button variant="primary" disabled className="btn-login">
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Loading...
+            </Button>
+          ) : (
+            <Button variant="outline-dark" type="submit" className="btn-login">
+              Login
+            </Button>
+          )}
+
           <h1 className="form-text">
             Don't have an account? <Link to="/register">Resigter</Link>
           </h1>

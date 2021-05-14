@@ -3,7 +3,7 @@ import "./Banner.css";
 const Banner = () => {
   return (
     <div className="hero-image">
-      <div className="hero-text"></div>
+      <div className="hero-text">Book Homestay easyly with Master Travel</div>
     </div>
   );
 };

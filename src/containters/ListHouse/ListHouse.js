@@ -98,7 +98,7 @@ const HomeList = () => {
                 <>
                   {" "}
                   <Form.Control
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setSearch({ ...search, lowestPrice: e.target.value });
                     }}
@@ -106,7 +106,7 @@ const HomeList = () => {
                   />
                   -{" "}
                   <Form.Control
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setSearch({ ...search, highestPrice: e.target.value });
                     }}
@@ -119,7 +119,7 @@ const HomeList = () => {
                 <Form.Label as="legend">Size</Form.Label>
                 <>
                   <Form.Control
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setSearch({ ...search, lowestSize: e.target.value });
                     }}
@@ -127,7 +127,7 @@ const HomeList = () => {
                   />
                   -{" "}
                   <Form.Control
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setSearch({ ...search, highestSize: e.target.value });
                     }}
@@ -139,7 +139,7 @@ const HomeList = () => {
                 <Form.Label as="legend">How many people?</Form.Label>
                 <>
                   <Form.Control
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setSearch({ ...search, lowestGuest: e.target.value });
                     }}
@@ -147,7 +147,7 @@ const HomeList = () => {
                   />
                   -{" "}
                   <Form.Control
-                    type="text"
+                    type="number"
                     onChange={(e) => {
                       setSearch({ ...search, highestGuest: e.target.value });
                     }}
