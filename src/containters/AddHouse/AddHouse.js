@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Container, Form, Row, Col, Button } from "react-bootstrap";
+import { Container, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import HouseService from "../../services/HouseService";
 import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
-import { Redirect } from "react-router-dom";
+import { Redirect,useHistory  } from "react-router-dom";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
 const AddHouse = () => {
@@ -26,24 +26,30 @@ const AddHouse = () => {
     tivi: false,
     fridge: false,
     swimPool: false,
-    image : "",
-    images : []
+    image: "",
+    images: [],
   });
   const isLogin = localStorage.getItem("token");
-
+  const [loading, setLoading] = useState(false);
+  let history = useHistory();
   const onSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     new HouseService()
       .addHouse(house)
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
+          setLoading(false);
+          history.push("/hostmanage");
         } else {
           NotificationManager.error(response.message);
+          setLoading(false);
         }
       })
       .catch((error) => {
         NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+        setLoading(false);
       });
   };
 
@@ -79,7 +85,7 @@ const AddHouse = () => {
             ></Form.Control>
           </Col>
         </Form.Group>
-        {/* <Form.Group as={Row}>
+        <Form.Group as={Row}>
           <Col>
             <Form.File>
               <Form.File.Label>Image Cover</Form.File.Label>
@@ -91,7 +97,7 @@ const AddHouse = () => {
               <Form.File.Label>Images </Form.File.Label>
             </Form.File>
           </Col>
-        </Form.Group> */}
+        </Form.Group>
 
         <Form.Group as={Row}>
           <Form.Label column sm="2">
@@ -288,14 +294,27 @@ const AddHouse = () => {
             placeholder="Full Description"
           ></Form.Control>
         </Form.Group>
-        <Button
-          variant="outline-secondary"
-          size="lg"
-          className="btn-Edit"
-          as="input"
-          type="submit"
-          value="Save"
-        />
+        {loading === true ? (
+          <Button variant="primary" disabled className="btn-login">
+            <Spinner
+              as="span"
+              animation="grow"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            Creating...
+          </Button>
+        ) : (
+          <Button
+            variant="outline-secondary"
+            size="lg"
+            className="btn-Edit"
+            as="input"
+            type="submit"
+            value="Save"
+          />
+        )}
       </Form>
       <NotificationContainer></NotificationContainer>
     </Container>

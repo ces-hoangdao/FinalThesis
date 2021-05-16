@@ -1,7 +1,7 @@
 .hero-image {
     background: url("../../assets/banner.jpg") no-repeat center; 
     background-size: cover;
-    height: 500px;
+    height: 600px;
   }
   
   .hero-text {
@@ -14,3 +14,12 @@
     font-size: 3em;
     font-weight: 700;
   }
+  .img-slide{
+    height: 450px
+  }
+  .carousel-control-next-icon, .carousel-control-prev-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  
+}

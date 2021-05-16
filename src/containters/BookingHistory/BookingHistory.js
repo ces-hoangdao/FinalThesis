@@ -1,7 +1,7 @@
 import "./BookingHistory.css";
 import { React, useState, useEffect } from "react";
 import { Redirect } from "react-router";
-import { Container, Tab, Tabs, Row, Form } from "react-bootstrap";
+import { Container,  Row, Form } from "react-bootstrap";
 import BookingService from "../../services/BookingService";
 import {
   NotificationContainer,

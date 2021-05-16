@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <>
     <header className="Header">
-      <Navbar bg="dark" variant="dark" expand="lg" >
+      <Navbar bg="dark" variant="dark" expand="lg"  >
         <Container>
           <Fade left>
             <NavLink to="/">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Form, Button, Col, Row,Spinner } from "react-bootstrap";
 import "./EditProfile.css";
 import UserService from "../../services/UserService";
 import {
@@ -23,37 +23,45 @@ const EditProfile = () => {
   const [dob, setDob] = useState(null);
   const email = localStorage.getItem("email");
   const isLogin = localStorage.getItem("token");
-
+  const [loading,setLoading] = useState(false);
   const onSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     new UserService()
       .editprofile(user)
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
+          setLoading(false);
         } else {
           NotificationManager.error(response.message);
+          setLoading(false);
         }
       })
       .catch((error) => {
         NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+        setLoading(false);
       });
   };
 
   //fetch data from database
   useEffect(() => {
+    setLoading(true);
     new UserService()
       .getCurrentUser()
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
           setUser({ ...response.data });
+          setLoading(false);
         } else {
           NotificationManager.error(response.message);
+          setLoading(false);
         }
       })
       .catch((error) => {
         NotificationManager.error(DEFAULT_ERROR_MESSAGE);
+        setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -73,6 +81,7 @@ const EditProfile = () => {
   return (
     <Form className="edit-form" onSubmit={onSubmit}>
       <h1> Edit Profile</h1>
+      {loading === true ? (<h5 className="text-center"><Spinner animation="grow"  variant="primary" /> Loading...</h5>) : (<></>) }
       <Form.Group as={Row} controlId="Email">
         <Form.Label column sm="3">
           Email

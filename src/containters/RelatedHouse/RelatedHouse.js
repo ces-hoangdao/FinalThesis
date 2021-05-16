@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import HouseService from "../../services/HouseService";
 import { Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory,Redirect } from "react-router-dom";
 function RelatedHouse(props) {
   const [houses, setHouses] = useState([]);
   const { houseId } = props;
   useEffect(() => {
-    new HouseService()
-      .getHouseRelated(houseId)
-      .then((response) => {
-        if (response.status < 300) {
-          setHouses(response.data.listHouseRecommend);
-        } 
-              })
-      
+    new HouseService().getHouseRelated(houseId).then((response) => {
+      if (response.status < 300) {
+        setHouses(response.data.listHouseRecommend);
+      }
+    });
   }, []);
+  let history = useHistory();
+  const handleBookAgainClick = (id) => {
+    history.push(`/housedetail/${id}`);
+  };
   return (
     <Row>
       {houses &&
@@ -22,9 +23,9 @@ function RelatedHouse(props) {
           return (
             <div className="col-md-4 " key={index}>
               <Card className="card card-house-grid">
-                <Link to={"/housedetail/" + String(house.id)}>
-                  <Card.Img className="img-wrap" src={house.image} alt="house" />
-                </Link>
+                <Card.Img className="img-wrap" src={house.image} alt="house"
+                  onClick={() => handleBookAgainClick(house.id)}/>
+
                 <Card.Body className="info-wrap">
                   <Card.Title> {house.title}</Card.Title>
                   <Card.Text className="price-wrap mt-2">

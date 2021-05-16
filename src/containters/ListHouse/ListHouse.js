@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row,Form, Button } from "react-bootstrap";
 import { RegionDropdown } from "react-country-region-selector";
 import {
   NotificationContainer,
@@ -54,11 +54,13 @@ const HomeList = () => {
         } else {
           NotificationManager.error(response.message);
           setNotFoundPage(true)
+          setLoading(false);
         }
       })
       .catch((error) => {
         NotificationManager.error(DEFAULT_ERROR_MESSAGE);
         setNotFoundPage(true);
+        setLoading(false);
       });
   }, [filter]);
 
