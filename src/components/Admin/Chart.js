@@ -110,6 +110,7 @@ function Chart() {
           setYear(e.target.value);
         }}
       >
+      {loading}
         <option value="2021">2021</option>
         <option value="2020">2020</option>
       </Form.Control>

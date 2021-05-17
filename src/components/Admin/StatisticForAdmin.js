@@ -15,12 +15,14 @@ import { numberWithCommas } from "../../helper/helper";
 function StatisticForAdmin() {
   const [statistics, setStatistics] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [revenue,setRevenue] = useState(0);
 
   useEffect(() => {
     setLoading(true);
     new AdminService().getStatistic().then((response) => {
       if (response) {
         setStatistics(response.data);
+        setRevenue(response.data.totalRevenue);
         setLoading(false);
       } else {
         setLoading(false);
@@ -42,7 +44,7 @@ function StatisticForAdmin() {
                   src={Money}
                   classIcon="Icon-statictis"
                   classText="text-card"
-                  text={statistics.totalRevenue}
+                  text={numberWithCommas(revenue)}
                   unit="VNĐ"
                 ></Icon>
               </Card.Text>

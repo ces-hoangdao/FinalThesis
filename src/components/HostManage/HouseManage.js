@@ -35,6 +35,7 @@ function HouseManage(props) {
       });
   }, [paramsString]);
 
+  
   const deactiveHouse = (houseId, index) => {
     // const filteredHouse = houses.filter((item) =>
     //   item.id === houseId ? (item.status = "deactived") : null
@@ -44,7 +45,6 @@ function HouseManage(props) {
         NotificationManager.success("Deactive House Success");
         const newHouses = [...houses];
         newHouses[index].status = "deactived";
-        console.log(newHouses);
         setHouses(newHouses);
         // setHouses(filteredHouse);
       },

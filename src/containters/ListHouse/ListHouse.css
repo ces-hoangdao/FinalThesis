@@ -88,3 +88,11 @@
   background-size: cover;
   height: 300px;
 } */
+.notfound img {
+  margin-left: 20%;
+  height: 500px;
+  width: 500px;
+}
+.notfound h3,h5 {
+  text-align: center;
+}

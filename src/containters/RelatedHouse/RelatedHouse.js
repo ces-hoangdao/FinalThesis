@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import HouseService from "../../services/HouseService";
 import { Row, Col, Card } from "react-bootstrap";
-import { Link, useHistory,Redirect } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 function RelatedHouse(props) {
   const [houses, setHouses] = useState([]);
-  const { houseId } = props;
+  const { houseId} = props;
   useEffect(() => {
     new HouseService().getHouseRelated(houseId).then((response) => {
       if (response.status < 300) {
@@ -15,6 +15,7 @@ function RelatedHouse(props) {
   let history = useHistory();
   const handleBookAgainClick = (id) => {
     history.push(`/housedetail/${id}`);
+    window.location.reload();
   };
   return (
     <Row>

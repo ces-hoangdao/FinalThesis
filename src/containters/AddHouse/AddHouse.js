@@ -6,8 +6,12 @@ import {
   NotificationManager,
 } from "react-notifications";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
-import { Redirect,useHistory  } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import ProgressBar from "../../comps/ProgressBar";
+import { motion } from "framer-motion";
+import UpLoadImg from "../../comps/UpLoadImg";
+import ImageGrid from "../../comps/ImageGrid";
 
 const AddHouse = () => {
   const [house, setHouse] = useState({
@@ -29,9 +33,27 @@ const AddHouse = () => {
     image: "",
     images: [],
   });
+
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
+  const types = ["image/png", "image/jpeg", "image/jpg"];
+  const changeHandler = (e) => {
+    let selected = e.target.files[0];
+    if (selected && types.includes(selected.type)) {
+      setFile(selected);
+      setError("");
+    } else {
+      setFile(null);
+      setError("Please check type of image file(png/jpeg/jpg)");
+    }
+  };
+
   const isLogin = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   let history = useHistory();
+  const onCancel = () => {
+    history.push("/hostmanage");
+  }
   const onSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -86,17 +108,37 @@ const AddHouse = () => {
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
-          <Col>
-            <Form.File>
-              <Form.File.Label>Image Cover</Form.File.Label>
-              <Form.File.Input />
-            </Form.File>
+          <Col className="up-img">
+            <form>
+              <label>Image Cover</label>
+              <input type="file" onChange={changeHandler}></input>
+
+              <div className="output">
+                {error && <div className="errorMessage">{error}</div>}
+                {file && <div>{file.name}</div>}
+                {file && (
+                  <ProgressBar
+                    file={file}
+                    setFile={setFile}
+                    setHouse={setHouse}
+                    house={house}
+                  />
+                )}
+                {house.image && (
+                  <motion.div className="" layout whileHover={{ opacity: 1 }}>
+                    <motion.img
+                      src={house.image}
+                      alt="uploaded pic"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 1 }}
+                    />
+                  </motion.div>
+                )}
+              </div>
+            </form>
           </Col>
-          <Col>
-            <Form.File>
-              <Form.File.Label>Images </Form.File.Label>
-            </Form.File>
-          </Col>
+          <Col></Col>
         </Form.Group>
 
         <Form.Group as={Row}>
@@ -294,29 +336,51 @@ const AddHouse = () => {
             placeholder="Full Description"
           ></Form.Control>
         </Form.Group>
-        {loading === true ? (
-          <Button variant="primary" disabled className="btn-login">
-            <Spinner
-              as="span"
-              animation="grow"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />
-            Creating...
-          </Button>
-        ) : (
-          <Button
-            variant="outline-secondary"
-            size="lg"
-            className="btn-Edit"
-            as="input"
-            type="submit"
-            value="Save"
-          />
-        )}
+
+        <Form.Group as={Row} className="up-img">
+          <Col>
+            {" "}
+            <UpLoadImg house={house} setHouse={setHouse} />
+          </Col>
+        </Form.Group>
+        <ImageGrid house={house.images} />
+
+        <Form.Group as={Row}>
+          <Col>
+            {loading === true ? (
+              <Button variant="primary" disabled className="btn-login">
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                Creating...
+              </Button>
+            ) : (
+              <Button
+                variant="outline-secondary"
+                size="lg"
+                className="btn-Edit"
+                as="input"
+                type="submit"
+                value="Save"
+              />
+            )}
+          </Col>
+          <Col>
+            <Button
+              variant="outline-danger"
+              size="lg"
+              className="btn-Edit"
+              onClick={onCancel}
+              
+            >Cancel</Button>
+          </Col>
+        </Form.Group>
       </Form>
-      <NotificationContainer></NotificationContainer>
+      <NotificationContainer/>
     </Container>
   );
 };

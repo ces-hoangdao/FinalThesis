@@ -39,10 +39,15 @@ class Login extends Component {
       const email = this.state.email;
       const password = this.state.password;
       new AuthService().login(email, password).then(
-        () => {
-          NotificationManager.success(userConstants.LOGIN_SUCCESS);
-          window.location.replace("/");
-          this.setState({ loader: false });
+        (response) => {
+          if (response) {
+            NotificationManager.success(userConstants.LOGIN_SUCCESS);
+            window.location.replace("/");
+            this.setState({ loader: false });
+          }else{
+            NotificationManager.error(userConstants.LOGIN_FAILURE);
+            window.location.reload();
+          }
         },
         (error) => {
           NotificationManager.error(userConstants.LOGIN_FAILURE);

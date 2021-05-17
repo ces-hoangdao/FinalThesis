@@ -5,7 +5,7 @@ import Booking from "../../assets/booking.svg";
 import Average from "../../assets/gold.svg";
 import Rating from "../../assets/rating.svg";
 import Statistic from "../PlaceHolder/Statistic";
-import CardBooking from "../PlaceHolder/CardBooking";
+// import CardBooking from "../PlaceHolder/CardBooking";
 import UserService from "../../services/UserService";
 import { NotificationManager } from "react-notifications";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
@@ -18,11 +18,13 @@ function StatisticForHost(props) {
   const [loading, setLoading] = useState(false);
   const [statistics, setStatistics] = useState([]);
   const [listbookings, setListbookings] = useState([]);
+  const [revenue,setRevenue] = useState(0);
   useEffect(() => {
     setLoading(true);
     new UserService().getStatisticOwner(accountId).then((response) => {
       if (response) {
         setStatistics(response.data);
+        setRevenue(response.data.revenue);
         setListbookings(response.data.listBooking);
         NotificationManager.success(response.message);
         setLoading(false);
@@ -32,6 +34,7 @@ function StatisticForHost(props) {
       }
     });
   }, [accountId]);
+  
   return (
     <Container className="Margin">
       <h3>Hosting progress</h3>
@@ -46,7 +49,7 @@ function StatisticForHost(props) {
                 src={Money}
                 classIcon="Icon-statictis"
                 classText="text-card"
-                text={statistics.revenue}
+                text={numberWithCommas(revenue)}
                 unit="VNĐ"
               ></Icon>
             </Card.Body>

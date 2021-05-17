@@ -5,6 +5,25 @@ import AxiosService from "./AxiosService";
 import { isValidData } from "../helper/helper";
 
 class UserService extends AxiosService {
+  HostRegister = async (hostInfo) => {
+    try {
+      const requestUrl = API_URL + `/registerHost`;
+      const response = await axios.post(
+        requestUrl,
+        { ...hostInfo },
+        { headers: this.token() }
+      );
+      // Validate response data
+      if (isValidData(response.data)) {
+        return response.data;
+      }
+    } catch (error) {
+      if (error.response.data.message !== "") {
+        return error.response.data;
+      }
+    }
+    return { status: 500, message: DEFAULT_ERROR_MESSAGE };
+  };
 
   // Get user's details
   getCurrentUser = async () => {
@@ -18,7 +37,7 @@ class UserService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (error.response.data.message !== '') {
+      if (error.response.data.message !== "") {
         return error.response.data;
       }
     }
@@ -40,7 +59,7 @@ class UserService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (error.response.data.message !== '') {
+      if (error.response.data.message !== "") {
         return error.response.data;
       }
     }
@@ -57,7 +76,7 @@ class UserService extends AxiosService {
       }
     } catch (error) {
       // Check if error is catched by BE
-      if (error.response.data.message !== '') {
+      if (error.response.data.message !== "") {
         return error.response.data;
       }
     }

@@ -53,6 +53,8 @@ const EditProfile = () => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
           setUser({ ...response.data });
+          setDob(response.data.birthday);
+          console.log(dob)
           setLoading(false);
         } else {
           NotificationManager.error(response.message);
@@ -65,6 +67,7 @@ const EditProfile = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // const date = new Date(user.birthday);
 
   const selectCountry = (val) => {
     setUser({ ...user, country: val });
@@ -136,6 +139,7 @@ const EditProfile = () => {
             as="input"
             type="date"
             value={dob}
+            
             onChange={(e) =>{
               setUser({
                 ...user,

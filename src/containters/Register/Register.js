@@ -73,12 +73,12 @@ class Register extends Component {
       case "password":
         formErrors.password = passwordRegex.test(value)
           ? ""
-          : "Invalid password";
+          : "Password must contain more than 6 characters and less than 30, include uppercase character, lowcase character, digit, and special characters!";
         break;
       case "username":
         formErrors.username = usernameRegex.test(value)
           ? ""
-          : "Invalid username";
+          : "Username must contain more than 4 characters , without spaces and special characters!";
         break;
       default:
         break;

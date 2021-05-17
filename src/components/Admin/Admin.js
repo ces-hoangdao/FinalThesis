@@ -18,13 +18,13 @@ function Admin() {
           <Nav className="flex-column" variant="pills" >
             <h1 className="TM">Travel Master</h1>
             <Nav.Item>
-              <Nav.Link eventKey="statistic">Statistic For Admin</Nav.Link>
+              <Nav.Link eventKey="statistic">Dashboard</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="userManager">User Management</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="houseManager">House Manager</Nav.Link>
+              <Nav.Link eventKey="houseManager">House Management</Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>

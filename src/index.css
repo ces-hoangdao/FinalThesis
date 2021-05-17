@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen','Noto Serif'
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,33 +37,7 @@ h2 {
   margin: 0.1rem;
 }
 
-/* carousel
-.carousel-item-next,
-.carousel-item-prev,
-.carousel-item.active {
-  display: flex;
-}
-.carousel-caption {
-  position: absolute;
-  top: 0;
-}
 
-.carousel-caption h2 {
-  color: #fff;
-}
-
-.carousel img {
-  width:auto;
-  height: auto;
-  padding: 30px;
-  margin: 40px;
-  border-radius: 3px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.carousel a {
-  margin: 0 auto;
-} */
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
@@ -71,7 +48,59 @@ h2 {
   margin-left: 20px;
 }
 .navbar-brand {
-  color: #fff;
+  color: rgb(78, 113, 228);
   font-size: 22px;
   font-size:20px;
+}
+
+.output{
+  height:200px;
+  font-size:1em;
+}
+.output img{
+  height: 200px;
+  width: 350px;
+}
+.progress-bar{
+  height:5px;
+  margin-top:20px;
+  background:#343A40;
+}
+ .up-img input{
+   margin-left: 115px;
+ }
+
+ .up-img img {
+   margin-left:190px;
+   margin-top: 7px;
+ }
+
+ label {
+   font-weight: 500;
+ }
+
+ /* image grid styles */
+.images-grid{
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+}
+.images-wrap{
+  overflow: hidden;
+  height: 0;
+  padding: 50% 0;
+  /* padding controls height, will always be perfectly square regardless of width */
+  position: relative;
+  opacity: 0.8;
+}
+.images-wrap img{
+  width: 300px;
+  height: 300px;
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 150%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

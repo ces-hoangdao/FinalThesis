@@ -35,6 +35,7 @@ class AuthService extends AxiosService {
           localStorage.setItem("username", userInfo.user.username);
           localStorage.setItem("isAdmin", isAdmin);
           localStorage.setItem("email", userInfo.user.email);
+          localStorage.setItem("role" ,userInfo.user.role);
         }
         return response.data;
       })

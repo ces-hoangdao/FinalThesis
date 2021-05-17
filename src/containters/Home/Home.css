@@ -29,3 +29,18 @@
 .btn-homepage a{
     color:antiquewhite;
 }
+.say {
+  background: url("../../assets/say1.jpg") no-repeat center; 
+  background-size: cover;
+  
+  height: 500px;
+}
+.content-feedback{
+  font-size:20px;
+}
+.fb-img{
+  border-radius: 2.5rem ;
+  height:100px;
+  width: 70px;
+  margin-left: 500px;
+}

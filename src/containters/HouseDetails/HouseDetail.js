@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Container, Button, Carousel } from "react-bootstrap";
-
+import {  useHistory } from "react-router-dom";
 import Location from "../../assets/location.svg";
 import Wifi from "../../assets/wifi-line.svg";
 import Price from "../../assets/price.svg";
@@ -20,25 +20,34 @@ import Rating from "./Ratings/Ratings";
 import { numberWithCommas } from "../../helper/helper";
 import HouseService from "../../services/HouseService";
 
-import { NotificationContainer, NotificationManager } from "react-notifications";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 
 import "./HouseDetail.css";
 
 const HouseDetail = () => {
+  const logged = localStorage.getItem("token");
   const [house, setHouse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [ratings, setRatings] = useState([]);
   const [modalShow, setModalShow] = useState(false);
-  const houseId = {
+  const [houseId, setHouseId] = useState({
     houseId: window.location.pathname.substring(
       window.location.pathname.lastIndexOf("/") + 1
-    )
-  };
-
+    ),
+  });
+  let history = useHistory();
   const handleClick = () => {
+  
+    if (logged === null) {
+      history.push("/login");
+      
+    }
     setModalShow(true);
-  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -67,7 +76,7 @@ const HouseDetail = () => {
         <>
           <Booking
             price={house.price}
-            houseName={house.title.split('-')[0]}
+            houseName={house.title.split("-")[0]}
             houseId={houseId.houseId}
             show={modalShow}
             onHide={() => setModalShow(false)}
@@ -219,7 +228,7 @@ const HouseDetail = () => {
                   onClick={handleClick}
                 >
                   Book house
-              </Button>
+                </Button>
               </Row>
             </div>
 
@@ -233,7 +242,7 @@ const HouseDetail = () => {
       {ratings.length ? <Rating ratings={ratings}></Rating> : <div></div>}
       <div className="container">
         <h1 className="text-center">Related Projects</h1>
-        <RelatedHouse houseId = {houseId}></RelatedHouse>
+        <RelatedHouse houseId={houseId}></RelatedHouse>
       </div>
     </div>
   );

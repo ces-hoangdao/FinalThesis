@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import DayPicker from 'react-day-picker';
 import { NotificationContainer, NotificationManager } from "react-notifications";
+import {  useHistory } from "react-router-dom";
 
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/message";
 import { numberWithCommas } from "../../helper/helper";
@@ -11,6 +12,8 @@ import 'react-day-picker/lib/style.css';
 import styles from './Booking.module.css'
 
 const Booking = (props) => {
+  
+    
   const [checkIn, setCheckIn] = useState();
   const [checkOut, setCheckOut] = useState();
   const today = new Date();
@@ -45,12 +48,14 @@ const Booking = (props) => {
   }
 
   // Click Book
+  let history = useHistory();
   const handleBookingClick = () => {
     new BookingService()
       .createBooking(props.houseId, checkIn, checkOut)
       .then((response) => {
         if (response.status < 300) {
           NotificationManager.success(response.message);
+          history.push("/bookinghistory");
         } else {
           NotificationManager.error(response.message);
         }
@@ -97,7 +102,7 @@ const Booking = (props) => {
     if (limit !== checkIn)
       disabledCheckOutDays = disabledCheckOutDays.concat([{ after: limit }])
   }
-
+ 
   return (
     <>
       <NotificationContainer></NotificationContainer>
