@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import ProgressBar from "./ProgressBar";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import ProgressBarList from "./ProgressBarList";
+
 
 const UpLoadImg = ({ house, setHouse }) => {
   const [files, setFiles] = useState(null);
   const [error, setError] = useState(null);
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
   const changeHandler = (e) => {
@@ -18,7 +18,12 @@ const UpLoadImg = ({ house, setHouse }) => {
       setError("Please check type of image file(png/jpeg/jpg)");
     }
   };
- 
+  useEffect(() => {
+    if (images) {
+      setHouse({ ...house, images: images });
+    }
+  }, [images]);
+
   return (
     <div>
       <form>
@@ -28,17 +33,13 @@ const UpLoadImg = ({ house, setHouse }) => {
         <div className="">
           {error && <div className="errorMessage">{error}</div>}
           {files && <div>{files.name}</div>}
-          {files && <ProgressBar files={files} setFiles={setFiles} />}
-          {image && (
-            <motion.div className="" layout whileHover={{ opacity: 1 }}>
-              <motion.img
-                src={image}
-                alt="uploaded pic"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-              />
-            </motion.div>
+          {files && (
+            <ProgressBarList
+              files={files}
+              setFiles={setFiles}
+              images={images}
+              setImages={setImages}
+            />
           )}
         </div>
       </form>

@@ -134,6 +134,7 @@ const EditProfile = () => {
         <Form.Label column sm="3">
           birthday
         </Form.Label>
+        
         <Col sm="9">
           <Form.Control
             as="input"
